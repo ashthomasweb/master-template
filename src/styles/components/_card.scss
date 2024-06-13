@@ -1,0 +1,42 @@
+.card {
+    width: 500px;
+    height: 300px;
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.flip-button {
+    position: absolute;
+    right: -80px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 5px 15px;
+}
+
+.front {
+    background-color: lightblue;
+    display: none;
+
+    &.dual-display {
+
+    }
+
+    &.isFrontDisplayed {
+        display: flex;
+    }
+}
+
+.back {
+    background-color: pink;
+    display: none;
+
+    &.dual-display {
+
+    }
+
+    &.isBackDisplayed {
+        display: flex;
+    }   
+}

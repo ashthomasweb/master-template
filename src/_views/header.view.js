@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react'
 import { MainContext } from '../context/MainContext'
-import SettingsMenu from '../components/settings-menu.component'
-import SetManager from '../components/set-manager.component'
-import CategoryMenu from '../components/category-manager.component'
-import QuizMenu from '../components/quiz-menu.component'
+import SettingsMenu from '../_components/settings-menu.component'
+import SetManager from '../_components/set-manager.component'
+import CategoryMenu from '../_components/category-manager.component'
+import QuizMenu from '../_components/quiz-menu.component'
 
 export default function HeaderView() {
     const {

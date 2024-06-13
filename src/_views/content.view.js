@@ -1,7 +1,9 @@
 import { useContext } from 'react'
 import { MainContext } from '../context/MainContext'
+import Card from '../_components/card.component'
+import Stats from '../_components/stats.component'
 
-export default function SetManager(props) {
+export default function ContentView() {
     const {
         mainState: {
         },
@@ -9,10 +11,9 @@ export default function SetManager(props) {
     } = useContext(MainContext)
 
     return (
-        <div className={`set-manager `}>
-            <div className={`menu-modal ${props.isOpen ? 'isOpen' : ''}`}>
-                Set Manager
-            </div>
+        <div className='content-view'>
+            <Card />
+            <Stats />
         </div>
     )
 }
