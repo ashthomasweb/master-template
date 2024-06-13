@@ -1,0 +1,9 @@
+.header-view {
+    height: $header-height;
+    border-bottom: 4px solid grey;
+    background-color: #ddd;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}

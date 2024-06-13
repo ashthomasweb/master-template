@@ -1,7 +1,21 @@
-// Views
-/* HAL VIEWS STYLESHEET TAG */
+// base
+@import './base/reset.scss';
+@import './base/variables.scss';
 
+// Views
+@import './views/content-view.scss';
+@import './views/header-view.scss';
+/* HAL VIEWS STYLESHEET TAG */
 
 // Components
 @import './components/main.scss';
+@import './components/card-back.scss';
+@import './components/card-front.scss';
+@import './components/entry-manager.scss';
+@import './components/quiz-menu.scss';
+@import './components/set-manager.scss';
+@import './components/settings-menu.scss';
+@import './components/stats.scss';
+@import './components/tag-manager.scss';
+@import './components/category-manager.scss';
 /* HAL COMPONENTS STYLESHEET TAG */
