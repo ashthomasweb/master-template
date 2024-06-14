@@ -9,7 +9,7 @@ export class Set {
     constructor(id, title, subtitle, categories) {
         this.id = id
         this.title = title
-        this.subittle = subtitle
+        this.subtitle = subtitle
         this.categories = categories
     }
 }

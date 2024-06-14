@@ -1,4 +1,47 @@
+import CRUDInterface from "../interfaces/crud-interface"
+import { FirebaseCreateOptions } from "../config/firebase-types"
+import DataPaths from "../config/data-paths"
+
 class DataService {
+    mainDispatch = null
+
+    setLocalDispatch(dispatch) {
+        this.mainDispatch = dispatch
+    }
+
+    saveNewSet(set, userObj) {
+        console.log(set)
+
+        const options = new FirebaseCreateOptions({...set}, DataPaths.base.users, [userObj.uid, DataPaths.extension.set, set.id].join('/'), false, false)
+        CRUDInterface.createRecord(options)
+
+        const payload = {
+            currentSet: set.title
+        }
+        this.mainDispatch({ payload })
+
+    }
+
+    setActiveSet(selectedSet) {
+        const payload = {
+            currentSet: selectedSet
+        }
+        this.mainDispatch({ payload })
+    }
+
+
+    saveNewCategory(category, userObj) {
+        console.log(category)
+
+        const options = new FirebaseCreateOptions({...category}, DataPaths.base.users, [userObj.uid, DataPaths.extension.category, category.id].join('/'), false, false)
+        CRUDInterface.createRecord(options)
+
+        const payload = {
+            currentCategory: category.title
+        }
+        this.mainDispatch({ payload })
+
+    }
 
     generateNewId(idLength, forceString) {
         let concatString = ''

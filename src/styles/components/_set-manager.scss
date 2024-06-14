@@ -17,5 +17,13 @@
         &.isOpen {
             display: flex;
         }
+
+        .set-header {
+            position: absolute;
+            width: 100%;
+            top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
     }
 }

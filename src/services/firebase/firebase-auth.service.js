@@ -4,7 +4,10 @@ import {
     signOut,
     signInWithRedirect,
     GoogleAuthProvider,
-    getRedirectResult
+    getRedirectResult, 
+    setPersistence,
+    onAuthStateChanged, 
+    browserLocalPersistence
 } from "firebase/auth"
 import { User } from "../../config/data-types"
 import { FirebaseCreateOptions } from "../../config/firebase-types"
@@ -18,7 +21,12 @@ class FirebaseAuthService {
 
     constructor() {
         this.auth = getAuth()
-        this.handleRedirectResult()
+        setPersistence(this.auth, browserLocalPersistence).then(() => {
+            this.handleRedirectResult()
+            this.listenToAuthStateChanges()
+        }).catch((error) => {
+            console.error("Error setting persistence:", error)
+        })
     }
 
     setLocalDispatch(dispatch) {
@@ -56,16 +64,24 @@ class FirebaseAuthService {
             })
     }
 
+    listenToAuthStateChanges() {
+        onAuthStateChanged(this.auth, (user) => {
+            if (user) {
+                this.setUserObjToState(user)
+            } else {
+                this.setNullUserToState()
+            }
+        });
+    }
+
     firebaseSignOut() {
         if (this.auth === null) {
             alert('No user currently authorized')
             return
         }
         signOut(this.auth).then(() => {
-            // Sign-out successful
             this.setNullUserToState()
         }).catch((error) => {
-            // An error happened
             console.error(error)
             alert(`An error occured during SignOut`)
         })

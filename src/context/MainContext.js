@@ -5,6 +5,7 @@ import FirebaseReadService from "../services/firebase/firebase-read.service"
 import FirebaseUpdateService from "../services/firebase/firebase-update.service"
 import FirebaseDeleteService from "../services/firebase/firebase-delete.service"
 import DisplayService from '../services/display.service'
+import DataService from "../services/data.service"
 
 // TEMP
 import { tempSets } from "../config/temp"
@@ -20,7 +21,9 @@ export const initialMainState = {
     isDualCardDisplayActive: false,
     /* Sets */
     currentSet: 'Select A Set',
-    setArray: tempSets
+    setArray: tempSets,
+    /* Categories */
+    currentCategory: 'Select A Category'
 }
 
 const MainReducer = (state, action) => {
@@ -34,6 +37,7 @@ const MainProvider = (props) => {
     const [mainState, mainDispatch] = useReducer(MainReducer, initialMainState)
 
     DisplayService.setLocalDispatch(mainDispatch)
+    DataService.setLocalDispatch(mainDispatch)
     FirebaseAuthService.setLocalDispatch(mainDispatch)
     FirebaseReadService.setLocalDispatch(mainDispatch)
     FirebaseUpdateService.setLocalDispatch(mainDispatch)
