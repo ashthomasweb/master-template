@@ -36,10 +36,9 @@ export class Entry {
 }
 
 export class Tag {
-    constructor(id, title, taggedEntries) {
+    constructor(id, title) {
         this.id = id
         this.title = title
-        this.taggedEntries = taggedEntries // ATTN: evaluate!
     }
 }
 

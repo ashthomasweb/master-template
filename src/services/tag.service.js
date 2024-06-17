@@ -9,8 +9,8 @@ class TagService {
         this.mainDispatch = dispatch
     }
 
-    async createNewTag() {
-        
+    async createNewTag(newTag) {
+        console.log(newTag)
 
 
 

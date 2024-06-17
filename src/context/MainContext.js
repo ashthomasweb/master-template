@@ -25,7 +25,9 @@ export const initialMainState = {
     currentCategory: 'Select A Category',
     categoryArray: [],
     /* Entry */
-    currentEntry: null
+    currentEntry: null,
+    /* Tags */
+    tagArray: [],
 }
 
 const MainReducer = (state, action) => {
