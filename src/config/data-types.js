@@ -24,13 +24,12 @@ export class Category {
 }
 
 export class Entry {
-    constructor(id, title, subtitle, description, set, category, tags, count ) {
+    constructor(id, question, answer, setId, categoryId, tags, count ) {
         this.id = id
-        this.title = title
-        this.subtitle = subtitle
-        this.description = description
-        this.set = set
-        this.category = category
+        this.question = question
+        this.answer = answer
+        this.setId = setId
+        this.categoryId = categoryId
         this.tags = tags
         this.count = count
     }
@@ -40,7 +39,7 @@ export class Tag {
     constructor(id, title, taggedEntries) {
         this.id = id
         this.title = title
-        this.taggedEntries = taggedEntries
+        this.taggedEntries = taggedEntries // ATTN: evaluate!
     }
 }
 

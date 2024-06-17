@@ -25,5 +25,25 @@
             display: flex;
             justify-content: space-between;
         }
+
+        select {
+            margin: 10px 0;
+            font-size: 18px;
+            height: auto;
+        }
+
+        input {
+            font-size: 18px;
+            margin: 10px 0;
+            height: auto;
+        }
+
+        button {
+            font-size: 18px;
+            margin: 10px 0;
+            height: auto;
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
     }
 }

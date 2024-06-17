@@ -16,7 +16,7 @@ class FirebaseCreateService {
     }
 
     // Create a new document, or pass a new field to existing document, as defined in options ...
-    async createRecord(options) {
+    async createRecord(options, userObj) {
         try {
             if (options.autoGenId) {
                 const docRef = await addDoc(collection(this.db, options.basePath), options.data)

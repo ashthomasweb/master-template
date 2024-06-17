@@ -1,0 +1,49 @@
+.entry-manager {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    
+    .menu-modal {
+        width: 400px;
+        height: 400px;
+        background-color: #555;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        
+        &.isOpen {
+            display: flex;
+        }
+
+        .entry-header {
+            position: absolute;
+            width: 100%;
+            top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        select {
+            margin: 10px 0;
+            font-size: 18px;
+            height: auto;
+        }
+
+        input {
+            font-size: 18px;
+            margin: 10px 0;
+            height: auto;
+        }
+
+        button {
+            font-size: 18px;
+            margin: 10px 0;
+            height: auto;
+            padding: 5px 10px;
+            border-radius: 8px;
+        }
+    }
+}

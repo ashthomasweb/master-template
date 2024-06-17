@@ -1,14 +1,17 @@
 import { useContext, useState, useRef } from 'react'
 import { MainContext } from '../context/MainContext'
 import { Category } from '../config/data-types'
+import CategoryService from '../services/category.service'
 import DataService from '../services/data.service'
+import SetService from '../services/set.service'
 
 export default function CategoryManager(props) {
     const {
         mainState: {
             currentCategory,
             currentSet,
-            userObj
+            userObj,
+            setArray
         }
     } = useContext(MainContext)
 
@@ -17,28 +20,29 @@ export default function CategoryManager(props) {
     const categorySubtitleRef = useRef(null)
     
     const handleCategoryChange = ({ target }) => {
-        console.log(target.value)
         target.value === 'Add New' ? setNewCategoryInputDisplay(true) : setNewCategoryInputDisplay(false)
+        const category = currentSet.categories.filter(entry => entry.title === target.value)[0]
+        CategoryService.setCurrentCategory(category)
     }
 
-    const saveNewCategory = () => {
+    const saveNewCategory = async () => {
         const title = categoryTitleRef.current.value
         const subtitle = categorySubtitleRef.current.value
         const forceString = true
         const id = DataService.generateNewId(15, forceString)
-        const categoryEntries = null
-
+        const categoryEntries = []
         const newCategory = new Category(id, title, subtitle, categoryEntries)
-        DataService.saveNewCategory(newCategory, userObj)
+        await CategoryService.saveNewCategory(newCategory, currentSet, userObj)
+        SetService.retrieveOneSet(userObj, currentSet, setArray)
     }
 
     return (
         <div className='category-manager'>
               <div className={`menu-modal ${props.isOpen ? 'isOpen' : ''}`}>
-              <div className='category-header'><span>Category Manager</span><span>{currentCategory}</span></div>
+              <div className='category-header'><span>Category Manager</span><span>{currentSet.title}:{currentCategory.title ? currentCategory.title : 'None selected'}</span></div>
               <select onInput={handleCategoryChange}>
                     <option value='Add New'>Add New</option>
-                    {/* {setArray.map((entry, index) => <option key={entry.title} value={entry.title}>{entry.title}</option>)} */}
+                    {currentSet?.categories?.map(entry => <option key={entry.title} value={entry.title}>{entry.title}</option>)}
                 </select>
                 {newCategoryInputDisplay
                     ?
