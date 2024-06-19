@@ -6,7 +6,7 @@
     z-index: 1000;
     
     .menu-modal {
-        width: 400px;
+        width: 700px;
         height: 400px;
         background-color: #555;
         display: none;
@@ -24,6 +24,16 @@
             top: 10px;
             display: flex;
             justify-content: space-between;
+        }
+
+        .selection-menus {
+            width: 90%;
+            height: auto;
+            margin: 10px;
+            padding: 10px;
+            border: 2px solid lightblue;
+            background-color: #222;
+            color: white;
         }
 
         select {
