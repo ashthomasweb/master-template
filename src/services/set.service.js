@@ -1,6 +1,6 @@
 import CRUDInterface from "../interfaces/crud-interface"
 import DataPaths from "../config/data-paths"
-import { FirebaseReadOptions, FirebaseCreateOptions } from "../config/firebase-types"
+import { FirebaseReadOptions, FirebaseCreateOptions, FirebaseUpdateOptions } from "../config/firebase-types"
 
 class SetService {
     mainDispatch = null
@@ -48,6 +48,12 @@ class SetService {
             setArray: filteredSetArray
         }
         this.mainDispatch({ payload })
+    }
+
+    updateSingleSet(currentSet, newTitle, newSubtitle, userObj) {
+        const options = new FirebaseUpdateOptions(DataPaths.base.users, [userObj.uid, DataPaths.extension.set, currentSet.id].join('/'), {title: newTitle, subtitle: newSubtitle})
+        CRUDInterface.updateRecord(options)
+        this.retrieveAllSets(userObj)
     }
 
 }

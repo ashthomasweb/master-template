@@ -1,5 +1,5 @@
 import DataPaths from "../config/data-paths"
-import { FirebaseCreateOptions } from "../config/firebase-types"
+import { FirebaseCreateOptions, FirebaseReadOptions } from "../config/firebase-types"
 import CRUDInterface from "../interfaces/crud-interface"
 
 class EntryService {
@@ -14,6 +14,14 @@ class EntryService {
         CRUDInterface.createRecord(options, userObj)
     }
 
+    async getSelectedEntries(set, category, userObj) {
+        const options = new FirebaseReadOptions(DataPaths.base.users, true, [userObj.uid, DataPaths.extension.entry].join('/'))
+        const result = await CRUDInterface.readRecord(options)
+        const payload = {
+            requestedEntries: result.filter(entry => entry.setId === set.id && entry.categoryId === category.id)
+        }
+        this.mainDispatch({ payload })
+    }
 
 }
 

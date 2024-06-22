@@ -18,7 +18,7 @@ export default function CategoryManager(props) {
     const [newCategoryInputDisplay, setNewCategoryInputDisplay] = useState(true)
     const categoryTitleRef = useRef(null)
     const categorySubtitleRef = useRef(null)
-    
+
     const handleCategoryChange = ({ target }) => {
         target.value === 'Add New' ? setNewCategoryInputDisplay(true) : setNewCategoryInputDisplay(false)
         const category = currentSet.categories.filter(entry => entry.title === target.value)[0]
@@ -37,22 +37,25 @@ export default function CategoryManager(props) {
     }
 
     return (
-        <div className='category-manager'>
-              <div className={`menu-modal ${props.isOpen ? 'isOpen' : ''}`}>
-              <div className='category-header'><span>Category Manager</span><span>{currentSet.title}:{currentCategory.title ? currentCategory.title : 'None selected'}</span></div>
-              <select onInput={handleCategoryChange}>
-                    <option value='Add New'>Add New</option>
-                    {currentSet?.categories?.map(entry => <option key={entry.title} value={entry.title}>{entry.title}</option>)}
-                </select>
-                {newCategoryInputDisplay
-                    ?
-                    <>
-                        <input ref={categoryTitleRef} type='text' placeholder='Enter your new Category title' />
-                        <input ref={categorySubtitleRef} type='text' placeholder='Enter your subtitle' />
-                        <button type='button' onClick={saveNewCategory}>Save</button>
-                    </>
-                    : null}
+        <div className='modal-container'>
+            <div className={`menu-modal category-manager ${props.isOpen ? 'isOpen' : ''}`}>
+                <div className='modal-header'><span>Category Manager</span><span>{currentSet.title}:{currentCategory.title ? currentCategory.title : 'None selected'}</span></div>
+                <div className='content'>
 
+                    <select onInput={handleCategoryChange}>
+                        <option value='Add New'>Add New</option>
+                        {currentSet?.categories?.map(entry => <option key={entry.title} value={entry.title}>{entry.title}</option>)}
+                    </select>
+                    {newCategoryInputDisplay
+                        ?
+                        <>
+                            <input ref={categoryTitleRef} type='text' placeholder='Enter your new Category title' />
+                            <input ref={categorySubtitleRef} type='text' placeholder='Enter your subtitle' />
+                            <button type='button' onClick={saveNewCategory}>Save</button>
+                        </>
+                        : null}
+
+                </div>
             </div>
         </div>
     )

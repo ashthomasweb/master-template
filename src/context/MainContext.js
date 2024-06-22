@@ -26,6 +26,7 @@ export const initialMainState = {
     categoryArray: [],
     /* Entry */
     currentEntry: null,
+    requestedEntries: [],
     /* Tags */
     tagArray: [],
 }

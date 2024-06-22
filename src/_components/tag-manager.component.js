@@ -9,15 +9,14 @@ export default function TagManager(props) {
     } = useContext(MainContext)
 
     return (
-        <div className='tag-manager'>
-            <div className='category-manager'>
-                <div className={`menu-modal ${props.isOpen ? 'isOpen' : ''}`}>
-                    <div className='category-header'><span>TagManager</span></div>
-                    {/* <select onInput={handleCategoryChange}>
+        <div className='modal-container'>
+            <div className={`menu-modal tag-manager ${props.isOpen ? 'isOpen' : ''}`}>
+                <div className='modal-header'><span>TagManager</span></div>
+                {/* <select onInput={handleCategoryChange}>
                         <option value='Add New'>Add New</option>
                         {currentSet?.categories?.map(entry => <option key={entry.title} value={entry.title}>{entry.title}</option>)}
                     </select> */}
-                    {/* {newCategoryInputDisplay
+                {/* {newCategoryInputDisplay
                         ?
                         <>
                             <input ref={categoryTitleRef} type='text' placeholder='Enter your new Category title' />
@@ -26,7 +25,6 @@ export default function TagManager(props) {
                         </>
                         : null
                     } */}
-                </div>
             </div>
         </div>
     )

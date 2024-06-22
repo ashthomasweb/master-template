@@ -9,9 +9,11 @@ export default function QuizMenu(props) {
     } = useContext(MainContext)
 
     return (
-        <div className='quiz-menu'>
-              <div className={`menu-modal ${props.isOpen ? 'isOpen' : ''}`}>
-                Quiz Menu
+        <div className='modal-container'>
+            <div className={`menu-modal quiz-manager ${props.isOpen ? 'isOpen' : ''}`}>
+                <div className='modal-header'>
+                    Quiz Menu
+                </div>
             </div>
         </div>
     )

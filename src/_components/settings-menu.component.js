@@ -9,9 +9,11 @@ export default function SettingsMenu(props) {
     } = useContext(MainContext)
 
     return (
-        <div className='settings-menu'>
-            <div className={`menu-modal ${props.isOpen ? 'isOpen' : ''}`}>
-                User Settings
+        <div className='modal-container'>
+            <div className={`menu-modal settings-menu ${props.isOpen ? 'isOpen' : ''}`}>
+                <div className='modal-header'>
+                    User Settings
+                </div>
             </div>
         </div>
     )
