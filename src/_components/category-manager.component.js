@@ -39,7 +39,7 @@ export default function CategoryManager(props) {
     return (
         <div className='modal-container'>
             <div className={`menu-modal category-manager ${props.isOpen ? 'isOpen' : ''}`}>
-                <div className='modal-header'><span>Category Manager</span><span>{currentSet.title}:{currentCategory.title ? currentCategory.title : 'None selected'}</span></div>
+                <div className='modal-header'><span>Category Manager</span><span>{currentSet ? currentSet.title : 'None Selected'}:{currentCategory.title ? currentCategory.title : 'None selected'}</span></div>
                 <div className='content'>
 
                     <select onInput={handleCategoryChange}>

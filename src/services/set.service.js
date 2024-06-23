@@ -13,10 +13,6 @@ class SetService {
     async saveNewSet(set, userObj) {
         const options = new FirebaseCreateOptions({...set}, DataPaths.base.users, [userObj.uid, DataPaths.extension.set, set.id].join('/'), false, false)
         await CRUDInterface.createRecord(options)
-        const payload = {
-            currentSet: set
-        }
-        this.mainDispatch({ payload })
         this.retrieveAllSets(userObj)
     }
     
