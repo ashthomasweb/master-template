@@ -27,6 +27,7 @@ export default function SetManager(props) {
 
     const handleSetChange = ({ target }) => {
         if (target.value === 'Add New') {
+            setUpdateActive(false)
             setNewSetInputDisplay(true)
         } else {
             setNewSetInputDisplay(false)
@@ -39,7 +40,7 @@ export default function SetManager(props) {
 
     useEffect(() => {
         SetService.retrieveAllSets(userObj)
-    }, [])
+    }, [setArray])
 
     const saveNewSet = () => {
         const title = setTitleRef.current.value
@@ -67,7 +68,11 @@ export default function SetManager(props) {
     }
 
     const deleteSet = () => {
-
+        setUpdateActive(false)
+        setNewSetInputDisplay(true)
+        SetService.markAsDeleted(currentSet, userObj)
+        setExistingSetTitle('')
+        setExistingSetSubtitle('')
     }
 
     const cancelUpdate = () => {

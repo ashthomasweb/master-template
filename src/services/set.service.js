@@ -1,6 +1,7 @@
 import CRUDInterface from "../interfaces/crud-interface"
 import DataPaths from "../config/data-paths"
-import { FirebaseReadOptions, FirebaseCreateOptions, FirebaseUpdateOptions } from "../config/firebase-types"
+import { FirebaseReadOptions, FirebaseCreateOptions, FirebaseUpdateOptions, FirebaseDeleteOptions } from "../config/firebase-types"
+import { useReducer } from "react"
 
 class SetService {
     mainDispatch = null
@@ -30,7 +31,7 @@ class SetService {
         const options = new FirebaseReadOptions(DataPaths.base.users, true, [userObj.uid, DataPaths.extension.set].join('/'))
         const results = await CRUDInterface.readRecord(options)
         const payload = {
-            setArray: results
+            setArray: results.filter(entry => !Object.keys(entry).includes('deletedAt'))
         }
         this.mainDispatch({ payload })
     }
@@ -56,6 +57,11 @@ class SetService {
         this.retrieveAllSets(userObj)
     }
 
+    async markAsDeleted(set, userObj) {
+        const options = new FirebaseDeleteOptions(DataPaths.base.users, [userObj.uid, DataPaths.extension.set, set.id].join('/'), true, null, null, null)
+        CRUDInterface.deleteRecord(options)
+        await this.retrieveAllSets(userObj)
+    }
 }
 
 export default new SetService()
