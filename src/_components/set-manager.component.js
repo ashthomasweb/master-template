@@ -15,12 +15,12 @@ export default function SetManager(props) {
 
     const [newSetInputDisplay, setNewSetInputDisplay] = useState(true)
 
-    const setTitleRef = useRef(null)
-    const setSubtitleRef = useRef(null)
+    // const setTitleRef = useRef(null)
+    // const setSubtitleRef = useRef(null)
     const existingSetTitleRef = useRef(null)
     const existingSetSubtitleRef = useRef(null)
-    const [existingSetTitle, setExistingSetTitle] = useState(null)
-    const [existingSetSubtitle, setExistingSetSubtitle] = useState(null)
+    const [existingSetTitle, setExistingSetTitle] = useState('')
+    const [existingSetSubtitle, setExistingSetSubtitle] = useState('')
     const [updateActive, setUpdateActive] = useState(false)
 
     useEffect(() => {
@@ -31,6 +31,8 @@ export default function SetManager(props) {
         if (target.value === 'Add New') {
             setUpdateActive(false)
             setNewSetInputDisplay(true)
+            setExistingSetTitle('')
+            setExistingSetSubtitle('')
         } else {
             setNewSetInputDisplay(false)
             const selectedSet = setArray.filter(entry => entry.title === target.value)[0]
@@ -41,15 +43,15 @@ export default function SetManager(props) {
     }
 
     const saveNewSet = () => {
-        const title = setTitleRef.current.value
-        const subtitle = setSubtitleRef.current.value
+        const title = existingSetTitleRef.current.value
+        const subtitle = existingSetSubtitleRef.current.value
         const forceString = true
         const id = DataService.generateNewId(15, forceString)
         const setCategories = []
         const newSet = new Set(id, title, subtitle, setCategories)
         SetService.saveNewSet(newSet, userObj)
-        setTitleRef.current.value = ''
-        setSubtitleRef.current.value = ''
+        existingSetTitleRef.current.value = ''
+        existingSetSubtitleRef.current.value = ''
     }
 
     const handleControlledInputs = () => {
@@ -97,47 +99,36 @@ export default function SetManager(props) {
                         {setArray.map(entry => <option key={entry.title} value={entry.title}>{entry.title}</option>)}
                     </select>
                     <div className='input-display-container'>
+                        <label>
+                            Title:
+                            <input ref={existingSetTitleRef} type='text' placeholder='Enter your new Set title' onInput={handleControlledInputs} value={existingSetTitle} readOnly={!updateActive && !newSetInputDisplay} />
+                        </label>
+                        <label>
+                            Subtitle:
+                            <input ref={existingSetSubtitleRef} type='text' placeholder='Enter your subtitle' onChange={handleControlledInputs} value={existingSetSubtitle} readOnly={!updateActive && !newSetInputDisplay}/>
+                        </label>
                         {
                             newSetInputDisplay
-                                ? <>
-                                    <label>
-                                        Title:
-                                        <input ref={setTitleRef} type='text' placeholder='Enter your new Set title' />
-                                    </label>
-                                    <label>
-                                        Subtitle:
-                                        <input ref={setSubtitleRef} type='text' placeholder='Enter your subtitle' />
-                                    </label>
-                                    <button type='button' onClick={saveNewSet}>Save</button>
+                                ?
+                                <button type='button' onClick={saveNewSet}>Save</button>
+                                :
+                                null
+                        }
+                        {
+                            !updateActive && !newSetInputDisplay
+                                ?
+                                <>
+                                    <button type='button' onClick={allowUpdate}>Update</button>
+                                    <button type='button' onClick={deleteSet}>Delete</button>
                                 </>
                                 : null
                         }
                         {
-                            !newSetInputDisplay && currentSet !== null
-                                ? <>
-                                    <label>
-                                        Title:
-                                        <input ref={existingSetTitleRef} type='text' onInput={handleControlledInputs} value={existingSetTitle} readOnly={!updateActive} />
-                                    </label>
-                                    <label>
-                                        Subtitle:
-                                        <input ref={existingSetSubtitleRef} type='text' onChange={handleControlledInputs} value={existingSetSubtitle} readOnly={!updateActive} />
-                                    </label>
-                                    {
-                                        !updateActive
-                                            ? <button type='button' onClick={allowUpdate}>Update</button>
-                                            : <button type='button' onClick={updateSetFields}>Save New Values</button>
-                                    }
-                                    {
-                                        updateActive
-                                            ? <button type='button' onClick={cancelUpdate}>Cancel</button>
-                                            : null
-                                    }
-                                    {
-                                        !updateActive
-                                            ? <button type='button' onClick={deleteSet}>Delete</button>
-                                            : null
-                                    }
+                            updateActive
+                                ?
+                                <>
+                                    <button type='button' onClick={updateSetFields}>Save New Values</button>
+                                    <button type='button' onClick={cancelUpdate}>Cancel</button>
                                 </>
                                 : null
                         }
