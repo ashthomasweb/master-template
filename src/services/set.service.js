@@ -47,9 +47,9 @@ class SetService {
         this.mainDispatch({ payload })
     }
 
-    updateSingleSet(currentSet, newTitle, newSubtitle, userObj) {
+    async updateSingleSet(currentSet, newTitle, newSubtitle, userObj) {
         const options = new FirebaseUpdateOptions(DataPaths.base.users, [userObj.uid, DataPaths.extension.set, currentSet.id].join('/'), {title: newTitle, subtitle: newSubtitle})
-        CRUDInterface.updateRecord(options)
+        await CRUDInterface.updateRecord(options)
         this.retrieveAllSets(userObj)
     }
 
