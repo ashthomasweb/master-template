@@ -29,7 +29,7 @@ class SetService {
         const payload = {
             setArray: results.filter(entry => !Object.keys(entry).includes('deletedAt'))
         }
-        this.mainDispatch({ payload })
+        await this.mainDispatch({ payload })
     }
 
     async retrieveOneSet(userObj, currentSet, setArray) {
