@@ -4,8 +4,8 @@ import FirebaseUpdateService from '../services/firebase/firebase-update.service'
 import FirebaseDeleteService from '../services/firebase/firebase-delete.service'
 
 class CRUDInterface {
-    async createRecord(options, userObj) {
-        await FirebaseCreateService.createRecord(options, userObj)
+    async createRecord(options) {
+        await FirebaseCreateService.createRecord(options)
     }
 
     async readRecord(options) {

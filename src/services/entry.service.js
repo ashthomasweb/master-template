@@ -14,19 +14,19 @@ class EntryService {
         this.userObj = userObj
     }
 
-    async saveNewEntry(entry, userObj) {
+    async saveNewEntry(entry) {
         const basePath = DataPaths.base.users
-        const pathExtension = [userObj.uid, DataPaths.extension.entry, entry.id]
+        const pathExtension = [this.userObj.uid, DataPaths.extension.entry, entry.id]
         const newEntry = {...entry}
         const autoGenId = false
         const merge = false
         const options = new FirebaseCreateOptions(basePath, pathExtension, newEntry, autoGenId, merge)
-        CRUDInterface.createRecord(options, userObj)
+        CRUDInterface.createRecord(options)
     }
 
-    async getSelectedEntries(set, category, userObj) {
+    async getSelectedEntries(set, category) {
         const basePath = DataPaths.base.users
-        const pathExtension = [userObj.uid, DataPaths.extension.entry]
+        const pathExtension = [this.userObj.uid, DataPaths.extension.entry]
         const isCollection = true
         const options = new FirebaseReadOptions(basePath, pathExtension, isCollection)
         const result = await CRUDInterface.readRecord(options)
