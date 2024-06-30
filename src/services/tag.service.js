@@ -4,9 +4,14 @@ import { Tag } from "../config/data-types"
 
 class TagService {
     mainDispatch = null
+    userObj = null
 
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
+    }
+
+    setUserObj(userObj) {
+        this.userObj = userObj
     }
 
     async createNewTag(newTag) {

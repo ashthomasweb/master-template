@@ -1,4 +1,4 @@
-import { useContext, useEffect, useReducer, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { MainContext } from '../context/MainContext'
 import { Set } from '../config/data-types'
 import SetService from '../services/set.service'
@@ -8,8 +8,7 @@ export default function SetManager(props) {
     const {
         mainState: {
             currentSet,
-            setArray,
-            userObj
+            setArray
         }
     } = useContext(MainContext)
 
@@ -25,34 +24,47 @@ export default function SetManager(props) {
     const [title, setTitle] = useState('')
     const [subtitle, setSubtitle] = useState('')
 
-    // Gather all sets on component mount ...
     useEffect(() => {
-        SetService.retrieveAllSets(userObj)
+        SetService.retrieveAllSets()
     }, [])
 
     // Set Select Menu to current set if updating, or 'Add New' if deleting ...
     useEffect(() => {
-        function findOption() {
-            const optionArray = Array.from(selectMenuRef.current.options)
-            optionArray.forEach((entry, index) => {
+        if (updatedOptionId !== '0') {
+            Array.from(selectMenuRef.current.options).forEach((entry, index) => {
                 entry.dataset.id === updatedOptionId && (selectMenuRef.current.selectedIndex = index)
             })
         }
-        updatedOptionId !== null && findOption()
     }, [setArray])
 
-    // Helper function for 'Title' and 'Subtitle' inputs ...
     const setTitleAndSubtitle = (title, subtitle) => {
         setTitle(title)
         setSubtitle(subtitle)
     }
 
-    const handleSelectChange = ({ target }) => {
+    const clearInputForNewEntry = () => {
+        setNewSetInputDisplay(true)
+        setTitleAndSubtitle('', '')
+    }
+
+    const enableUpdateMode = () => {
+        setUpdateModeActive(true)
+        setUpdatedOptionId(Array.from(selectMenuRef.current.options)[selectMenuRef.current.selectedIndex].dataset.id)
+    }
+
+    const cancelUpdateMode = () => {
+        setUpdateModeActive(false)
         setUpdatedOptionId('0')
+    }
+
+    const handleControlledInputs = () => {
+        setTitleAndSubtitle(setTitleRef.current.value, setSubtitleRef.current.value)
+    }
+
+    const handleSelectMenuChange = ({ target }) => {
+        cancelUpdateMode()
         if (target.value === 'Add New') {
-            setUpdateModeActive(false)
-            setNewSetInputDisplay(true)
-            clearInputFields()
+            clearInputForNewEntry()
         } else {
             setNewSetInputDisplay(false)
             const selectedSet = setArray.filter(entry => entry.title === target.value)[0]
@@ -61,56 +73,32 @@ export default function SetManager(props) {
         }
     }
 
-    // Create new set in DB ...
     const saveNewSet = async () => {
         setUpdatedOptionId('0')
-        const title = setTitleRef.current.value
-        const subtitle = setSubtitleRef.current.value
-        const forceString = true
-        const id = DataService.generateNewId(15, forceString)
+        const forceIdAsString = true
+        const id = DataService.generateNewId(15, forceIdAsString)
         const setCategories = []
-        const newSet = new Set(id, title, subtitle, setCategories)
-        await SetService.saveNewSet(newSet, userObj)
-        clearInputFields()
+        const newSet = new Set(id, setTitleRef.current.value, setSubtitleRef.current.value, setCategories)
+        await SetService.saveNewSet(newSet)
+        clearInputForNewEntry()
     }
 
-    const clearInputFields = () => {
-        setTitleAndSubtitle('', '')
-    }
-
-    const handleControlledInputs = () => {
-        setTitleAndSubtitle(setTitleRef.current.value, setSubtitleRef.current.value)
-    }
-
-    // Updates current set with new values and then cancels 'update mode' ...
     const updateSetFields = async () => {
-        await SetService.updateSingleSet(currentSet, title, subtitle, userObj)
-        setUpdatedOptionId('0')
-        setUpdateModeActive(false)
+        cancelUpdateMode()
+        await SetService.updateSingleSet(currentSet, title, subtitle)
         SetService.setActiveSet({ ...currentSet, title, subtitle })
-        setUpdatedOptionId(Array.from(selectMenuRef.current.options)[selectMenuRef.current.selectedIndex].dataset.id)
     }
 
-    // Activates 'update mode' ...
-    const allowUpdate = () => {
-        setUpdateModeActive(true)
-    }
-
-    // Mark current set as deleted ...
     const deleteSet = async () => {
-        setUpdatedOptionId('0')
-        setUpdateModeActive(false)
-        setNewSetInputDisplay(true)
-        await SetService.markAsDeleted(currentSet, userObj)
-        clearInputFields()
+        cancelUpdateMode()
+        clearInputForNewEntry()
+        await SetService.markAsDeleted(currentSet)
         SetService.setActiveSet(null)
     }
 
-    // Cancel 'update mode' and reset to existing input values ...
     const cancelUpdate = () => {
-        setUpdateModeActive(false)
+        cancelUpdateMode()
         setTitleAndSubtitle(currentSet.title, currentSet.subtitle)
-        setUpdatedOptionId('0')
     }
 
     return (
@@ -118,7 +106,7 @@ export default function SetManager(props) {
             <div className={`menu-modal set-manager ${props.isOpen ? 'isOpen' : ''}`}>
                 <div className='modal-header'><span>Set Manager</span><span><strong><em>Current Set:</em></strong> {currentSet ? currentSet.title : 'None selected'}</span></div>
                 <div className='content'>
-                    <select ref={selectMenuRef} onInput={handleSelectChange}>
+                    <select ref={selectMenuRef} onInput={handleSelectMenuChange}>
                         <option data-id='0' value='Add New'>Add New</option>
                         {setArray.map(entry => <option key={entry.id} data-id={entry.id} value={entry.title}>{entry.title}</option>)}
                     </select>
@@ -129,7 +117,7 @@ export default function SetManager(props) {
                         </label>
                         <label>
                             Subtitle:
-                            <input ref={setSubtitleRef} type='text' placeholder='Enter your subtitle' onChange={handleControlledInputs} value={subtitle} readOnly={!updateModeActive && !newSetInputDisplay} />
+                            <input ref={setSubtitleRef} type='text' placeholder='Enter your subtitle' onInput={handleControlledInputs} value={subtitle} readOnly={!updateModeActive && !newSetInputDisplay} />
                         </label>
                         {
                             newSetInputDisplay
@@ -139,20 +127,20 @@ export default function SetManager(props) {
                                 null
                         }
                         {
-                            !updateModeActive && !newSetInputDisplay
-                                ?
-                                <>
-                                    <button type='button' onClick={allowUpdate}>Update</button>
-                                    <button type='button' onClick={deleteSet}>Delete</button>
-                                </>
-                                : null
-                        }
-                        {
                             updateModeActive
                                 ?
                                 <>
                                     <button type='button' onClick={updateSetFields}>Save New Values</button>
                                     <button type='button' onClick={cancelUpdate}>Cancel</button>
+                                </>
+                                : null
+                        }
+                        {
+                            !updateModeActive && !newSetInputDisplay
+                                ?
+                                <>
+                                    <button type='button' onClick={enableUpdateMode}>Update</button>
+                                    <button type='button' onClick={deleteSet}>Delete</button>
                                 </>
                                 : null
                         }

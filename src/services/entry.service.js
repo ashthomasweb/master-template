@@ -4,18 +4,31 @@ import CRUDInterface from "../interfaces/crud-interface"
 
 class EntryService {
     mainDispatch = null
+    userObj = null
 
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
     }
 
-    async saveNewEntry(newEntry, userObj) {
-        const options = new FirebaseCreateOptions({...newEntry}, DataPaths.base.users, [userObj.uid, DataPaths.extension.entry, newEntry.id].join('/'), false, false)
+    setUserObj(userObj) {
+        this.userObj = userObj
+    }
+
+    async saveNewEntry(entry, userObj) {
+        const basePath = DataPaths.base.users
+        const pathExtension = [userObj.uid, DataPaths.extension.entry, entry.id]
+        const newEntry = {...entry}
+        const autoGenId = false
+        const merge = false
+        const options = new FirebaseCreateOptions(basePath, pathExtension, newEntry, autoGenId, merge)
         CRUDInterface.createRecord(options, userObj)
     }
 
     async getSelectedEntries(set, category, userObj) {
-        const options = new FirebaseReadOptions(DataPaths.base.users, true, [userObj.uid, DataPaths.extension.entry].join('/'))
+        const basePath = DataPaths.base.users
+        const pathExtension = [userObj.uid, DataPaths.extension.entry]
+        const isCollection = true
+        const options = new FirebaseReadOptions(basePath, pathExtension, isCollection)
         const result = await CRUDInterface.readRecord(options)
         const payload = {
             requestedEntries: result.filter(entry => entry.setId === set.id && entry.categoryId === category.id)

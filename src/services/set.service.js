@@ -1,30 +1,44 @@
 import CRUDInterface from "../interfaces/crud-interface"
 import DataPaths from "../config/data-paths"
 import { FirebaseReadOptions, FirebaseCreateOptions, FirebaseUpdateOptions, FirebaseDeleteOptions } from "../config/firebase-types"
-import { useReducer } from "react"
 
 class SetService {
     mainDispatch = null
+    userObj = null
 
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
     }
 
-    async saveNewSet(set, userObj) {
-        const options = new FirebaseCreateOptions({...set}, DataPaths.base.users, [userObj.uid, DataPaths.extension.set, set.id].join('/'), false, false)
-        await CRUDInterface.createRecord(options)
-        this.retrieveAllSets(userObj)
-    }
-    
-    setActiveSet(selectedSet) {
-        const payload = {
-            currentSet: selectedSet
-        }
-        this.mainDispatch({ payload })
+    setUserObj(userObj) {
+        this.userObj = userObj
     }
 
-    async retrieveAllSets(userObj) {
-        const options = new FirebaseReadOptions(DataPaths.base.users, true, [userObj.uid, DataPaths.extension.set].join('/'))
+    async saveNewSet(set) {
+        const basePath = DataPaths.base.users
+        const pathExtension = [this.userObj.uid, DataPaths.extension.set, set.id]
+        const newSet = {...set}
+        const autoGenId = false
+        const merge = false
+        const options = new FirebaseCreateOptions(basePath, pathExtension, newSet, autoGenId, merge)
+        await CRUDInterface.createRecord(options)
+        this.retrieveAllSets()
+    }
+    
+    async retrieveOneSet(currentSet, setArray) {
+        const basePath = DataPaths.base.users
+        const isCollection = false
+        const pathExtension = [this.userObj.uid, DataPaths.extension.set, currentSet.id]
+        const options = new FirebaseReadOptions(basePath, pathExtension, isCollection)
+        const result = await CRUDInterface.readRecord(options)
+        this.updateStateSetsWithRetrievedSet(result[0], setArray)
+    }
+
+    async retrieveAllSets() {
+        const basePath = DataPaths.base.users
+        const isCollection = true
+        const pathExtension = [this.userObj.uid, DataPaths.extension.set]
+        const options = new FirebaseReadOptions(basePath, pathExtension, isCollection)
         const results = await CRUDInterface.readRecord(options)
         const payload = {
             setArray: results.filter(entry => !Object.keys(entry).includes('deletedAt'))
@@ -32,10 +46,32 @@ class SetService {
         await this.mainDispatch({ payload })
     }
 
-    async retrieveOneSet(userObj, currentSet, setArray) {
-        const options = new FirebaseReadOptions(DataPaths.base.users, false, [userObj.uid, DataPaths.extension.set, currentSet.id].join('/'))
-        const result = await CRUDInterface.readRecord(options)
-        this.updateStateSetsWithRetrievedSet(result[0], setArray)
+    async updateSingleSet(currentSet, newTitle, newSubtitle) {
+        const basePath = DataPaths.base.users
+        const pathExtension = [this.userObj.uid, DataPaths.extension.set, currentSet.id]
+        const newData = {title: newTitle, subtitle: newSubtitle}
+        const options = new FirebaseUpdateOptions(basePath, pathExtension, newData)
+        await CRUDInterface.updateRecord(options)
+        this.retrieveAllSets()
+    }
+
+    async markAsDeleted(set) {
+        const basePath = DataPaths.base.users
+        const pathExtension = [this.userObj.uid, DataPaths.extension.set, set.id]
+        const markForDelete = true
+        const deleteField = null
+        const documentDelete = null
+        const fieldToDelete = null
+        const options = new FirebaseDeleteOptions(basePath, pathExtension, markForDelete, deleteField, documentDelete, fieldToDelete)
+        await CRUDInterface.deleteRecord(options)
+        await this.retrieveAllSets()
+    }
+
+    setActiveSet(selectedSet) {
+        const payload = {
+            currentSet: selectedSet
+        }
+        this.mainDispatch({ payload })
     }
 
     updateStateSetsWithRetrievedSet(set, setArray) {
@@ -45,18 +81,6 @@ class SetService {
             setArray: filteredSetArray
         }
         this.mainDispatch({ payload })
-    }
-
-    async updateSingleSet(currentSet, newTitle, newSubtitle, userObj) {
-        const options = new FirebaseUpdateOptions(DataPaths.base.users, [userObj.uid, DataPaths.extension.set, currentSet.id].join('/'), {title: newTitle, subtitle: newSubtitle})
-        await CRUDInterface.updateRecord(options)
-        this.retrieveAllSets(userObj)
-    }
-
-    async markAsDeleted(set, userObj) {
-        const options = new FirebaseDeleteOptions(DataPaths.base.users, [userObj.uid, DataPaths.extension.set, set.id].join('/'), true, null, null, null)
-        CRUDInterface.deleteRecord(options)
-        await this.retrieveAllSets(userObj)
     }
 }
 

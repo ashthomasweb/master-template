@@ -13,6 +13,10 @@ import { User } from "../../config/data-types"
 import { FirebaseCreateOptions } from "../../config/firebase-types"
 import CRUDInterface from "../../interfaces/crud-interface"
 import DataPaths from "../../config/data-paths"
+import SetService from "../set.service"
+import CategoryService from "../category.service"
+import EntryService from "../entry.service"
+import TagService from "../tag.service"
 
 class FirebaseAuthService {
     mainDispatch = null
@@ -46,11 +50,12 @@ class FirebaseAuthService {
                     const credential = GoogleAuthProvider.credentialFromResult(result)
                     const token = credential.accessToken
                     // The signed-in user info
-                    const user = result.user
+                    const userObj = result.user
                     // IdP data available using getAdditionalUserInfo(result)
                     // Set user info to Context
-                    this.setUserObjToState(user)
-                    this.setUserToFirestore(user)
+                    this.setUserObjToState(userObj)
+                    this.setUserObjToServices(userObj)
+                    this.setUserToFirestore(userObj)
                 }
             }).catch((error) => {
                 // Handle Errors here
@@ -65,13 +70,14 @@ class FirebaseAuthService {
     }
 
     listenToAuthStateChanges() {
-        onAuthStateChanged(this.auth, (user) => {
-            if (user) {
-                this.setUserObjToState(user)
+        onAuthStateChanged(this.auth, (userObj) => {
+            if (userObj) {
+                this.setUserObjToState(userObj)
+                this.setUserObjToServices(userObj)
             } else {
                 this.setNullUserToState()
             }
-        });
+        })
     }
 
     firebaseSignOut() {
@@ -89,10 +95,12 @@ class FirebaseAuthService {
 
     // Set user information to Firestore DB ...
     setUserToFirestore(user) {
-        const userName = user.displayName
-        const userEmail = user.email
-        const newUser = { ...new User(userName, userEmail) }
-        const options = new FirebaseCreateOptions(newUser, DataPaths.base.users, user.uid, false, true)
+        const basePath = DataPaths.base.users
+        const pathExtension = user.uid
+        const newUser = { ...new User(user.displayName, user.email) }
+        const autoGenId = false
+        const merge = true // TODO: verify if this needs to be a merge ...
+        const options = new FirebaseCreateOptions(basePath, pathExtension, newUser, autoGenId, merge)
         CRUDInterface.createRecord(options)
     }
 
@@ -103,6 +111,13 @@ class FirebaseAuthService {
             userName: userObj.displayName
         }
         this.mainDispatch({ payload })
+    }
+
+    setUserObjToServices(userObj) {
+        SetService.setUserObj(userObj)
+        CategoryService.setUserObj(userObj)
+        EntryService.setUserObj(userObj)
+        TagService.setUserObj(userObj)
     }
 
     // Reset user object and name fields in state to default conditions ...

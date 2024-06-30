@@ -33,7 +33,7 @@ export default function CategoryManager(props) {
         const categoryEntries = []
         const newCategory = new Category(id, title, subtitle, categoryEntries)
         await CategoryService.saveNewCategory(newCategory, currentSet, userObj)
-        SetService.retrieveOneSet(userObj, currentSet, setArray)
+        SetService.retrieveOneSet(currentSet, setArray)
     }
 
     return (
