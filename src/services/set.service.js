@@ -26,6 +26,7 @@ class SetService {
     }
     
     async retrieveOneSet(currentSet, setArray) {
+        console.log('TRACE: retrieveOneSet')
         const basePath = DataPaths.base.users
         const isCollection = false
         const pathExtension = [this.userObj.uid, DataPaths.extension.set, currentSet.id]
@@ -35,6 +36,7 @@ class SetService {
     }
 
     async retrieveAllSets() {
+        console.log('TRACE: retrieveAllSets')
         const basePath = DataPaths.base.users
         const isCollection = true
         const pathExtension = [this.userObj.uid, DataPaths.extension.set]
@@ -44,12 +46,22 @@ class SetService {
             setArray: results.filter(entry => !Object.keys(entry).includes('deletedAt'))
         }
         await this.mainDispatch({ payload })
+        return payload.setArray
     }
 
-    async updateSingleSet(currentSet, newTitle, newSubtitle) {
+    async updateSetFields(currentSet, newTitle, newSubtitle) {
         const basePath = DataPaths.base.users
         const pathExtension = [this.userObj.uid, DataPaths.extension.set, currentSet.id]
         const newData = {title: newTitle, subtitle: newSubtitle}
+        const options = new FirebaseUpdateOptions(basePath, pathExtension, newData)
+        await CRUDInterface.updateRecord(options)
+        this.retrieveAllSets()
+    }
+
+    async updateSetCategories(currentSet) {
+        const basePath = DataPaths.base.users
+        const pathExtension = [this.userObj.uid, DataPaths.extension.set, currentSet.id]
+        const newData = {categories: [...currentSet.categories]}
         const options = new FirebaseUpdateOptions(basePath, pathExtension, newData)
         await CRUDInterface.updateRecord(options)
         this.retrieveAllSets()
@@ -64,10 +76,11 @@ class SetService {
         const fieldToDelete = null
         const options = new FirebaseDeleteOptions(basePath, pathExtension, markForDelete, deleteField, documentDelete, fieldToDelete)
         await CRUDInterface.deleteRecord(options)
-        await this.retrieveAllSets()
+        this.retrieveAllSets()
     }
 
     setActiveSet(selectedSet) {
+        console.log('TRACE: setActiveSet')
         const payload = {
             currentSet: selectedSet
         }

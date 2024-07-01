@@ -85,7 +85,7 @@ export default function SetManager(props) {
 
     const updateSetFields = async () => {
         cancelUpdateMode()
-        await SetService.updateSingleSet(currentSet, title, subtitle)
+        await SetService.updateSetFields(currentSet, title, subtitle)
         SetService.setActiveSet({ ...currentSet, title, subtitle })
     }
 
