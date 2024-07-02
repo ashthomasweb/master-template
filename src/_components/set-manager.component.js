@@ -3,6 +3,7 @@ import { MainContext } from '../context/MainContext'
 import { Set } from '../config/data-types'
 import SetService from '../services/set.service'
 import DataService from '../services/data.service'
+import CategoryService from '../services/category.service'
 
 export default function SetManager(props) {
     const {
@@ -71,6 +72,7 @@ export default function SetManager(props) {
             SetService.setActiveSet(selectedSet)
             setTitleAndSubtitle(selectedSet.title, selectedSet.subtitle)
         }
+        CategoryService.setCurrentCategory(null)
     }
 
     const saveNewSet = async () => {

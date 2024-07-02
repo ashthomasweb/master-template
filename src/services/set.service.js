@@ -26,7 +26,6 @@ class SetService {
     }
     
     async retrieveOneSet(currentSet, setArray) {
-        console.log('TRACE: retrieveOneSet')
         const basePath = DataPaths.base.users
         const isCollection = false
         const pathExtension = [this.userObj.uid, DataPaths.extension.set, currentSet.id]
@@ -36,7 +35,6 @@ class SetService {
     }
 
     async retrieveAllSets() {
-        console.log('TRACE: retrieveAllSets')
         const basePath = DataPaths.base.users
         const isCollection = true
         const pathExtension = [this.userObj.uid, DataPaths.extension.set]
@@ -58,7 +56,7 @@ class SetService {
         this.retrieveAllSets()
     }
 
-    async updateSetCategories(currentSet) {
+    async updateSetCategories(currentSet) { // ATTN: Could be refactored to be called directly from Category Manager
         const basePath = DataPaths.base.users
         const pathExtension = [this.userObj.uid, DataPaths.extension.set, currentSet.id]
         const newData = {categories: [...currentSet.categories]}
@@ -80,7 +78,6 @@ class SetService {
     }
 
     setActiveSet(selectedSet) {
-        console.log('TRACE: setActiveSet')
         const payload = {
             currentSet: selectedSet
         }

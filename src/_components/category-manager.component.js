@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from 'react'
+import { useContext, useState, useRef, useEffect } from 'react'
 import { MainContext } from '../context/MainContext'
 import { Category } from '../config/data-types'
 import CategoryService from '../services/category.service'
@@ -15,7 +15,6 @@ export default function CategoryManager(props) {
     } = useContext(MainContext)
 
     const [newCategoryInputDisplay, setNewCategoryInputDisplay] = useState(true)
-    const [updatedOptionId, setUpdatedOptionId] = useState('0')
     const [updateModeActive, setUpdateModeActive] = useState(false)
 
     const selectMenuRef = useRef(null)
@@ -25,6 +24,18 @@ export default function CategoryManager(props) {
     const [title, setTitle] = useState('')
     const [subtitle, setSubtitle] = useState('')
 
+    // Set Select Menu to current set if updating, or 'Add New' if deleting ...
+    useEffect(() => {
+        if (currentCategory === null) {
+            Array.from(selectMenuRef.current.options).forEach((entry, index) => {
+                entry.dataset.id === '0' && (selectMenuRef.current.selectedIndex = index)
+            })
+        }
+    }, [currentCategory])
+
+    useEffect(() => {
+        setTitleAndSubtitle('', '')
+    }, [currentSet])
 
     const setTitleAndSubtitle = (title, subtitle) => {
         setTitle(title)
@@ -38,12 +49,10 @@ export default function CategoryManager(props) {
 
     const enableUpdateMode = () => {
         setUpdateModeActive(true)
-        setUpdatedOptionId(Array.from(selectMenuRef.current.options)[selectMenuRef.current.selectedIndex].dataset.id)
     }
 
     const cancelUpdateMode = () => {
         setUpdateModeActive(false)
-        setUpdatedOptionId('0')
     }
 
     const handleControlledInputs = () => {
@@ -63,7 +72,6 @@ export default function CategoryManager(props) {
     }
 
     const saveNewCategory = async () => {
-        setUpdatedOptionId('0')
         const forceIdAsString = true
         const id = DataService.generateNewId(15, forceIdAsString)
         const categoryEntries = []
@@ -71,17 +79,17 @@ export default function CategoryManager(props) {
         await CategoryService.saveNewCategory(newCategory, currentSet)
         clearInputForNewEntry()
     }
-    
+
     const updateCategoryFields = async () => {
         cancelUpdateMode()
-        await CategoryService.updateSingleCategory(currentSet, currentCategory, title, subtitle) // TODO!
-        CategoryService.setCurrentCategory({ ...currentSet, title, subtitle }) // TODO!
+        await CategoryService.updateSingleCategory(currentSet, currentCategory, title, subtitle)
+        CategoryService.setCurrentCategory({ ...currentCategory, title, subtitle })
     }
 
     const deleteCategory = async () => {
         cancelUpdateMode()
         clearInputForNewEntry()
-        await CategoryService.markAsDeleted(currentSet, currentCategory) // TODO!
+        await CategoryService.markAsDeleted(currentSet, currentCategory)
         CategoryService.setCurrentCategory(null)
     }
 

@@ -16,39 +16,34 @@ class CategoryService {
     }
 
     async saveNewCategory(category, currentSet) {
-        console.log('TRACE: saveNewCategory')
         const basePath = DataPaths.base.users
         const pathExtension = [this.userObj.uid, DataPaths.extension.set, currentSet.id]
         const newData = { categories: [...currentSet.categories, {...category}] }
         const options = new FirebaseUpdateOptions(basePath, pathExtension, newData)
         await CRUDInterface.updateRecord(options, this.userObj)
-        this.setCurrentCategory(category)
         const updatedSetArray = await SetService.retrieveAllSets()
         SetService.setActiveSet(updatedSetArray.filter(entry => entry.id === currentSet.id)[0])
     }
 
     setCurrentCategory(category) {
-        console.log('TRACE: setCurrentCategory')
+        console.log('TRACE: setCurrentCategory', category)
         const payload = {
             currentCategory: category
         }
         this.mainDispatch({ payload })
     }
 
-    async updateSingleCategory(currentSet, currentCategory, title, subtitle) {
+    async updateSingleCategory(currentSet, currentCategory, title, subtitle) { // ATTN: Could be refactored to be passed directly to Set Service
         currentCategory.title = title
         currentCategory.subtitle = subtitle
         await SetService.updateSetCategories(currentSet)
     }
 
     async markAsDeleted(currentSet, currentCategory) {
-        console.log('TRACE: markAsDeleted')
         currentCategory.deletedAt = new Date()
         await SetService.updateSetCategories(currentSet)
         this.setCurrentCategory(null)
     }
-
-
 
 }
 
