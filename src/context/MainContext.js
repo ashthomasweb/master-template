@@ -9,6 +9,7 @@ import DataService from "../services/data.service"
 import SetService from "../services/set.service"
 import CategoryService from "../services/category.service"
 import EntryService from "../services/entry.service"
+import TagService from "../services/tag.service"
 
 export const MainContext = createContext()
 
@@ -46,8 +47,7 @@ const MainProvider = (props) => {
     SetService.setLocalDispatch(mainDispatch)
     CategoryService.setLocalDispatch(mainDispatch)
     EntryService.setLocalDispatch(mainDispatch)
-    // DataService.setLocalDispatch(mainDispatch)
-    // DataService.setLocalDispatch(mainDispatch)
+    TagService.setLocalDispatch(mainDispatch)
 
     FirebaseAuthService.setLocalDispatch(mainDispatch)
     FirebaseReadService.setLocalDispatch(mainDispatch)
