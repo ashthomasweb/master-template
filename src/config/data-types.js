@@ -36,9 +36,10 @@ export class Entry {
 }
 
 export class Tag {
-    constructor(id, title) {
+    constructor(id, title, primarySet) {
         this.id = id
         this.title = title
+        this.primarySet = primarySet
     }
 }
 

@@ -24,6 +24,7 @@ class TagService {
         const options = new FirebaseCreateOptions(basePath, pathExtension, {...newTag}, autoGenId, merge)
 
         await CRUDInterface.createRecord(options)
+        this.retrieveAllTags()
     }
 
     async retrieveAllTags() {
