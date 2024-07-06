@@ -2,8 +2,6 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { MainContext } from '../context/MainContext'
 import { Tag } from '../config/data-types'
 import dataService from '../services/data.service'
-import { FirebaseCreateOptions } from '../config/firebase-types'
-import DataPaths from '../config/data-paths'
 import TagService from '../services/tag.service'
 
 export default function TagManager(props) {
@@ -19,15 +17,14 @@ export default function TagManager(props) {
     const [displayViewOrUpdate, setDisplayViewOrUpdate] = useState(false)
 
 
-    const [newTagInputDisplay, setNewTagInputDisplay] = useState(true)
     const [updateModeActive, setUpdateModeActive] = useState(false)
 
     const existingTagSetMenuRef = useRef(null)
-    const primarySetMenuRef = useRef({value: 'All Sets'})
+    const primarySetMenuRef = useRef({ value: 'All Sets' })
     const primarySetTagsRef = useRef(null)
     const [primarySet, setPrimarySet] = useState(null)
 
-    const tagTitleRef = useRef(null)
+    const tagTitleRef = useRef('')
     const [tagTitle, setTagTitle] = useState('')
 
     const [currentTag, setCurrentTag] = useState(null)
@@ -37,7 +34,7 @@ export default function TagManager(props) {
     }, [])
 
     const clearInputForNewEntry = () => {
-        setNewTagInputDisplay(true)
+        // setNewTagInputDisplay(true)
         setTagTitle('')
     }
 
@@ -57,6 +54,10 @@ export default function TagManager(props) {
     }
 
     const saveNewTag = () => {
+        if (tagTitleRef.current.value === '' || tagTitleRef.current.value === null) {
+            alert('Cannot save empty tag. Please input a value')
+            return
+        }
         const forceIdAsString = true
         const id = dataService.generateNewId(15, forceIdAsString)
         const primarySet = primarySetMenuRef.current.value
@@ -75,7 +76,7 @@ export default function TagManager(props) {
 
     const cancelUpdateMode = () => {
         setUpdateModeActive(false)
-
+        setTagTitle(currentTag.title)
     }
 
     const handleControlledInputs = ({ target }) => {
@@ -90,7 +91,6 @@ export default function TagManager(props) {
     const existingTagFields = () => {
         setExistingTagDisplay(!existingTagDisplay)
         setNewTagDisplay(false)
-        console.log(primarySetMenuRef)
     }
 
     return (
@@ -138,7 +138,8 @@ export default function TagManager(props) {
                                                     <label>
                                                         In Set:
                                                         <select ref={existingTagSetMenuRef} onInput={handleSearchSetChange}>
-                                                            {setArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
+                                                            {setArray?.filter(entry => entry.title === currentTag.primarySet).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
+                                                            {setArray?.filter(entry => entry.title !== currentTag.primarySet).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                                                         </select>
                                                     </label>
                                                     <button type='button' onClick={cancelUpdateMode} >Cancel Update</button>

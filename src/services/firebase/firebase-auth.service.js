@@ -109,7 +109,6 @@ class FirebaseAuthService {
 
     // Set user object and name to state for further usage and display ...
     setUserObjToState(userObj) {
-        console.log('TRACE: setUser', userObj)
         const payload = {
             userObj,
             userName: userObj.displayName
