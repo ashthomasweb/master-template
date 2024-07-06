@@ -116,7 +116,6 @@ export default function TagManager(props) {
                                     Tags:
                                     <select ref={primarySetTagsRef} onChange={handleExistingTagChange}>
                                         <option key='0' value='Pick To View or Edit'>Pick To View or Edit</option>
-
                                         {primarySetMenuRef !== null
                                             ?
                                             primarySetMenuRef.current?.value === 'All Sets'

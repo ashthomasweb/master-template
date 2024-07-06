@@ -7,7 +7,8 @@ import {
     getRedirectResult, 
     setPersistence,
     onAuthStateChanged, 
-    browserLocalPersistence
+    browserLocalPersistence,
+    signInWithPopup
 } from "firebase/auth"
 import { User } from "../../config/data-types"
 import { FirebaseCreateOptions } from "../../config/firebase-types"
@@ -25,8 +26,7 @@ class FirebaseAuthService {
 
     constructor() {
         this.auth = getAuth()
-        setPersistence(this.auth, browserLocalPersistence).then(() => {
-            this.handleRedirectResult()
+        setPersistence(this.auth, browserLocalPersistence).then(async () => {
             this.listenToAuthStateChanges()
         }).catch((error) => {
             console.error("Error setting persistence:", error)
@@ -37,14 +37,17 @@ class FirebaseAuthService {
         this.mainDispatch = dispatch
     }
 
-    firebaseSignIn() {
+    async firebaseSignIn() {
         const provider = new GoogleAuthProvider()
-        signInWithRedirect(this.auth, provider)
+        await signInWithPopup(this.auth, provider)
+        // signInWithRedirect(this.auth, provider) // TODO: Implement on prod?
     }
 
     handleRedirectResult() {
+        console.log(this.auth)
         getRedirectResult(this.auth)
             .then((result) => {
+                console.log('TRACE: redirectThen', result)
                 if (result) {
                     // This gives you a Google Access Token. You can use it to access the Google API
                     const credential = GoogleAuthProvider.credentialFromResult(result)
@@ -55,7 +58,7 @@ class FirebaseAuthService {
                     // Set user info to Context
                     this.setUserObjToState(userObj)
                     this.setUserObjToServices(userObj)
-                    this.setUserToFirestore(userObj)
+                    this.setUserToFirestore(userObj) // TODO: Only needs to be set if record doesn't exist!
                 }
             }).catch((error) => {
                 // Handle Errors here
@@ -106,6 +109,7 @@ class FirebaseAuthService {
 
     // Set user object and name to state for further usage and display ...
     setUserObjToState(userObj) {
+        console.log('TRACE: setUser', userObj)
         const payload = {
             userObj,
             userName: userObj.displayName
