@@ -30,7 +30,7 @@ class TagService {
         const options = new FirebaseReadOptions(DataPaths.base.users, [this.userObj.uid, DataPaths.extension.tags], isCollection)
         const result = await CRUDInterface.readRecord(options)
         const payload = {
-            tagArray: result
+            tagArray: result.filter(entry => !Object.keys(entry).includes('deletedAt'))
         }
         this.mainDispatch({ payload })
     }
@@ -43,12 +43,16 @@ class TagService {
         this.retrieveAllTags()
     }
 
-    async deleteTag() {
-        
-
-
-
-        await CRUDInterface.deleteRecord()
+    async deleteTag(currentTag) {
+        const basePath = DataPaths.base.users
+        const pathExtension = [this.userObj.uid, DataPaths.extension.tags, currentTag.id]
+        const markForDelete = true
+        const deleteField = false
+        const documentDelete = false
+        const fieldToDelete = null
+        const options = new FirebaseDeleteOptions(basePath, pathExtension, markForDelete, deleteField, documentDelete, fieldToDelete)
+        await CRUDInterface.deleteRecord(options)
+        this.retrieveAllTags()
     }
 }
 

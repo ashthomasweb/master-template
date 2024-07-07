@@ -21,11 +21,14 @@ export default function TagManager(props) {
     const [updateModeActive, setUpdateModeActive] = useState(false)
 
     const existingTagSetMenuRef = useRef(null)
+    const newTagSetMenuRef = useRef(null)
     const primarySetMenuRef = useRef({ value: 'All Sets' })
     const primarySetTagsRef = useRef(null)
     const [existingSet, setExistingSet] = useState(null)
 
     const tagTitleRef = useRef('')
+    const newTagTitleRef = useRef('')
+
     const [tagTitle, setTagTitle] = useState('')
 
     const [currentTag, setCurrentTag] = useState(null)
@@ -60,21 +63,26 @@ export default function TagManager(props) {
         setDisplayViewOrUpdate(false)
     }
 
+    const handleNewSetSelectionChange = ({ target }) => {
+        setExistingSet(target.value)
+    }
+
     const handleExistingSetChange = ({ target }) => {
         setExistingSet(target.value)
     }
 
     const saveNewTag = () => {
-        if (tagTitleRef.current.value === '' || tagTitleRef.current.value === null) {
+        if (newTagTitleRef.current.value === '' || newTagTitleRef.current.value === null) {
             alert('Cannot save empty tag. Please input a value')
             return
         }
         const forceIdAsString = true
         const id = dataService.generateNewId(15, forceIdAsString)
-        const primarySet = primarySetMenuRef.current.value
-        const newTag = new Tag(id, tagTitleRef.current.value, primarySet)
+        const primarySet = newTagSetMenuRef.current.value
+        const newTag = new Tag(id, newTagTitleRef.current.value, primarySet)
         TagService.createNewTag(newTag)
         clearInputForNewEntry()
+        setExistingSet(null)
     }
 
     const updateTag = () => {
@@ -102,6 +110,7 @@ export default function TagManager(props) {
     }
 
     const addNewTagFields = () => {
+        clearInputForNewEntry()
         setNewTagDisplay(!newTagDisplay)
         setExistingTagDisplay(false)
     }
@@ -109,6 +118,11 @@ export default function TagManager(props) {
     const existingTagFields = () => {
         setExistingTagDisplay(!existingTagDisplay)
         setNewTagDisplay(false)
+    }
+
+    const markTagAsDeleted = () => {
+        TagService.deleteTag(currentTag)
+        setDisplayViewOrUpdate(false)
     }
 
     return (
@@ -134,13 +148,13 @@ export default function TagManager(props) {
                                     Tags:
                                     <select ref={primarySetTagsRef} onChange={handleExistingTagChange}>
                                         <option key='0' value='Pick To View or Edit'>Pick To View or Edit</option>
-                                        {primarySetMenuRef !== null
-                                            ?
+                                        {
+                                        // primarySetMenuRef !== null
+                                        //    / ?
                                             primarySetMenuRef.current?.value === 'All Sets'
                                                 ? tagArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)
                                                 : tagArray?.filter(entry => entry.primarySet === primarySetMenuRef.current?.value).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)
-
-                                            : null
+                                            // : null
                                         }
                                     </select>
                                 </label>
@@ -169,6 +183,7 @@ export default function TagManager(props) {
                                                     ? <button type='button' onClick={updateTag} >Save New Values</button>
                                                     : <>
                                                         <button type='button' onClick={enableUpdateMode} >Update</button>
+                                                        <button type='button' onClick={markTagAsDeleted} >Delete</button>
                                                     </>
                                             }
                                         </div>
@@ -181,10 +196,10 @@ export default function TagManager(props) {
                         newTagDisplay
                             ?
                             <div className='input-display-container'>
-                                <input ref={tagTitleRef} value={tagTitle} onInput={handleControlledInputs} type='text' placeholder='Enter your new tag title' />
+                                <input ref={newTagTitleRef} value={tagTitle} onInput={handleControlledInputs} type='text' placeholder='Enter your new tag title' />
                                 <label>
                                     Assign to Set:
-                                    <select ref={primarySetMenuRef} onInput={handleSearchSetChange}>
+                                    <select ref={newTagSetMenuRef} onInput={handleNewSetSelectionChange}>
                                         {setArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                                     </select>
                                 </label>
@@ -192,32 +207,6 @@ export default function TagManager(props) {
                             </div>
                             : null
                     }
-                    {/* {
-                        <div className='input-display-container'>
-                            <input ref={tagTitleRef} value={tagTitle} onInput={handleControlledInputs} readOnly={!updateModeActive && !newTagInputDisplay} type='text' placeholder='Enter your new tag title' />
-                            {updateModeActive
-                                ?
-                                <>
-                                    <label>
-                                        In Set:
-                                        <select ref={primarySetMenuRef} onInput={handleSearchSetChange}>
-                                            {setArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
-                                        </select>
-                                    </label>
-                                    <button type='button' onClick={cancelUpdateMode} >Cancel Update</button>
-                                </>
-                                : null
-                            }
-                            {
-                                updateModeActive
-                                    ? <button type='button' onClick={updateTag} >Save New Values</button>
-                                    : <>
-                                        <button type='button' onClick={saveNewTag} >Save New</button>
-                                        <button type='button' onClick={enableUpdateMode} >Update</button>
-                                    </>
-                            }
-                        </div>
-                    } */}
                 </div>
             </div>
         </div>
