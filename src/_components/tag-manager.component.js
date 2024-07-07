@@ -116,6 +116,8 @@ export default function TagManager(props) {
     }
 
     const existingTagFields = () => {
+        setDisplayViewOrUpdate(false)
+        primarySetMenuRef.current = {value: 'All Sets'}
         setExistingTagDisplay(!existingTagDisplay)
         setNewTagDisplay(false)
     }
@@ -149,12 +151,15 @@ export default function TagManager(props) {
                                     <select ref={primarySetTagsRef} onChange={handleExistingTagChange}>
                                         <option key='0' value='Pick To View or Edit'>Pick To View or Edit</option>
                                         {
-                                        // primarySetMenuRef !== null
-                                        //    / ?
-                                            primarySetMenuRef.current?.value === 'All Sets'
-                                                ? tagArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)
-                                                : tagArray?.filter(entry => entry.primarySet === primarySetMenuRef.current?.value).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)
-                                            // : null
+                                            primarySetMenuRef !== null
+                                                ?
+                                                primarySetMenuRef.current?.value === 'All Sets'
+                                                    ? tagArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)
+                                                    : tagArray?.filter(entry => {
+                                                        console.log(primarySetMenuRef)
+                                                        return entry.primarySet === primarySetMenuRef.current?.value
+                                                    }).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)
+                                                : null
                                         }
                                     </select>
                                 </label>
@@ -192,6 +197,8 @@ export default function TagManager(props) {
                             </>
                             : null
                     }
+
+                    {/* New Tag Selection and Setter */}
                     {
                         newTagDisplay
                             ?
