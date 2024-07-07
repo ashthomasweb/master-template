@@ -16,7 +16,6 @@ class TagService {
     }
 
     async createNewTag(newTag) {
-        console.log(newTag)
         const basePath = DataPaths.base.users
         const pathExtension = [this.userObj.uid, DataPaths.extension.tags, newTag.id]
         const autoGenId = false
@@ -36,12 +35,12 @@ class TagService {
         this.mainDispatch({ payload })
     }
 
-    async updateTag() {
-        
-
-
-
-        await CRUDInterface.updateRecord()
+    async updateTag(updatedTag) {
+        const basePath = DataPaths.base.users
+        const pathExtension = [this.userObj.uid, DataPaths.extension.tags, updatedTag.id]
+        const options = new FirebaseUpdateOptions(basePath, pathExtension, {...updatedTag})
+        await CRUDInterface.updateRecord(options)
+        this.retrieveAllTags()
     }
 
     async deleteTag() {

@@ -3,6 +3,7 @@ import { MainContext } from '../context/MainContext'
 import { Tag } from '../config/data-types'
 import dataService from '../services/data.service'
 import TagService from '../services/tag.service'
+import crudInterface from '../interfaces/crud-interface'
 
 export default function TagManager(props) {
     const {
@@ -22,7 +23,7 @@ export default function TagManager(props) {
     const existingTagSetMenuRef = useRef(null)
     const primarySetMenuRef = useRef({ value: 'All Sets' })
     const primarySetTagsRef = useRef(null)
-    const [primarySet, setPrimarySet] = useState(null)
+    const [existingSet, setExistingSet] = useState(null)
 
     const tagTitleRef = useRef('')
     const [tagTitle, setTagTitle] = useState('')
@@ -40,17 +41,27 @@ export default function TagManager(props) {
 
     const handleExistingTagChange = ({ target }) => {
         clearInputForNewEntry()
+        setUpdateModeActive(false)
         if (target.value === 'Pick To View or Edit') {
             setDisplayViewOrUpdate(false)
         } else {
             setDisplayViewOrUpdate(true)
             setTagTitle(primarySetTagsRef.current.value)
             setCurrentTag(tagArray.filter(entry => entry.title === target.value)[0])
+            // setExistingSet()
         }
     }
 
     const handleSearchSetChange = ({ target }) => {
-        setPrimarySet(target.value)
+        setExistingSet(target.value)
+        setUpdateModeActive(false)
+        primarySetTagsRef.current.options.selectedIndex = 0
+        setCurrentTag(null)
+        setDisplayViewOrUpdate(false)
+    }
+
+    const handleExistingSetChange = ({ target }) => {
+        setExistingSet(target.value)
     }
 
     const saveNewTag = () => {
@@ -67,7 +78,14 @@ export default function TagManager(props) {
     }
 
     const updateTag = () => {
-
+        const updatedTag = {
+            ...currentTag,
+            primarySet: existingTagSetMenuRef.current.value,
+            title: tagTitle
+        }
+        TagService.updateTag(updatedTag)
+        setUpdateModeActive(false)
+        setCurrentTag(updatedTag)
     }
 
     const enableUpdateMode = () => {
@@ -137,7 +155,7 @@ export default function TagManager(props) {
                                                 <>
                                                     <label>
                                                         In Set:
-                                                        <select ref={existingTagSetMenuRef} onInput={handleSearchSetChange}>
+                                                        <select ref={existingTagSetMenuRef} onInput={handleExistingSetChange}>
                                                             {setArray?.filter(entry => entry.title === currentTag.primarySet).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                                                             {setArray?.filter(entry => entry.title !== currentTag.primarySet).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                                                         </select>
