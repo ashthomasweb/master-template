@@ -12,19 +12,23 @@ export default function TagManager(props) {
         }
     } = useContext(MainContext)
 
-    const [newTagDisplay, setNewTagDisplay] = useState(false)
-    const [existingTagDisplay, setExistingTagDisplay] = useState(false)
-    const [displayViewOrUpdate, setDisplayViewOrUpdate] = useState(false)
+    // Tab display conditions ...
+    const [displayNewTagTab, setDisplayNewTagTab] = useState(false)
+    const [displayExistingTagTab, setDisplayExistingTagTab] = useState(false)
 
+    // View/Update display and mode conditions ...
+    const [displayViewOrUpdate, setDisplayViewOrUpdate] = useState(false)
     const [updateModeActive, setUpdateModeActive] = useState(false)
 
-    const primarySetMenuRef = useRef({ value: 'All Sets' })
     const primarySetTagsRef = useRef(null)
-    const [existingSet, setExistingSet] = useState(null)
-
-    const tagTitleRef = useRef('')
-
+    const newTagPrimarySetRef = useRef(null)
+    
+    // Controlled input value for new, existing, and updating tags
     const [tagTitle, setTagTitle] = useState('')
+    
+    const [newPrimarySet, setNewPrimarySet] = useState(null)
+    const [searchSet, setSearchSet] = useState(null)
+    const [existingSet, setExistingSet] = useState(null)
     const [currentTag, setCurrentTag] = useState(null)
 
     useEffect(() => {
@@ -37,6 +41,7 @@ export default function TagManager(props) {
     }
     const enableUpdateMode = () => {
         setUpdateModeActive(true)
+        setExistingSet(currentTag.primarySet)
     }
 
     const cancelUpdateMode = () => {
@@ -52,16 +57,16 @@ export default function TagManager(props) {
     const displayNewTagEntry = () => {
         setExistingSet(null)
         clearInputForNewEntry()
-        setNewTagDisplay(!newTagDisplay)
-        setExistingTagDisplay(false)
+        setDisplayNewTagTab(!displayNewTagTab)
+        setDisplayExistingTagTab(false)
     }
 
     const displayExistingTags = () => {
         setExistingSet(null)
         setDisplayViewOrUpdate(false)
-        primarySetMenuRef.current = { value: 'All Sets' }
-        setExistingTagDisplay(!existingTagDisplay)
-        setNewTagDisplay(false)
+        setSearchSet('All Sets')
+        setDisplayExistingTagTab(!displayExistingTagTab)
+        setDisplayNewTagTab(false)
     }
 
     
@@ -72,22 +77,22 @@ export default function TagManager(props) {
         if (target.value === 'Pick To View or Edit') {
             setDisplayViewOrUpdate(false)
         } else {
-            setDisplayViewOrUpdate(true)
-            setTagTitle(primarySetTagsRef.current.value)
             setCurrentTag(tagArray.filter(entry => entry.title === target.value)[0])
+            setTagTitle(primarySetTagsRef.current.value)
+            setDisplayViewOrUpdate(true)
         }
     }
 
     const handleSearchSetChange = ({ target }) => {
-        setExistingSet(target.value)
+        setSearchSet(target.value)
         setUpdateModeActive(false)
         primarySetTagsRef.current.options.selectedIndex = 0
         setCurrentTag(null)
         setDisplayViewOrUpdate(false)
     }
 
-    const handleNewSetSelectionChange = ({ target }) => {
-        setExistingSet(target.value)
+    const handleNewPrimarySetChange = ({ target }) => {
+        setNewPrimarySet(target.value)
     }
 
     const handleExistingSetChange = ({ target }) => {
@@ -102,7 +107,7 @@ export default function TagManager(props) {
         }
         const forceIdAsString = true
         const id = dataService.generateNewId(15, forceIdAsString)
-        const primarySet = existingSet
+        const primarySet = newPrimarySet
         const newTag = new Tag(id, tagTitle, primarySet)
         TagService.createNewTag(newTag)
         clearInputForNewEntry()
@@ -138,13 +143,13 @@ export default function TagManager(props) {
 
                     {/* Search and/or View/Update within existing Tags */}
                     {
-                        existingTagDisplay
+                        displayExistingTagTab
                             ?
                             <>
                                 {/* Search for Existing Tags */}
                                 <label>
                                     Search In Set:
-                                    <select ref={primarySetMenuRef} onChange={handleSearchSetChange} >
+                                    <select onChange={handleSearchSetChange} >
                                         <option key='0' value='All Sets'>All Sets</option>
                                         {setArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                                     </select>
@@ -154,11 +159,11 @@ export default function TagManager(props) {
                                     <select ref={primarySetTagsRef} onChange={handleExistingTagChange}>
                                         <option key='0' value='Pick To View or Edit'>Pick To View or Edit</option>
                                         {
-                                            primarySetMenuRef !== null
+                                            searchSet !== null
                                                 ?
-                                                primarySetMenuRef.current?.value === 'All Sets'
+                                                searchSet === 'All Sets'
                                                     ? tagArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)
-                                                    : tagArray?.filter(entry => entry.primarySet === primarySetMenuRef.current?.value).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)
+                                                    : tagArray?.filter(entry => entry.primarySet === searchSet).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)
                                                 :
                                                 null
                                         }
@@ -171,14 +176,13 @@ export default function TagManager(props) {
                                         ?
                                         <div className='input-display-container'>
                                             <span>{currentTag ? currentTag.primarySet : null} : {currentTag ? currentTag.title : null}</span>
-                                            <input ref={tagTitleRef} value={tagTitle} onInput={handleControlledInputs} readOnly={updateModeActive ? false : true} type='text' placeholder='Enter your new tag title' />
+                                            <input value={tagTitle} onInput={handleControlledInputs} readOnly={updateModeActive ? false : true} type='text' placeholder='Enter your new tag title' />
                                             {updateModeActive
                                                 ?
                                                 <>
                                                     <label>
                                                         In Set:
                                                         <select onChange={handleExistingSetChange}>
-                                                        {/* <select ref={existingTagSetMenuRef} onChange={handleExistingSetChange}> */}
                                                             {setArray?.filter(entry => entry.title === currentTag.primarySet).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                                                             {setArray?.filter(entry => entry.title !== currentTag.primarySet).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                                                         </select>
@@ -203,14 +207,13 @@ export default function TagManager(props) {
 
                     {/* New Tag Placement and Setter */}
                     {
-                        newTagDisplay
+                        displayNewTagTab
                             ?
                             <div className='input-display-container'>
                                 <input value={tagTitle} onInput={handleControlledInputs} type='text' placeholder='Enter your new tag title' />
                                 <label>
                                     Assign to Set:
-                                    {/* <select ref={newTagSetMenuRef} onChange={handleNewSetSelectionChange}> */}
-                                    <select onChange={handleNewSetSelectionChange}>
+                                    <select ref={newTagPrimarySetRef} onChange={handleNewPrimarySetChange}>
                                         {setArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                                     </select>
                                 </label>
