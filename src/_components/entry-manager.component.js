@@ -17,20 +17,20 @@ export default function EntryManager(props) {
 
     const [newEntryInputDisplay, setNewEntryInputDisplay] = useState(false)
     const [showRequestedEntries, setShowRequestedEntries] = useState(false)
+    const [updateModeActive, setUpdateModeActive] = useState(null)
 
-    // const [addTagInputDisplay, setAddTagInputDisplay] = useState(true)
     const [selectedSet, setSelectedSet] = useState(null)
     const [selectedCategory, setSelectedCategory] = useState(null)
     const [selectedTag, setSelectedTag] = useState(null)
     const [selectedTagsArray, setSelectedTagsArray] = useState([])
 
-    const entryQuestionRef = useRef(null)
-    const entryAnswerRef = useRef(null)
-    const tagSelectionRef = useRef(null)
-    // const newTagRef = useRef(null)
     const selectMenuRef = useRef(null)
     const categoryRef = useRef(null)
-
+    const entryQuestionRef = useRef(null)
+    const entryAnswerRef = useRef(null)
+    const [existingEntryQuestion, setExistingEntryQuestion] = useState(null)
+    const [existingEntryAnswer, setExistingEntryAnswer] = useState(null)
+    const tagSelectionRef = useRef(null)
 
     const allowNewEntry = () => {
         setNewEntryInputDisplay(true)
@@ -64,32 +64,50 @@ export default function EntryManager(props) {
         await EntryService.getSelectedEntries(selectedSet, selectedCategory, userObj)
     }
 
-    // const handleTagChange = () => {
-    //     tagMenuRef.current.value === 'Add New Tag' ? setAddTagInputDisplay(true) : setAddTagInputDisplay(false)
-    // }
-
-    // const addNewTag = () => {
-    //     const tagId = DataService.generateNewId(15, true)
-    //     const newTag = new Tag(tagId, newTagRef.current.value)
-    //     TagService.createNewTag(newTag)
-    // }
-
     const deleteEntry = ({ target }) => {
         console.dir(target.parentElement)
     }
 
-    const updateEntry = ({ target }) => {
+    const updateEntry = async ({ target }) => {
+        const entry = requestedEntries.filter(entry => entry.id === target.dataset.id)[0]
+        console.log(existingEntryQuestion, existingEntryAnswer, entry)
+        const updatedEntry = {
+            ...entry,
+            question: existingEntryQuestion,
+            answer: existingEntryAnswer,
+            tags: [...entry.tags, ...selectedTagsArray.map(entry => entry.id)] // TODO: Only set Tag id to entry, and lookup and display by id
+        }
+        await EntryService.updateEntry(updatedEntry)
+        EntryService.getSelectedEntries(selectedSet, selectedCategory)
+    }
 
+    const updateMode = ({ target }) => {
+        setUpdateModeActive(target.dataset.index)
+    }
+
+    const cancelUpdate = async () => {
+        setShowRequestedEntries(false)
+        await EntryService.getSelectedEntries(selectedSet, selectedCategory)
+        setUpdateModeActive(null)
+        setSelectedTagsArray([])
+        setShowRequestedEntries(true)
     }
 
     const addSelectedTagToEntry = () => {
-        console.log(selectedTag)
         setSelectedTagsArray([...new Set([...selectedTagsArray, selectedTag])])
     }
 
     const handleTagSelectionChange = ({ target }) => {
         const selectedTag = tagArray.filter(entry => entry.id === target.value)[0]
         setSelectedTag(selectedTag)
+    }
+
+    const handleExistingQuestionChange = ({ target }) => {
+        setExistingEntryQuestion(target.value)
+    }
+
+    const handleExistingAnswerChange = ({ target }) => {
+        setExistingEntryAnswer(target.value)
     }
 
     return (
@@ -124,42 +142,62 @@ export default function EntryManager(props) {
 
                 {showRequestedEntries
                     ?
-                    <div className='requested-entry-container'>
+                    <div className={`requested-entry-container`}>
                         <h2>{`Entries matching Set: ${selectedSet.title} and Category: ${selectedCategory.title}`}</h2>
                         <hr />
-                        {requestedEntries.map((entry, index) => {
-                            // console.log(entry)
-
-                            return (<div className='existing-entry' key={entry.id} data-id={entry.id}>
-                                <label>Entry {index}:</label>
-                                <textarea defaultValue={entry.question}></textarea>
-                                <textarea defaultValue={entry.answer} ></textarea >
-                                <div className='existing-tags-container'>
-                                    {entry.tags.map(tag => {
-                                        <span>{tag.title}</span>
-                                    })}
-                                </div>
-                                <div className='tag-selection-container'>
-                                    <select ref={tagSelectionRef} onChange={handleTagSelectionChange}>
-                                        <option key='0' value='Choose From Existing'>Choose From Existing In Selected Set</option>
-                                        {tagArray.filter(entry => entry.primarySet === selectedSet.title).map(tag => (
-                                            <option key={tag.id} value={tag.id}>{tag.title}</option>
-                                        ))}
-                                    </select>
-                                    <button type='button' onClick={addSelectedTagToEntry}>Add</button>
-                                    <div className='temp-tag-container'>
-                                        {selectedTagsArray.map(entry => <span key={entry.id}>{entry.title}</span>)}
+                        {
+                            requestedEntries.map((entry, index) => {
+                                return (<div className={`existing-entry ${updateModeActive === null ? '' : +updateModeActive === index ? 'update-available' : 'disabled'}`} key={entry.id} data-id={entry.id}>
+                                    <label>Entry {index}:</label>
+                                    <textarea onInput={handleExistingQuestionChange} defaultValue={entry.question}></textarea>
+                                    <textarea onInput={handleExistingAnswerChange} defaultValue={entry.answer} ></textarea >
+                                    <div className='existing-tags-container'>
+                                        {
+                                            entry.tags.length > 0
+                                            ?
+                                            entry.tags.map(tagId => {
+                                                const matchedTag = tagArray.filter(tag => tag.id === tagId)[0]
+                                                return (<span key={matchedTag.id}>{matchedTag.title}</span>)
+                                            })
+                                            : null
+                                        }
                                     </div>
-                                </div>
-                                <div className='controls-container'>
-                                    <button type='button' onClick={deleteEntry} >Delete</button>
-                                    <button type='button' onClick={updateEntry} >Update</button>
-                                </div>
 
-                                <hr />
-                            </div>
-                            )
-                        })}
+                                    {
+                                        updateModeActive
+                                            ?
+                                            <div className='tag-selection-container'>
+                                                <select ref={tagSelectionRef} onChange={handleTagSelectionChange}>
+                                                    <option key='0' value='Choose From Existing'>Choose From Existing In Selected Set</option>
+                                                    {tagArray.filter(entry => entry.primarySet === selectedSet.title).map(tag => (
+                                                        <option key={tag.id} value={tag.id}>{tag.title}</option>
+                                                    ))}
+                                                </select>
+                                                <button type='button' onClick={addSelectedTagToEntry}>Add</button>
+                                                <div className='temp-tag-container'>
+                                                    {selectedTagsArray.map(entry => <span key={entry.id}>{entry.title}</span>)}
+                                                </div>
+                                            </div>
+                                            : null
+                                    }
+
+                                    <div className='controls-container'>
+                                        <button type='button' onClick={deleteEntry} >Delete</button>
+                                        {
+                                             updateModeActive !== null && +updateModeActive === index
+                                                ? <>
+                                                    <button type='button' data-id={entry.id} onClick={updateEntry} >Save New Values</button>
+                                                    <button type='button' onClick={cancelUpdate} >Cancel</button>
+                                                </>
+                                                : <button type='button' data-index={index} data-id={entry.id} onClick={updateMode} >Update</button>
+                                        }
+                                    </div>
+
+                                    <hr />
+                                </div>
+                                )
+                            })
+                        }
                         <hr />
                     </div>
                     : null

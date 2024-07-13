@@ -1,5 +1,5 @@
 import DataPaths from "../config/data-paths"
-import { FirebaseCreateOptions, FirebaseReadOptions } from "../config/firebase-types"
+import { FirebaseCreateOptions, FirebaseReadOptions, FirebaseUpdateOptions } from "../config/firebase-types"
 import CRUDInterface from "../interfaces/crud-interface"
 
 class EntryService {
@@ -34,6 +34,13 @@ class EntryService {
             requestedEntries: result.filter(entry => entry.setId === set.id && entry.categoryId === category.id)
         }
         this.mainDispatch({ payload })
+    }
+
+    async updateEntry(entry) {
+        const basePath = DataPaths.base.users
+        const pathExtension = [this.userObj.uid, DataPaths.extension.entry, entry.id]
+        const options = new FirebaseUpdateOptions(basePath, pathExtension, {...entry})
+        await CRUDInterface.updateRecord(options)
     }
 
 }

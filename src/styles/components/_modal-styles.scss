@@ -168,10 +168,37 @@
                     align-items: center;
                     width: 500px;
 
+                    &.update-available {
+                        pointer-events: all;
+                        border: 2px solid lightblue;
+
+                        textarea {
+                            pointer-events: all;
+                        }
+                    }
+
+                    &.disabled {
+                        pointer-events: none;
+                        opacity: .4;
+                    }
+
                     textarea {
                         min-height: 120px;
                         margin-bottom: 10px;
                         width: 100%;
+                        pointer-events: none;
+                    }
+
+                    .existing-tags-container {
+                        border: 1px solid #333;
+                        height: auto;
+                        padding: 5px;
+                        
+                        span {
+                            margin: 10px;
+                            padding: 5px;
+                            background-color: #333;
+                        }
                     }
 
                     .controls-container {
@@ -186,7 +213,7 @@
                         border: 1px solid #444;
                         padding: 15px;
                         height: auto;
-                        
+
                         span {
                             background-color: #222;
                             padding: 8px 12px;
