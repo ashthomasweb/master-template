@@ -13,8 +13,8 @@ export default function TagManager(props) {
     } = useContext(MainContext)
 
     // Tab display conditions ...
-    const [displayNewTagTab, setDisplayNewTagTab] = useState(false)
-    const [displayExistingTagTab, setDisplayExistingTagTab] = useState(false)
+    const [displayNewTagsPane, setDisplayNewTagsPane] = useState(false)
+    const [displayExistingTagsPane, setDisplayExistingTagsPane] = useState(false)
 
     // View/Update display and mode conditions ...
     const [displayViewOrUpdate, setDisplayViewOrUpdate] = useState(false)
@@ -36,9 +36,6 @@ export default function TagManager(props) {
     }, [])
 
     // Helper functions ...
-    const clearInputForNewEntry = () => {
-        setTagTitle('')
-    }
     const enableUpdateMode = () => {
         setUpdateModeActive(true)
         setExistingSet(currentTag.primarySet)
@@ -56,23 +53,21 @@ export default function TagManager(props) {
     // Action tab selection ...
     const displayNewTagEntry = () => {
         setExistingSet(null)
-        clearInputForNewEntry()
-        setDisplayNewTagTab(!displayNewTagTab)
-        setDisplayExistingTagTab(false)
+        setTagTitle('')
+        setDisplayNewTagsPane(!displayNewTagsPane)
+        setDisplayExistingTagsPane(false)
     }
 
     const displayExistingTags = () => {
         setExistingSet(null)
         setDisplayViewOrUpdate(false)
-        setSearchSet('All Sets')
-        setDisplayExistingTagTab(!displayExistingTagTab)
-        setDisplayNewTagTab(false)
+        setDisplayExistingTagsPane(!displayExistingTagsPane)
+        setDisplayNewTagsPane(false)
     }
 
-    
     // onChange handlers ...
     const handleExistingTagChange = ({ target }) => {
-        clearInputForNewEntry()
+        setTagTitle('')
         setUpdateModeActive(false)
         if (target.value === 'Pick To View or Edit') {
             setDisplayViewOrUpdate(false)
@@ -110,8 +105,8 @@ export default function TagManager(props) {
         const primarySet = newPrimarySet
         const newTag = new Tag(id, tagTitle, primarySet)
         TagService.createNewTag(newTag)
-        clearInputForNewEntry()
         setExistingSet(null)
+        setTagTitle('')
     }
 
     const updateTag = () => {
@@ -143,7 +138,7 @@ export default function TagManager(props) {
 
                     {/* Search and/or View/Update within existing Tags */}
                     {
-                        displayExistingTagTab
+                        displayExistingTagsPane
                             ?
                             <>
                                 {/* Search for Existing Tags */}
@@ -207,7 +202,7 @@ export default function TagManager(props) {
 
                     {/* New Tag Placement and Setter */}
                     {
-                        displayNewTagTab
+                        displayNewTagsPane
                             ?
                             <div className='input-display-container'>
                                 <input value={tagTitle} onInput={handleControlledInputs} type='text' placeholder='Enter your new tag title' />
