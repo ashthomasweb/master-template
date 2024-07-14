@@ -18,6 +18,7 @@ import SetService from "../set.service"
 import CategoryService from "../category.service"
 import EntryService from "../entry.service"
 import TagService from "../tag.service"
+import QuizService from "../quiz.service"
 
 class FirebaseAuthService {
     mainDispatch = null
@@ -121,6 +122,7 @@ class FirebaseAuthService {
         CategoryService.setUserObj(userObj)
         EntryService.setUserObj(userObj)
         TagService.setUserObj(userObj)
+        QuizService.setUserObj(userObj)
     }
 
     // Reset user object and name fields in state to default conditions ...

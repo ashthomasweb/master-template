@@ -47,12 +47,13 @@ export default function EntryManager(props) {
         // build data and options
         const entryQuestion = entryQuestionRef.current.value
         const entryAnswer = entryAnswerRef.current.value
-        const tags = []
+        const tags = [...selectedTagsArray.map(entry => entry.id)]
         const count = null
         const forceString = true
         const entryId = DataService.generateNewId(15, forceString)
         const newEntry = new Entry(entryId, entryQuestion, entryAnswer, selectedSet.id, selectedCategory.id, tags, count)
         await EntryService.saveNewEntry(newEntry, userObj)
+        setSelectedTagsArray([])
     }
 
     const handleSetChange = () => {
@@ -120,6 +121,51 @@ export default function EntryManager(props) {
         setExistingEntryAnswer(target.value)
     }
 
+    const removeExistingTagFromEntry = ({ target }) => {
+        if (updateModeActive === null) return
+        const selectedEntry = requestedEntries.filter(entry => entry.id === target.dataset.entryid)[0]
+        const newEntryTags = selectedEntry.tags.filter(tag => tag !== target.dataset.tagid)
+        selectedEntry.tags = newEntryTags
+        target.classList.add('checked-for-removal')
+    }
+
+    const existingTagsSelector = (entry) => {
+        return (
+            <>
+                {
+                    entry.tags.length > 0
+                        ?
+                        <div className='existing-tags-container'>
+                            {
+                                entry.tags.map(tagId => {
+                                    const matchedTag = tagArray.filter(tag => tag.id === tagId)[0]
+                                    return matchedTag ? <span key={matchedTag.id} data-tagid={matchedTag.id} data-entryid={entry.id} onClick={removeExistingTagFromEntry}>{matchedTag.title}</span> : null
+                                })
+                            }
+                        </div>
+                        : null
+                }
+            </>
+        )
+    }
+
+    const newTagsSelector = () => {
+        return (
+            <div className='tag-selection-container'>
+                <select ref={tagSelectionRef} onChange={handleTagSelectionChange}>
+                    <option key='0' value='Choose From Existing'>Choose From Existing In Selected Set</option>
+                    {tagArray.filter(entry => entry.primarySet === selectedSet.title).map(tag => (
+                        <option key={tag.id} value={tag.id}>{tag.title}</option>
+                    ))}
+                </select>
+                <button type='button' onClick={addSelectedTagToEntry}>Add</button>
+                <div className='temp-tag-container'>
+                    {selectedTagsArray.map(entry => <span key={entry.id}>{entry.title}</span>)}
+                </div>
+            </div>
+        )
+    }
+
     return (
         <div className='modal-container'>
             <div className={`menu-modal entry-manager ${props.isOpen ? 'isOpen' : ''}`}>
@@ -145,6 +191,7 @@ export default function EntryManager(props) {
                     <div className='new-entry-container'>
                         <textarea ref={entryQuestionRef} type='text' placeholder='Enter your new Question' />
                         <textarea ref={entryAnswerRef} type='text' placeholder='Enter your answer' />
+                        {newTagsSelector()}
                         <button type='button' onClick={saveNewEntry}>Save</button>
                     </div>
                     : null
@@ -161,33 +208,15 @@ export default function EntryManager(props) {
                                     <label>Entry {index}:</label>
                                     <textarea onInput={handleExistingQuestionChange} defaultValue={entry.question}></textarea>
                                     <textarea onInput={handleExistingAnswerChange} defaultValue={entry.answer} ></textarea >
-                                    <div className='existing-tags-container'>
-                                        {
-                                            entry.tags.length > 0
-                                                ?
-                                                entry.tags.map(tagId => {
-                                                    const matchedTag = tagArray.filter(tag => tag.id === tagId)[0]
-                                                    return matchedTag ? <span key={matchedTag.id}>{matchedTag.title}</span> : null
-                                                })
-                                                : null
-                                        }
-                                    </div>
+                                    {
+                                        entry.tags.length > 0
+                                            ? existingTagsSelector(entry)
+                                            : null
+                                    }
 
                                     {
                                         updateModeActive
-                                            ?
-                                            <div className='tag-selection-container'>
-                                                <select ref={tagSelectionRef} onChange={handleTagSelectionChange}>
-                                                    <option key='0' value='Choose From Existing'>Choose From Existing In Selected Set</option>
-                                                    {tagArray.filter(entry => entry.primarySet === selectedSet.title).map(tag => (
-                                                        <option key={tag.id} value={tag.id}>{tag.title}</option>
-                                                    ))}
-                                                </select>
-                                                <button type='button' onClick={addSelectedTagToEntry}>Add</button>
-                                                <div className='temp-tag-container'>
-                                                    {selectedTagsArray.map(entry => <span key={entry.id}>{entry.title}</span>)}
-                                                </div>
-                                            </div>
+                                            ? newTagsSelector()
                                             : null
                                     }
 

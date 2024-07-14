@@ -10,6 +10,7 @@ import SetService from "../services/set.service"
 import CategoryService from "../services/category.service"
 import EntryService from "../services/entry.service"
 import TagService from "../services/tag.service"
+import QuizService from "../services/quiz.service"
 
 export const MainContext = createContext()
 
@@ -30,6 +31,10 @@ export const initialMainState = {
     requestedEntries: [],
     /* Tags */
     tagArray: [],
+    /* Quiz */
+    quizzableEntries: [],
+    currentQuizEntries: [],
+    currentEntry: {}
 }
 
 const MainReducer = (state, action) => {
@@ -48,6 +53,7 @@ const MainProvider = (props) => {
     CategoryService.setLocalDispatch(mainDispatch)
     EntryService.setLocalDispatch(mainDispatch)
     TagService.setLocalDispatch(mainDispatch)
+    QuizService.setLocalDispatch(mainDispatch)
 
     FirebaseAuthService.setLocalDispatch(mainDispatch)
     FirebaseReadService.setLocalDispatch(mainDispatch)

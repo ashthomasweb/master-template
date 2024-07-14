@@ -26,7 +26,6 @@ class CategoryService {
     }
 
     setCurrentCategory(category) {
-        console.log('TRACE: setCurrentCategory', category)
         const payload = {
             currentCategory: category
         }
