@@ -1,4 +1,4 @@
-import { useContext, useState, useRef } from 'react'
+import { useContext, useState, useRef, useEffect } from 'react'
 import { MainContext } from '../context/MainContext'
 import { Entry, Tag } from '../config/data-types'
 import DataService from '../services/data.service'
@@ -32,6 +32,11 @@ export default function EntryManager(props) {
     const [existingEntryAnswer, setExistingEntryAnswer] = useState(null)
     const tagSelectionRef = useRef(null)
 
+    useEffect(() => {
+        setUpdateModeActive(null)
+        setShowRequestedEntries(false)
+    }, [props.isOpen])
+
     const allowNewEntry = () => {
         setNewEntryInputDisplay(true)
         setShowRequestedEntries(false)
@@ -61,7 +66,7 @@ export default function EntryManager(props) {
     const selectionSearchHandler = async () => {
         setNewEntryInputDisplay(false)
         setShowRequestedEntries(true)
-        await EntryService.getSelectedEntries(selectedSet, selectedCategory, userObj)
+        await EntryService.getSelectedEntries(selectedSet, selectedCategory)
     }
 
     const deleteEntry = ({ target }) => {
@@ -70,7 +75,6 @@ export default function EntryManager(props) {
 
     const updateEntry = async ({ target }) => {
         const entry = requestedEntries.filter(entry => entry.id === target.dataset.id)[0]
-        console.log(existingEntryQuestion, existingEntryAnswer, entry)
         const updatedEntry = {
             ...entry,
             question: existingEntryQuestion,
@@ -79,9 +83,13 @@ export default function EntryManager(props) {
         }
         await EntryService.updateEntry(updatedEntry)
         EntryService.getSelectedEntries(selectedSet, selectedCategory)
+        setUpdateModeActive(null)
     }
 
     const updateMode = ({ target }) => {
+        const selectedEntryToUpdate = requestedEntries[target.dataset.index]
+        setExistingEntryQuestion(selectedEntryToUpdate.question)
+        setExistingEntryAnswer(selectedEntryToUpdate.answer)
         setUpdateModeActive(target.dataset.index)
     }
 
@@ -154,12 +162,12 @@ export default function EntryManager(props) {
                                     <div className='existing-tags-container'>
                                         {
                                             entry.tags.length > 0
-                                            ?
-                                            entry.tags.map(tagId => {
-                                                const matchedTag = tagArray.filter(tag => tag.id === tagId)[0]
-                                                return (<span key={matchedTag.id}>{matchedTag.title}</span>)
-                                            })
-                                            : null
+                                                ?
+                                                entry.tags.map(tagId => {
+                                                    const matchedTag = tagArray.filter(tag => tag.id === tagId)[0]
+                                                    return matchedTag ? <span key={matchedTag.id}>{matchedTag.title}</span> : null
+                                                })
+                                                : null
                                         }
                                     </div>
 
@@ -184,7 +192,7 @@ export default function EntryManager(props) {
                                     <div className='controls-container'>
                                         <button type='button' onClick={deleteEntry} >Delete</button>
                                         {
-                                             updateModeActive !== null && +updateModeActive === index
+                                            updateModeActive !== null && +updateModeActive === index
                                                 ? <>
                                                     <button type='button' data-id={entry.id} onClick={updateEntry} >Save New Values</button>
                                                     <button type='button' onClick={cancelUpdate} >Cancel</button>

@@ -209,6 +209,7 @@ export default function TagManager(props) {
                                 <label>
                                     Assign to Set:
                                     <select ref={newTagPrimarySetRef} onChange={handleNewPrimarySetChange}>
+                                    <option key='0' value='Choose Primary Set'>Choose Primary Set</option>
                                         {setArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                                     </select>
                                 </label>
