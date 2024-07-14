@@ -4,6 +4,7 @@ import { Entry, Tag } from '../config/data-types'
 import DataService from '../services/data.service'
 import EntryService from '../services/entry.service'
 import TagService from '../services/tag.service'
+import crudInterface from '../interfaces/crud-interface'
 
 export default function EntryManager(props) {
     const {
@@ -69,8 +70,9 @@ export default function EntryManager(props) {
         await EntryService.getSelectedEntries(selectedSet, selectedCategory)
     }
 
-    const deleteEntry = ({ target }) => {
-        console.dir(target.parentElement)
+    const deleteEntry = async ({ target }) => {
+        await EntryService.deleteEntry(target.dataset.id)
+        EntryService.getSelectedEntries(selectedSet, selectedCategory)
     }
 
     const updateEntry = async ({ target }) => {
@@ -190,7 +192,7 @@ export default function EntryManager(props) {
                                     }
 
                                     <div className='controls-container'>
-                                        <button type='button' onClick={deleteEntry} >Delete</button>
+                                        <button type='button' data-id={entry.id} onClick={deleteEntry} >Delete</button>
                                         {
                                             updateModeActive !== null && +updateModeActive === index
                                                 ? <>

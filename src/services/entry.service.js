@@ -1,5 +1,5 @@
 import DataPaths from "../config/data-paths"
-import { FirebaseCreateOptions, FirebaseReadOptions, FirebaseUpdateOptions } from "../config/firebase-types"
+import { FirebaseCreateOptions, FirebaseDeleteOptions, FirebaseReadOptions, FirebaseUpdateOptions } from "../config/firebase-types"
 import CRUDInterface from "../interfaces/crud-interface"
 
 class EntryService {
@@ -31,7 +31,7 @@ class EntryService {
         const options = new FirebaseReadOptions(basePath, pathExtension, isCollection)
         const result = await CRUDInterface.readRecord(options)
         const payload = {
-            requestedEntries: result.filter(entry => entry.setId === set.id && entry.categoryId === category.id)
+            requestedEntries: result.filter(entry => entry.setId === set.id && entry.categoryId === category.id && !Object.keys(entry).includes('deletedAt'))
         }
         this.mainDispatch({ payload })
     }
@@ -43,6 +43,16 @@ class EntryService {
         await CRUDInterface.updateRecord(options)
     }
 
+    async deleteEntry(entryId) {
+        const basePath = DataPaths.base.users
+        const pathExtension = [this.userObj.uid, DataPaths.extension.entry, entryId]
+        const markForDelete = true
+        const deleteField = null
+        const documentDelete = null
+        const fieldToDelete = null
+        const options = new FirebaseDeleteOptions(basePath, pathExtension, markForDelete, deleteField, documentDelete, fieldToDelete)
+        await CRUDInterface.deleteRecord(options)
+    }
 }
 
 export default new EntryService()
