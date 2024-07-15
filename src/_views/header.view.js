@@ -10,6 +10,8 @@ import TagManager from '../_components/tag-manager.component'
 export default function HeaderView() {
     const {
         mainState: {
+            userName,
+            userObj
         }
     } = useContext(MainContext)
 
@@ -22,8 +24,8 @@ export default function HeaderView() {
         tag: false
     })
 
-    const toggleModal = ({target}) => {
-        const newHeaderDisplayConditions = {...headerModalDisplay}
+    const toggleModal = ({ target }) => {
+        const newHeaderDisplayConditions = { ...headerModalDisplay }
         const selectedMenu = target.dataset.menutype
         const currentMenuState = headerModalDisplay[selectedMenu]
         for (const key in headerModalDisplay) {
@@ -31,6 +33,14 @@ export default function HeaderView() {
         }
         newHeaderDisplayConditions[selectedMenu] = !currentMenuState
         setHeaderModalDisplay(newHeaderDisplayConditions)
+    }
+
+    const close = () => {
+        let newHeaderModalDisplay = {}
+        for (const key in headerModalDisplay) {
+            newHeaderModalDisplay[key] = false
+        }
+        setHeaderModalDisplay(newHeaderModalDisplay)
     }
 
     return (
@@ -44,7 +54,7 @@ export default function HeaderView() {
             <SetManager isOpen={headerModalDisplay.set} />
             <CategoryMenu isOpen={headerModalDisplay.category} />
             <EntryMenu isOpen={headerModalDisplay.entry} />
-            <QuizMenu isOpen={headerModalDisplay.quiz} />
+            <QuizMenu isOpen={headerModalDisplay.quiz} close={close} />
             <TagManager isOpen={headerModalDisplay.tag} />
             <SettingsMenu isOpen={headerModalDisplay.settings} />
         </div>

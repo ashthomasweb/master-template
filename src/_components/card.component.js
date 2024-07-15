@@ -10,7 +10,10 @@ export default function Card() {
             isDualCardDisplayActive,
             quizzableEntries,
             currentQuizEntries,
-            currentEntry
+            currentEntry,
+            currentSet,
+            currentCategory,
+            statCount
         },
     } = useContext(MainContext)
 
@@ -19,19 +22,19 @@ export default function Card() {
     }
 
     const resetQuiz = () => {
-
+        QuizService.resetQuiz(quizzableEntries)
     }
 
     const startQuiz = () => {
-        QuizService.startQuiz(currentQuizEntries) 
+        QuizService.startQuiz(currentQuizEntries)
     }
 
     const handleSuccessfulEntry = () => {
-        QuizService.nextQuizEntry(currentEntry, currentQuizEntries, quizzableEntries)
+        QuizService.nextQuizEntry(currentEntry, currentQuizEntries, quizzableEntries, statCount, 'success')
     }
 
     const handleFailedEntry = () => {
-        QuizService.nextQuizEntry(currentEntry, currentQuizEntries, quizzableEntries)
+        QuizService.nextQuizEntry(currentEntry, currentQuizEntries, quizzableEntries, statCount, 'fail')
     }
 
     return (
@@ -42,19 +45,24 @@ export default function Card() {
                         ? quizzableEntries.length === currentQuizEntries.length
                             ? <button type='button' onClick={startQuiz}>Start!</button>
                             : <button type='button' onClick={resetQuiz}>Reset</button>
-                        : null
+                        : `Use 'Quiz Menu' to start`
                 }
             </div>
             <div className={`card front ${isCardFrontDisplayed ? 'isFrontDisplayed' : ''} ${isDualCardDisplayActive ? 'dual-display' : ''}`} onClick={toggleCardDisplay}>
+                <span>Question:</span>
                 {currentEntry.question}
             </div>
             <div className={`card back ${!isCardFrontDisplayed ? 'isBackDisplayed' : ''} ${isDualCardDisplayActive ? 'dual-display' : ''}`} onClick={toggleCardDisplay}>
+                <span>Answer:</span>
                 {currentEntry.answer}
             </div>
             <div className='controls-container'>
                 <button className='flip-button' type='button' onClick={toggleCardDisplay}>Flip</button>
-                <button className='success-button' type='button' onClick={handleSuccessfulEntry}>Success</button>
-                <button className='fail-button' type='button' onClick={handleFailedEntry}>Fail</button>
+                <hr />
+                <div>
+                    <button className='success-button' type='button' onClick={handleSuccessfulEntry}>Success</button>
+                    <button className='fail-button' type='button' onClick={handleFailedEntry}>Fail</button>
+                </div>
             </div>
         </div>
     )

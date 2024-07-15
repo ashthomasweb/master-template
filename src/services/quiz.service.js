@@ -20,7 +20,10 @@ class QuizService {
         const isCollection = true
         const options = new FirebaseReadOptions(basePath, pathExtension, isCollection)
         const result = await CRUDInterface.readRecord(options)
-        const filteredEntries = result.filter(entry => entry.setId === set.id && entry.categoryId === category.id && !Object.keys(entry).includes('deletedAt'))
+
+        const filteredEntries = category === 'Select A Category'
+            ? result.filter(entry => entry.setId === set.id && entry.categoryId === category.id && !Object.keys(entry).includes('deletedAt'))
+            : result.filter(entry => entry.setId === set.id && !Object.keys(entry).includes('deletedAt'))
         const payload = {
             quizzableEntries: filteredEntries,
             currentQuizEntries: filteredEntries
@@ -28,24 +31,31 @@ class QuizService {
         this.mainDispatch({ payload })
     }
 
-    nextQuizEntry(currentEntry, currentQuizEntries, quizzableEntries) {
+    nextQuizEntry(currentEntry, currentQuizEntries, quizzableEntries, statCount, result) {
         const remainingLength = currentQuizEntries.length - 1
         if (remainingLength === 0) {
             const payload = {
                 currentQuizEntries: quizzableEntries,
                 currentEntry: {},
-                isCardFrontDisplayed: true
+                isCardFrontDisplayed: true,
+                statCount: {
+                    success: 0,
+                    fail: 0
+                }
             }
             this.mainDispatch({ payload })
             window.alert('You went through all entries!')
         } else {
-
             const randomIndex = Math.floor(Math.random() * remainingLength)
             const remainingEntries = currentQuizEntries.filter(entry => entry.id !== currentEntry.id)
             const payload = {
                 currentQuizEntries: remainingEntries,
                 currentEntry: remainingEntries[randomIndex],
-                isCardFrontDisplayed: true
+                isCardFrontDisplayed: true,
+                statCount: {
+                    success: result === 'success' ? statCount.success + 1 : statCount.success,
+                    fail: result === 'fail' ? statCount.fail + 1 : statCount.fail
+                }
             }
             this.mainDispatch({ payload })
         }
@@ -60,6 +70,13 @@ class QuizService {
         this.mainDispatch({ payload })
     }
 
+    resetQuiz(quizzableEntries) {
+        const payload = {
+            currentQuizEntries: quizzableEntries,
+            currentEntry: {}
+        }
+        this.mainDispatch({ payload })
+    }
 }
 
 export default new QuizService()

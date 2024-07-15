@@ -34,7 +34,11 @@ export const initialMainState = {
     /* Quiz */
     quizzableEntries: [],
     currentQuizEntries: [],
-    currentEntry: {}
+    currentEntry: {},
+    statCount: {
+        success: 0,
+        fail: 0
+    }
 }
 
 const MainReducer = (state, action) => {
