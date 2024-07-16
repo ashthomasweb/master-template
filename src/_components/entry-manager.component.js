@@ -154,7 +154,7 @@ export default function EntryManager(props) {
             <div className='tag-selection-container'>
                 <select ref={tagSelectionRef} onChange={handleTagSelectionChange}>
                     <option key='0' value='Choose From Existing'>Choose From Existing In Selected Set</option>
-                    {tagArray.filter(entry => entry.primarySet === selectedSet.title).map(tag => (
+                    {tagArray.filter(entry => entry.primarySet === selectedSet.id).map(tag => (
                         <option key={tag.id} value={tag.id}>{tag.title}</option>
                     ))}
                 </select>

@@ -19,7 +19,6 @@ export default function CategoryManager(props) {
 
     const selectMenuRef = useRef(null)
     const setMenuRef = useRef(null)
-
     const categoryTitleRef = useRef(null)
     const categorySubtitleRef = useRef(null)
     const [title, setTitle] = useState('')
@@ -35,7 +34,6 @@ export default function CategoryManager(props) {
     }, [currentCategory])
 
     useEffect(() => {
-        console.log('TRACE: UE')
         Array.from(setMenuRef.current.options).forEach((entry, index) => {
             entry.dataset.id === currentSet.id && (setMenuRef.current.selectedIndex = index)
         })
@@ -111,7 +109,6 @@ export default function CategoryManager(props) {
         if (target.value !== 'Select A Set') {
             const selectedSet = setArray.filter(entry => entry.title === target.value)[0]
             SetService.setActiveSet(selectedSet)
-            // setTitleAndSubtitle(selectedSet.title, selectedSet.subtitle)
         }
         CategoryService.setCurrentCategory(null)
     }

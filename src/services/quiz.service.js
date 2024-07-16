@@ -32,6 +32,10 @@ class QuizService {
     }
 
     nextQuizEntry(currentEntry, currentQuizEntries, quizzableEntries, statCount, result) {
+        const newStatCount = {
+            success: result === 'success' ? statCount.success + 1 : statCount.success,
+            fail: result === 'fail' ? statCount.fail + 1 : statCount.fail
+        }
         const remainingLength = currentQuizEntries.length - 1
         if (remainingLength === 0) {
             const payload = {
@@ -44,7 +48,7 @@ class QuizService {
                 }
             }
             this.mainDispatch({ payload })
-            window.alert('You went through all entries!')
+            window.alert(`You went through all entries!\n\nYour Results:\nSuccess: ${newStatCount.success}\nFail: ${newStatCount.fail}`)
         } else {
             const randomIndex = Math.floor(Math.random() * remainingLength)
             const remainingEntries = currentQuizEntries.filter(entry => entry.id !== currentEntry.id)
@@ -52,10 +56,7 @@ class QuizService {
                 currentQuizEntries: remainingEntries,
                 currentEntry: remainingEntries[randomIndex],
                 isCardFrontDisplayed: true,
-                statCount: {
-                    success: result === 'success' ? statCount.success + 1 : statCount.success,
-                    fail: result === 'fail' ? statCount.fail + 1 : statCount.fail
-                }
+                statCount: newStatCount
             }
             this.mainDispatch({ payload })
         }

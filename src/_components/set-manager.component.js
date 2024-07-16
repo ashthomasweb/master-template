@@ -16,10 +16,9 @@ export default function SetManager(props) {
     const [newSetInputDisplay, setNewSetInputDisplay] = useState(true)
     const [updatedOptionId, setUpdatedOptionId] = useState('0')
     const [updateModeActive, setUpdateModeActive] = useState(false)
-
-    const selectMenuRef = useRef(null)
-
+    
     // Ref and state controls for 'Title' and 'Subtitle'
+    const selectMenuRef = useRef(null)
     const setTitleRef = useRef(null)
     const setSubtitleRef = useRef(null)
     const [title, setTitle] = useState('')

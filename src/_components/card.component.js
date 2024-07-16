@@ -56,14 +56,19 @@ export default function Card() {
                 <span>Answer:</span>
                 {currentEntry.answer}
             </div>
-            <div className='controls-container'>
-                <button className='flip-button' type='button' onClick={toggleCardDisplay}>Flip</button>
-                <hr />
-                <div>
-                    <button className='success-button' type='button' onClick={handleSuccessfulEntry}>Success</button>
-                    <button className='fail-button' type='button' onClick={handleFailedEntry}>Fail</button>
-                </div>
-            </div>
+            {
+                Object.keys(currentEntry).length > 0
+                    ?
+                    <div className='controls-container'>
+                        <button className='flip-button' type='button' onClick={toggleCardDisplay}>Flip</button>
+                        <hr />
+                        <div>
+                            <button className='success-button' type='button' onClick={handleSuccessfulEntry}>Success</button>
+                            <button className='fail-button' type='button' onClick={handleFailedEntry}>Fail</button>
+                        </div>
+                    </div>
+                    : null
+            }
         </div>
     )
 }
