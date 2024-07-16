@@ -38,7 +38,7 @@ export default function TagManager(props) {
     // Helper functions ...
     const enableUpdateMode = () => {
         setUpdateModeActive(true)
-        setExistingSet(currentTag.primarySet)
+        setExistingSet(setArray.filter(entry => entry.id === currentTag.primarySet)[0].title)
     }
 
     const cancelUpdateMode = () => {
@@ -145,8 +145,9 @@ export default function TagManager(props) {
                                 <label>
                                     Search In Set:
                                     <select onChange={handleSearchSetChange} >
-                                        <option key='0' value='All Sets'>All Sets</option>
-                                        {setArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
+                                        <option key='0' value='Default'>Select to Search</option>
+                                        <option key='1' value='All Sets'>All Sets</option>
+                                        {setArray?.map(entry => <option key={entry.id} value={entry.id}>{entry.title}</option>)}
                                     </select>
                                 </label>
                                 <label>
@@ -170,7 +171,7 @@ export default function TagManager(props) {
                                     displayViewOrUpdate
                                         ?
                                         <div className='input-display-container'>
-                                            <span>{currentTag ? currentTag.primarySet : null} : {currentTag ? currentTag.title : null}</span>
+                                            <span>{currentTag ? setArray.filter(entry => entry.id === currentTag.primarySet)[0].title : null} : {currentTag ? currentTag.title : null}</span>
                                             <input value={tagTitle} onInput={handleControlledInputs} readOnly={updateModeActive ? false : true} type='text' placeholder='Enter your new tag title' />
                                             {updateModeActive
                                                 ?
@@ -178,8 +179,8 @@ export default function TagManager(props) {
                                                     <label>
                                                         In Set:
                                                         <select onChange={handleExistingSetChange}>
-                                                            {setArray?.filter(entry => entry.title === currentTag.primarySet).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
-                                                            {setArray?.filter(entry => entry.title !== currentTag.primarySet).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
+                                                            {setArray?.filter(entry => entry.id === currentTag.primarySet).map(entry => <option key={entry.id} value={entry.id}>{entry.title}</option>)}
+                                                            {setArray?.filter(entry => entry.id !== currentTag.primarySet).map(entry => <option key={entry.id} value={entry.id}>{entry.title}</option>)}
                                                         </select>
                                                     </label>
                                                     <button type='button' onClick={cancelUpdateMode} >Cancel Update</button>
@@ -210,7 +211,7 @@ export default function TagManager(props) {
                                     Assign to Set:
                                     <select ref={newTagPrimarySetRef} onChange={handleNewPrimarySetChange}>
                                     <option key='0' value='Choose Primary Set'>Choose Primary Set</option>
-                                        {setArray?.map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
+                                        {setArray?.map(entry => <option key={entry.id} value={entry.id}>{entry.title}</option>)}
                                     </select>
                                 </label>
                                 <button type='button' onClick={saveNewTag} >Save New</button>

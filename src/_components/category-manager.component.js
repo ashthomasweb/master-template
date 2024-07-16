@@ -18,6 +18,7 @@ export default function CategoryManager(props) {
     const [updateModeActive, setUpdateModeActive] = useState(false)
 
     const selectMenuRef = useRef(null)
+    const setMenuRef = useRef(null)
 
     const categoryTitleRef = useRef(null)
     const categorySubtitleRef = useRef(null)
@@ -32,6 +33,13 @@ export default function CategoryManager(props) {
             })
         }
     }, [currentCategory])
+
+    useEffect(() => {
+        console.log('TRACE: UE')
+        Array.from(setMenuRef.current.options).forEach((entry, index) => {
+            entry.dataset.id === currentSet.id && (setMenuRef.current.selectedIndex = index)
+        })
+    }, [currentSet])
 
     useEffect(() => {
         setTitleAndSubtitle('', '')
@@ -59,7 +67,7 @@ export default function CategoryManager(props) {
         setTitleAndSubtitle(categoryTitleRef.current.value, categorySubtitleRef.current.value)
     }
 
-    const handleSelectMenuChange = ({ target }) => {
+    const handleCategoryMenuChange = ({ target }) => {
         cancelUpdateMode()
         if (target.value === 'Add New') {
             clearInputForNewEntry()
@@ -95,7 +103,17 @@ export default function CategoryManager(props) {
 
     const cancelUpdate = () => {
         cancelUpdateMode()
-        setTitleAndSubtitle(currentCategory.title, currentCategory.subtitle)
+        currentCategory !== 'Select A Category' || currentCategory !== null && setTitleAndSubtitle(currentCategory.title, currentCategory.subtitle)
+    }
+
+    const handleSetMenuChange = ({ target }) => {
+        cancelUpdate()
+        if (target.value !== 'Select A Set') {
+            const selectedSet = setArray.filter(entry => entry.title === target.value)[0]
+            SetService.setActiveSet(selectedSet)
+            // setTitleAndSubtitle(selectedSet.title, selectedSet.subtitle)
+        }
+        CategoryService.setCurrentCategory(null)
     }
 
     return (
@@ -104,7 +122,11 @@ export default function CategoryManager(props) {
                 <div className='modal-header'><span>Category Manager</span><span>{currentSet ? currentSet.title : 'None Selected'}:{currentCategory ? currentCategory.title : 'None selected'}</span></div>
                 <div className='content'>
 
-                    <select ref={selectMenuRef} onInput={handleSelectMenuChange}>
+                    <select ref={setMenuRef} onChange={handleSetMenuChange}>
+                        <option data-id='0' value='Select A Set'>Select A Set</option>
+                        {setArray.map(entry => <option key={entry.id} data-id={entry.id} value={entry.title}>{entry.title}</option>)}
+                    </select>
+                    <select ref={selectMenuRef} onInput={handleCategoryMenuChange}>
                         <option data-id='0' value='Add New'>Add New</option>
                         {currentSet?.categories?.filter(entry => entry.deletedAt === undefined).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                     </select>

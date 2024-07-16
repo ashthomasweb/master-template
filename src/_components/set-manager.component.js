@@ -108,7 +108,7 @@ export default function SetManager(props) {
             <div className={`menu-modal set-manager ${props.isOpen ? 'isOpen' : ''}`}>
                 <div className='modal-header'><span>Set Manager</span><span><strong><em>Current Set:</em></strong> {currentSet ? currentSet.title : 'None selected'}</span></div>
                 <div className='content'>
-                    <select ref={selectMenuRef} onInput={handleSelectMenuChange}>
+                    <select ref={selectMenuRef} onChange={handleSelectMenuChange}>
                         <option data-id='0' value='Add New'>Add New</option>
                         {setArray.map(entry => <option key={entry.id} data-id={entry.id} value={entry.title}>{entry.title}</option>)}
                     </select>
