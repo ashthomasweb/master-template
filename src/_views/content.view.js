@@ -24,7 +24,7 @@ export default function ContentView() {
                         : null
                 }
                 <div className='quiz-header'>
-                    <span><strong>Set:</strong> {currentSet !== 'Select A Set' ? currentSet.title : 'None Selected'}</span><span><strong>Category:</strong> {currentCategory !== 'Select A Category' ? currentCategory?.title : 'None Selected'}</span>
+                    <span><strong>Set:</strong> {currentSet !== null ? currentSet.title : 'None Selected'}</span><span><strong>Category:</strong> {currentCategory !== 'Select A Category' ? currentCategory?.title : 'None Selected'}</span>
                 </div>
             </div>
             <Card />

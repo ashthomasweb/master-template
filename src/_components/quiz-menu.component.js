@@ -33,7 +33,7 @@ export default function QuizMenu(props) {
             <div className={`menu-modal quiz-manager ${props.isOpen ? 'isOpen' : ''}`}>
                 <div className='modal-header'>
                     Quiz Menu
-                    <span>{currentSet !== 'Select A Set' ? currentSet.title : 'None Selected'} : {currentCategory !== 'Select A Category' ? currentCategory?.title : 'None selected'}</span>
+                    <span>{currentSet !== null ? currentSet.title : 'None Selected'} : {currentCategory !== 'Select A Category' ? currentCategory?.title : 'None selected'}</span>
                 </div>
                 <div className='content'>
                     <select onInput={handleSetMenuChange}>

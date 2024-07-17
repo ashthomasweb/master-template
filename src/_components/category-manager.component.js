@@ -16,6 +16,7 @@ export default function CategoryManager(props) {
 
     const [newCategoryInputDisplay, setNewCategoryInputDisplay] = useState(true)
     const [updateModeActive, setUpdateModeActive] = useState(false)
+    const [selectedSetValue, setSelectedSetValue] = useState('Select A Set')
 
     const selectMenuRef = useRef(null)
     const setMenuRef = useRef(null)
@@ -35,7 +36,7 @@ export default function CategoryManager(props) {
 
     useEffect(() => {
         Array.from(setMenuRef.current.options).forEach((entry, index) => {
-            entry.dataset.id === currentSet.id && (setMenuRef.current.selectedIndex = index)
+            entry.dataset.id === currentSet?.id || currentSet === null && setSelectedSetValue(entry.title)
         })
     }, [currentSet])
 
@@ -101,16 +102,22 @@ export default function CategoryManager(props) {
 
     const cancelUpdate = () => {
         cancelUpdateMode()
+        console.log(currentCategory)
         currentCategory !== 'Select A Category' || currentCategory !== null && setTitleAndSubtitle(currentCategory.title, currentCategory.subtitle)
     }
 
     const handleSetMenuChange = ({ target }) => {
         cancelUpdate()
-        if (target.value !== 'Select A Set') {
+        if (target.value === 'Select A Set') {
+            console.log('test')
+            CategoryService.setCurrentCategory(null)
+            SetService.setActiveSet(null)
+        } else if (target.value !== 'Select A Set') {
             const selectedSet = setArray.filter(entry => entry.title === target.value)[0]
             SetService.setActiveSet(selectedSet)
+            setSelectedSetValue(selectedSet.title)
         }
-        CategoryService.setCurrentCategory(null)
+        // CategoryService.setCurrentCategory(null)
     }
 
     return (
@@ -118,12 +125,13 @@ export default function CategoryManager(props) {
             <div className={`menu-modal category-manager ${props.isOpen ? 'isOpen' : ''}`}>
                 <div className='modal-header'><span>Category Manager</span><span>{currentSet ? currentSet.title : 'None Selected'}:{currentCategory ? currentCategory.title : 'None selected'}</span></div>
                 <div className='content'>
-
-                    <select ref={setMenuRef} onChange={handleSetMenuChange}>
+                    <label>Set: </label>
+                    <select ref={setMenuRef} onChange={handleSetMenuChange} defaultValue={selectedSetValue}>
                         <option data-id='0' value='Select A Set'>Select A Set</option>
                         {setArray.map(entry => <option key={entry.id} data-id={entry.id} value={entry.title}>{entry.title}</option>)}
                     </select>
-                    <select ref={selectMenuRef} onInput={handleCategoryMenuChange}>
+                    <label>Category: </label>
+                    <select ref={selectMenuRef} onChange={handleCategoryMenuChange} defaultValue={title}>
                         <option data-id='0' value='Add New'>Add New</option>
                         {currentSet?.categories?.filter(entry => entry.deletedAt === undefined).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                     </select>

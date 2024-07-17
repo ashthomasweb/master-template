@@ -24,7 +24,7 @@ export const initialMainState = {
     currentSet: 'Select A Set',
     setArray: [],
     /* Categories */
-    currentCategory: 'Select A Category',
+    currentCategory: null,
     categoryArray: [],
     /* Entry */
     currentEntry: null,

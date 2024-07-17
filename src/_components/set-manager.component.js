@@ -37,6 +37,12 @@ export default function SetManager(props) {
         }
     }, [setArray])
 
+    useEffect(() => {
+        Array.from(selectMenuRef.current.options).forEach((entry, index) => {
+            entry.dataset.id === currentSet?.id || currentSet === null && (selectMenuRef.current.selectedIndex = index)
+        })
+    }, [currentSet])
+
     const setTitleAndSubtitle = (title, subtitle) => {
         setTitle(title)
         setSubtitle(subtitle)
