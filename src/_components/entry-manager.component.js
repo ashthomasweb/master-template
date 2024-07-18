@@ -200,12 +200,13 @@ export default function EntryManager(props) {
                 {showRequestedEntries
                     ?
                     <div className={`requested-entry-container`}>
-                        <h2>{`Entries matching Set: ${selectedSet.title} and Category: ${selectedCategory.title}`}</h2>
+                        <h2>Entries matching</h2>
+                        <h3>{`Set: ${selectedSet.title}`}</h3>
+                        <h3>{`Category: ${selectedCategory ? selectedCategory.title : 'None Selected'}`}</h3>
                         <hr />
                         {
                             requestedEntries.map((entry, index) => {
                                 return (<div className={`existing-entry ${updateModeActive === null ? '' : +updateModeActive === index ? 'update-available' : 'disabled'}`} key={entry.id} data-id={entry.id}>
-                                    <label>Entry {index}:</label>
                                     <textarea onInput={handleExistingQuestionChange} defaultValue={entry.question}></textarea>
                                     <textarea onInput={handleExistingAnswerChange} defaultValue={entry.answer} ></textarea >
                                     {

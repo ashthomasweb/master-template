@@ -30,8 +30,11 @@ class EntryService {
         const isCollection = true
         const options = new FirebaseReadOptions(basePath, pathExtension, isCollection)
         const result = await CRUDInterface.readRecord(options)
+        const request = category === null || category === undefined
+        ? result.filter(entry => entry.setId === set.id && !Object.keys(entry).includes('deletedAt'))
+        : result.filter(entry => entry.setId === set.id && entry.categoryId === category.id && !Object.keys(entry).includes('deletedAt'))
         const payload = {
-            requestedEntries: result.filter(entry => entry.setId === set.id && entry.categoryId === category.id && !Object.keys(entry).includes('deletedAt'))
+            requestedEntries: request
         }
         this.mainDispatch({ payload })
     }

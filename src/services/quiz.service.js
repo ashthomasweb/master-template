@@ -21,9 +21,9 @@ class QuizService {
         const options = new FirebaseReadOptions(basePath, pathExtension, isCollection)
         const result = await CRUDInterface.readRecord(options)
 
-        const filteredEntries = category === 'Select A Category'
-            ? result.filter(entry => entry.setId === set.id && entry.categoryId === category.id && !Object.keys(entry).includes('deletedAt'))
-            : result.filter(entry => entry.setId === set.id && !Object.keys(entry).includes('deletedAt'))
+        const filteredEntries = category === null || category === undefined
+            ? result.filter(entry => entry.setId === set.id && !Object.keys(entry).includes('deletedAt'))
+            : result.filter(entry => entry.setId === set.id && entry.categoryId === category.id && !Object.keys(entry).includes('deletedAt'))
         const payload = {
             quizzableEntries: filteredEntries,
             currentQuizEntries: filteredEntries

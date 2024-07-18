@@ -41,7 +41,7 @@ export default function QuizMenu(props) {
                         {setArray.map(entry => <option key={entry.id} data-id={entry.id} value={entry.title}>{entry.title}</option>)}
                     </select>
                     <select onInput={handleCategoryMenuChange}>
-                        <option data-id='0' value='Add New'>Optional: Select Category</option>
+                        <option data-id='0' value={null}>All Categories</option>
                         {currentSet?.categories?.filter(entry => entry.deletedAt === undefined).map(entry => <option key={entry.id} value={entry.title}>{entry.title}</option>)}
                     </select>
                     <button type='button' onClick={gatherForQuiz}>Gather For Quiz</button>
