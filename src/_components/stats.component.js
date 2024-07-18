@@ -4,13 +4,17 @@ import { MainContext } from '../context/MainContext'
 export default function Stats() {
     const {
         mainState: {
-        },
-        mainDispatch
+            statCount
+        }
     } = useContext(MainContext)
 
     return (
         <div className='stats'>
-            Stats
+            Stats:
+            <hr />
+            Success: {statCount.success}
+            <br />
+            Fail: {statCount.fail}
         </div>
     )
 }

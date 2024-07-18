@@ -1,0 +1,24 @@
+
+.entry-auth-modal {
+    text-align: center;
+    background: #add8e6;
+    border-radius: 12px;
+    margin: 20px;
+    padding: 10px 20px;
+    box-sizing: content-box;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    button {
+        padding: 10px 20px;
+        font-size: 18px;
+        margin: 10px;
+        width: 200px;
+    }
+
+    hr {
+        width: 40vw;
+    }
+}

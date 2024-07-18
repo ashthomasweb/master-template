@@ -26,7 +26,7 @@ class FirebaseCreateService {
                 console.log(`Document with options set at ${options.basePath}/${options.pathExtension}`, options)
             }
         } catch (error) {
-            console.error("Error adding document: ", error)
+            console.error("Error adding document: ", error, options)
         }
     }
 }

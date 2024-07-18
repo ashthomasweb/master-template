@@ -20,36 +20,26 @@ class FirebaseReadService {
         const results = []
         try {
             if (options.isCollection) {
-                const collectionRef = collection(this.db, options.path)
+                const collectionRef = collection(this.db, options.basePath, options.pathExtension)
                 const collectionsSnapshot = await getDocs(collectionRef)
-                if (collectionsSnapshot.exists()) {
-                    collectionsSnapshot.forEach(doc => ( results.push(doc.data()) ))
-                    console.log(`Record successfully retrieved from Firestore with options: `, options)
-                } else {
-                    throw new Error(`No such collection found!`)
-                }
+                collectionsSnapshot.forEach(doc => (results.push(doc.data())))
+                results.length === 0 ? console.log('not a collection') : console.log(`Record successfully retrieved from Firestore with options: `, options)
+                return results
             } else {
                 const docRef = doc(this.db, options.basePath, options.pathExtension)
                 const docSnap = await getDoc(docRef)
                 if (docSnap.exists()) {
                     results.push(docSnap.data())
                     console.log(`Record successfully retrieved from Firestore with options: `, options)
+                    return results
                 } else {
-                    throw new Error(`No such document found!`)
+                    throw new Error(`No such record found!`)
                 }
             }
         } catch (error) {
             console.log(`An error occurred during 'Read' operations with options: `, options)
             console.error(error)
         }
-        this.setReadRecords(results)
-    }
-
-    setReadRecords(results) {
-        const payload = {
-            readDisplay: results
-        }
-        this.mainDispatch({ payload })
     }
 }
 

@@ -1,0 +1,313 @@
+.modal-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    overflow: hidden;
+
+    .menu-modal {
+        background-color: #555;
+        display: none;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        &.isOpen {
+            display: flex;
+        }
+
+        .modal-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            height: $modal-header-height;
+            background-color: #333;
+            padding: 5px;
+            font-size: 1.1rem;
+            box-shadow: 0 -3px 6px 4px #000;
+        }
+
+        .content {
+            padding: 10px;
+        }
+
+        &.set-manager {
+            width: 800px;
+            height: 650px;
+
+            .content {
+                select {
+                    margin: 10px 0;
+                    font-size: 18px;
+                    height: auto;
+                }
+
+                .input-display-container {
+                    border: 2px solid #555;
+                    padding: 10px;
+
+                    input {
+                        font-size: 18px;
+                        margin: 10px 0;
+                        height: auto;
+                        display: block;
+                        margin: 5px 0;
+                        width: 400px;
+                        padding: 4px 5px;
+                    }
+
+                    button {
+                        font-size: 18px;
+                        margin: 10px 0;
+                        height: auto;
+                        padding: 5px 15px;
+                        border-radius: 8px;
+                        margin: 10px 15px;
+                    }
+                }
+            }
+        }
+
+        &.category-manager {
+            width: 800px;
+            height: 650px;
+
+            .content {
+
+
+                .input-display-container {
+                    border: 2px solid #555;
+                    padding: 10px;
+
+                    input {
+                        font-size: 18px;
+                        margin: 10px 0;
+                        height: auto;
+                        display: block;
+                        margin: 5px 0;
+                        width: 400px;
+                        padding: 4px 5px;
+                    }
+
+                    button {
+                        font-size: 18px;
+                        margin: 10px 0;
+                        height: auto;
+                        padding: 5px 15px;
+                        border-radius: 8px;
+                        margin: 10px 15px;
+                    }
+                }
+
+                select {
+                    margin: 10px 0;
+                    font-size: 18px;
+                    height: auto;
+                }
+
+                // input {
+                //     font-size: 18px;
+                //     margin: 10px 0;
+                //     height: auto;
+                // }
+
+                // button {
+                //     font-size: 18px;
+                //     margin: 10px 0;
+                //     height: auto;
+                //     padding: 5px 10px;
+                //     border-radius: 8px;
+                // }
+            }
+        }
+
+        &.entry-manager {
+            width: 1000px;
+            height: 800px;
+
+            .selection-menus {
+                width: 90%;
+                height: auto;
+                margin: 10px;
+                padding: 10px;
+                border: 2px solid lightblue;
+                background-color: #222;
+                color: white;
+
+                .save-new-entry {
+                    &.isActive {
+                        pointer-events: all;
+                    }
+
+                    &.isDisabled {
+                        pointer-events: none;
+                        opacity: .3;
+                        cursor: none;
+                    }
+                }
+            }
+
+            .new-entry-container {
+                border: 2px solid #444;
+                margin: 15px 0;
+            }
+
+            .requested-entry-container {
+                border: 2px solid #444;
+                margin: 15px 0;
+                overflow-y: auto;
+                height: 569px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .existing-entry {
+                    display: flex;
+                    margin: 20px;
+                    flex-direction: column;
+                    align-items: center;
+                    width: 500px;
+
+                    &.update-available {
+                        pointer-events: all;
+                        border: 2px solid lightblue;
+
+                        textarea {
+                            pointer-events: all;
+                        }
+                    }
+
+                    &.disabled {
+                        pointer-events: none;
+                        opacity: .4;
+                    }
+
+                    textarea {
+                        min-height: 120px;
+                        margin-bottom: 10px;
+                        width: 100%;
+                        pointer-events: none;
+                    }
+
+                    .existing-tags-container {
+                        border: 1px solid #333;
+                        height: auto;
+                        padding: 5px;
+                        
+                        span {
+                            margin: 10px;
+                            padding: 5px;
+                            background-color: #333;
+                            cursor: default;
+
+                            &.checked-for-removal {
+                                opacity: .4;
+                            }
+                        }
+                    }
+
+                    .controls-container {
+                        button {
+                            margin: 10px 15px;
+                            width: 100px;
+                        }
+                    }
+
+                    .tag-selection-container {
+                        margin: 15px;
+                        border: 1px solid #444;
+                        padding: 15px;
+                        height: auto;
+
+                        span {
+                            background-color: #222;
+                            padding: 8px 12px;
+                            margin: 10px 15px;
+                        }
+                    }
+
+                    hr {
+                        width: 100%;
+                    }
+                }
+            }
+
+            select {
+                margin: 10px 0;
+                font-size: 18px;
+                height: auto;
+            }
+
+            input {
+                font-size: 18px;
+                margin: 10px 0;
+                height: auto;
+            }
+
+            button {
+                font-size: 18px;
+                margin: 10px 0;
+                height: auto;
+                padding: 5px 10px;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+
+            hr {
+                width: 200px;
+                margin: 10px 0;
+            }
+        }
+
+        &.quiz-manager {
+            width: 800px;
+            height: 650px;
+
+            .content {}
+        }
+
+        &.settings-menu {
+            width: 800px;
+            height: 650px;
+
+            .content {}
+        }
+
+        &.tag-manager {
+            width: 800px;
+            height: 650px;
+
+            .content {
+                select {
+                    margin: 10px 0;
+                    font-size: 18px;
+                    height: auto;
+                }
+
+                .input-display-container {
+                    border: 2px solid #555;
+                    padding: 10px;
+
+                    input {
+                        font-size: 18px;
+                        margin: 10px 0;
+                        height: auto;
+                        display: block;
+                        margin: 5px 0;
+                        width: 400px;
+                        padding: 4px 5px;
+                    }
+
+                    button {
+                        font-size: 18px;
+                        margin: 10px 0;
+                        height: auto;
+                        padding: 5px 15px;
+                        border-radius: 8px;
+                        margin: 10px 15px;
+                    }
+                }
+            }
+        }
+    }
+}

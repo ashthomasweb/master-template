@@ -1,40 +1,68 @@
 export class User {
-    constructor(first, last, age) {
+    constructor(first, last) {
         this.first = first
         this.last = last
     }
 }
 
-export class ExpandedUser extends User {
-    constructor(user, profession, location) {
-        super(user.first, user.last, user.age)
-        // Set additional fields as needed
-        // this.profession = profession
-        // this.location = location
+export class Set {
+    constructor(id, title, subtitle, categories) {
+        this.id = id
+        this.title = title
+        this.subtitle = subtitle
+        this.categories = categories
     }
 }
 
-/* Non-critical data types for use in testing */
-export class City {
-    constructor(name, state) {
-        this.name = name
-        this.state = state
+export class Category {
+    constructor(id, title, subtitle, entries) {
+        this.id = id
+        this.title = title
+        this.subtitle = subtitle
+        this.entries = entries
     }
 }
 
-export class Hobby {
-    constructor(isActive, length, isFree) {
-        this.isActive = isActive
-        this.length = length
-        this.isFree = isFree
+export class Entry {
+    constructor(id, question, answer, setId, categoryId, tags, count ) {
+        this.id = id
+        this.question = question
+        this.answer = answer
+        this.setId = setId
+        this.categoryId = categoryId
+        this.tags = tags
+        this.count = count
     }
 }
 
-export class Instruments {
-    constructor(isSolo, price, isTransportable) {
-        this.isSolo = isSolo
-        this.price = price
-        this.isTransportable = isTransportable
+export class Tag {
+    constructor(id, title, primarySet) {
+        this.id = id
+        this.title = title
+        this.primarySet = primarySet
     }
 }
-/* END Non-critical data types */
+
+export class Quiz {
+    constructor(id, title, set, categories, tags, count) {
+        this.id = id
+        this.title = title
+        this.set = set
+        this.categories = categories
+        this.tags = tags
+        this.count = count
+    }
+}
+
+export class Count {
+    constructor(completed, scores, viewed, correct, incorrect) {
+        this.completed = completed
+        this.scores = scores
+        this.viewed = viewed
+        this.correct = correct
+        this.incorrect = incorrect
+    }
+}
+
+
+

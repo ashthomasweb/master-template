@@ -15,11 +15,11 @@ class FirebaseDeleteService {
         this.mainDispatch = dispatch
     }
 
-    // Handler for individual 'delete' option function chains ...
-    deleteRecord(options) {
-        options.markForDelete && this.markForDelete(options)
-        options.documentDelete && this.documentDelete(options)
-        options.deleteField && this.deleteRecordField(options)
+    // Handler for individual 'delete' option conditions ...
+    async deleteRecord(options) {
+        options.markForDelete && await this.markForDelete(options)
+        options.documentDelete && await this.documentDelete(options)
+        options.deleteField && await this.deleteRecordField(options)
     }
 
     // Assign a 'deletedAt' field to the record, to be handled upon retrieval ...
@@ -47,7 +47,7 @@ class FirebaseDeleteService {
     }
 
     // Delete an individual field in a document ...
-    // NOTE: If the passed field is not present, custom handling is required to notify UI. No error will be produced from current implementation.
+    // NOTE/ATTN/TODO: If the passed field is not present, custom handling is required to notify UI. No error will be produced from current implementation.
     async deleteRecordField(options) {
         const docRef = doc(this.db, options.basePath, options.pathExtension)
         const fieldObject = {}

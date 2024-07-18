@@ -4,12 +4,21 @@ import {
     signOut,
     signInWithRedirect,
     GoogleAuthProvider,
-    getRedirectResult
+    getRedirectResult, 
+    setPersistence,
+    onAuthStateChanged, 
+    browserLocalPersistence,
+    signInWithPopup
 } from "firebase/auth"
 import { User } from "../../config/data-types"
 import { FirebaseCreateOptions } from "../../config/firebase-types"
 import CRUDInterface from "../../interfaces/crud-interface"
 import DataPaths from "../../config/data-paths"
+import SetService from "../set.service"
+import CategoryService from "../category.service"
+import EntryService from "../entry.service"
+import TagService from "../tag.service"
+import QuizService from "../quiz.service"
 
 class FirebaseAuthService {
     mainDispatch = null
@@ -18,31 +27,39 @@ class FirebaseAuthService {
 
     constructor() {
         this.auth = getAuth()
-        this.handleRedirectResult()
+        setPersistence(this.auth, browserLocalPersistence).then(async () => {
+            this.listenToAuthStateChanges()
+        }).catch((error) => {
+            console.error("Error setting persistence:", error)
+        })
     }
 
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
     }
 
-    firebaseSignIn() {
+    async firebaseSignIn() {
         const provider = new GoogleAuthProvider()
-        signInWithRedirect(this.auth, provider)
+        await signInWithPopup(this.auth, provider)
+        // signInWithRedirect(this.auth, provider) // TODO: Implement on prod?
     }
 
     handleRedirectResult() {
+        console.log(this.auth)
         getRedirectResult(this.auth)
             .then((result) => {
+                console.log('TRACE: redirectThen', result)
                 if (result) {
                     // This gives you a Google Access Token. You can use it to access the Google API
                     const credential = GoogleAuthProvider.credentialFromResult(result)
                     const token = credential.accessToken
                     // The signed-in user info
-                    const user = result.user
+                    const userObj = result.user
                     // IdP data available using getAdditionalUserInfo(result)
                     // Set user info to Context
-                    this.setUserObjToState(user)
-                    this.setUserToFirestore(user)
+                    this.setUserObjToState(userObj)
+                    this.setUserObjToServices(userObj)
+                    this.setUserToFirestore(userObj) // TODO: Only needs to be set if record doesn't exist!
                 }
             }).catch((error) => {
                 // Handle Errors here
@@ -56,16 +73,25 @@ class FirebaseAuthService {
             })
     }
 
+    listenToAuthStateChanges() {
+        onAuthStateChanged(this.auth, (userObj) => {
+            if (userObj) {
+                this.setUserObjToState(userObj)
+                this.setUserObjToServices(userObj)
+            } else {
+                this.setNullUserToState()
+            }
+        })
+    }
+
     firebaseSignOut() {
         if (this.auth === null) {
             alert('No user currently authorized')
             return
         }
         signOut(this.auth).then(() => {
-            // Sign-out successful
             this.setNullUserToState()
         }).catch((error) => {
-            // An error happened
             console.error(error)
             alert(`An error occured during SignOut`)
         })
@@ -73,10 +99,12 @@ class FirebaseAuthService {
 
     // Set user information to Firestore DB ...
     setUserToFirestore(user) {
-        const userName = user.displayName
-        const userEmail = user.email
-        const newUser = { ...new User(userName, userEmail) }
-        const options = new FirebaseCreateOptions(newUser, DataPaths.base.users, user.uid, false, true)
+        const basePath = DataPaths.base.users
+        const pathExtension = user.uid
+        const newUser = { ...new User(user.displayName, user.email) }
+        const autoGenId = false
+        const merge = true // TODO: verify if this needs to be a merge ...
+        const options = new FirebaseCreateOptions(basePath, pathExtension, newUser, autoGenId, merge)
         CRUDInterface.createRecord(options)
     }
 
@@ -87,6 +115,14 @@ class FirebaseAuthService {
             userName: userObj.displayName
         }
         this.mainDispatch({ payload })
+    }
+
+    setUserObjToServices(userObj) {
+        SetService.setUserObj(userObj)
+        CategoryService.setUserObj(userObj)
+        EntryService.setUserObj(userObj)
+        TagService.setUserObj(userObj)
+        QuizService.setUserObj(userObj)
     }
 
     // Reset user object and name fields in state to default conditions ...
