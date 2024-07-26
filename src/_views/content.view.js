@@ -1,15 +1,11 @@
 import { useContext } from 'react'
 import { MainContext } from '../context/MainContext'
-import Card from '../_components/card.component'
-import Stats from '../_components/stats.component'
 
 export default function ContentView() {
     const {
         mainState: {
             userObj,
-            userName,
-            currentSet,
-            currentCategory
+            userName
         }
     } = useContext(MainContext)
 
@@ -23,12 +19,7 @@ export default function ContentView() {
                         </div>
                         : null
                 }
-                <div className='quiz-header'>
-                    <span><strong>Set:</strong> {currentSet !== null ? currentSet.title : 'None Selected'}</span><span><strong>Category:</strong> {currentCategory !== 'Select A Category' ? currentCategory?.title : 'None Selected'}</span>
-                </div>
             </div>
-            <Card />
-            <Stats />
         </div>
     )
 }

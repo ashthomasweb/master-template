@@ -4,11 +4,7 @@ class DataPaths {
     }
 
     extension = {
-        set: 'set',
-        category: 'category',
-        entry: 'entry',
-        tags: 'tags',
-        quizzes: 'quizzes'
+        
     }
 
     globalBasePath = this.base.users

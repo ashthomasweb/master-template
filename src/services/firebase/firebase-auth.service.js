@@ -2,11 +2,11 @@ import FirebaseInitialization from "./firebase-init.service"
 import {
     getAuth,
     signOut,
-    signInWithRedirect,
+    // signInWithRedirect,
     GoogleAuthProvider,
-    getRedirectResult, 
+    getRedirectResult,
     setPersistence,
-    onAuthStateChanged, 
+    onAuthStateChanged,
     browserLocalPersistence,
     signInWithPopup
 } from "firebase/auth"
@@ -14,24 +14,23 @@ import { User } from "../../config/data-types"
 import { FirebaseCreateOptions } from "../../config/firebase-types"
 import CRUDInterface from "../../interfaces/crud-interface"
 import DataPaths from "../../config/data-paths"
-import SetService from "../set.service"
-import CategoryService from "../category.service"
-import EntryService from "../entry.service"
-import TagService from "../tag.service"
-import QuizService from "../quiz.service"
+
+const initFirebase = false
 
 class FirebaseAuthService {
     mainDispatch = null
     auth = null
     app = FirebaseInitialization.app
 
-    constructor() {
-        this.auth = getAuth()
-        setPersistence(this.auth, browserLocalPersistence).then(async () => {
-            this.listenToAuthStateChanges()
-        }).catch((error) => {
-            console.error("Error setting persistence:", error)
-        })
+    constructor(initFirebase) {
+        if (initFirebase) {
+            this.auth = getAuth()
+            setPersistence(this.auth, browserLocalPersistence).then(async () => {
+                this.listenToAuthStateChanges()
+            }).catch((error) => {
+                console.error("Error setting persistence:", error)
+            })
+        }
     }
 
     setLocalDispatch(dispatch) {
@@ -77,7 +76,6 @@ class FirebaseAuthService {
         onAuthStateChanged(this.auth, (userObj) => {
             if (userObj) {
                 this.setUserObjToState(userObj)
-                this.setUserObjToServices(userObj)
             } else {
                 this.setNullUserToState()
             }
@@ -117,14 +115,6 @@ class FirebaseAuthService {
         this.mainDispatch({ payload })
     }
 
-    setUserObjToServices(userObj) {
-        SetService.setUserObj(userObj)
-        CategoryService.setUserObj(userObj)
-        EntryService.setUserObj(userObj)
-        TagService.setUserObj(userObj)
-        QuizService.setUserObj(userObj)
-    }
-
     // Reset user object and name fields in state to default conditions ...
     setNullUserToState() {
         const payload = {
@@ -135,4 +125,4 @@ class FirebaseAuthService {
     }
 }
 
-export default new FirebaseAuthService()
+export default new FirebaseAuthService(initFirebase)
