@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import { MainContext } from '../context/MainContext'
-import FirebaseAuthService from '../services/firebase/firebase-auth.service'
+import { MainContext } from '../__context/MainContext'
+import FirebaseAuthService from '../_services/firebase/firebase-auth.service'
 
 export default function SettingsMenu(props) {
     const {

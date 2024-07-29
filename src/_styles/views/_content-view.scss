@@ -1,6 +1,6 @@
 .content-view {
-    height: calc(100vh - $header-height);
-    border: 1px solid red;
+    height: calc(100% - $header-height);
+    border: 5px solid blue;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -1,7 +1,7 @@
-import FirebaseCreateService from '../services/firebase/firebase-create.service'
-import FirebaseReadService from '../services/firebase/firebase-read.service'
-import FirebaseUpdateService from '../services/firebase/firebase-update.service'
-import FirebaseDeleteService from '../services/firebase/firebase-delete.service'
+import FirebaseCreateService from '../_services/firebase/firebase-create.service'
+import FirebaseReadService from '../_services/firebase/firebase-read.service'
+import FirebaseUpdateService from '../_services/firebase/firebase-update.service'
+import FirebaseDeleteService from '../_services/firebase/firebase-delete.service'
 
 class CRUDInterface {
     async createRecord(options) {

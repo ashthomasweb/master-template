@@ -5,6 +5,7 @@ class DataService {
         this.mainDispatch = dispatch
     }
 
+
     generateNewId(idLength, forceString = true) {
         let concatString = ''
         for (let i = 0; i < 4; i++) {

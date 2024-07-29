@@ -1,11 +1,11 @@
 import { createContext } from "react"
 import { useReducer } from "react"
-import FirebaseAuthService from '../services/firebase/firebase-auth.service'
-import FirebaseReadService from "../services/firebase/firebase-read.service"
-import FirebaseUpdateService from "../services/firebase/firebase-update.service"
-import FirebaseDeleteService from "../services/firebase/firebase-delete.service"
-import DisplayService from '../services/display.service'
-import DataService from "../services/data.service"
+import FirebaseAuthService from '../_services/firebase/firebase-auth.service'
+import FirebaseReadService from "../_services/firebase/firebase-read.service"
+import FirebaseUpdateService from "../_services/firebase/firebase-update.service"
+import FirebaseDeleteService from "../_services/firebase/firebase-delete.service"
+import DisplayService from '../_services/display.service'
+import DataService from "../_services/data.service"
 
 export const MainContext = createContext()
 

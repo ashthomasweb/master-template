@@ -1,6 +1,10 @@
-// base
+// Base
 @import './base/reset.scss';
 @import './base/variables.scss';
+
+// Global
+@import './global/app-container.scss';
+@import './global/app.scss';
 
 // Views
 @import './views/content-view.scss';
@@ -8,7 +12,6 @@
 /* HAL VIEWS STYLESHEET TAG */
 
 // Components
-@import './components/main.scss';
 @import './components/auth-modal.scss';
 @import './components/modal-styles.scss';
 

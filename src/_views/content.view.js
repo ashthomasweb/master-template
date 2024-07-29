@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { MainContext } from '../context/MainContext'
+import { MainContext } from '../__context/MainContext'
 
 export default function ContentView() {
     const {

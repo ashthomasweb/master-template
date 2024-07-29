@@ -1,10 +1,19 @@
 import { useContext } from 'react'
-import { MainContext } from '../context/MainContext'
-import HeaderView from '../_views/header.view'
-import ContentView from '../_views/content.view'
-import UserAuth from './user-auth.component'
+import { MainContext } from '../__context/MainContext'
+import {
+    /* Firebase */
+    /* Components */
+    UserAuth,
+    /* Views */
+    HeaderView,
+    ContentView,
+    /* Service Classes */
+    /* Initial Assets */
+    /* Config Assets */
+    /* Icons */
+} from '../app-index'
 
-export default function Main() {
+export default function AppContainer() {
     const {
         mainState: {
             userObj

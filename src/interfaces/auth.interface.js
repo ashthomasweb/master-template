@@ -1,4 +1,4 @@
-import FirebaseAuthService from '../services/firebase/firebase-auth.service'
+import FirebaseAuthService from '../_services/firebase/firebase-auth.service'
 
 class AuthInterface {
     userLogin() {
