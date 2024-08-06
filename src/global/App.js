@@ -10,14 +10,18 @@ import {
     /* Icons */
     /* DeveloperTools */
     DebugService,
-    debug, t, s
+    debug, t as trace, m as msg
 } from '../app-index'
 
-const trace = false
-const file = '%cApp'
+/* Trace vars */
+const t = true
+const m = (copy) => msg(copy, 'App')
 
 export default function App() {
-    t(trace) && console.log(`${file} - Init`, s)
+    trace(t) && c(...m('Init'))
+    debug && DebugService.validateInitialState() && console.log('Initial State Validated')
+    
+    d(DebugService)
 
     return (
         <MainProvider>

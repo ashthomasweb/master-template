@@ -15,7 +15,7 @@ export default function ContentView() {
                 {
                     userObj !== null
                         ? <div className='user-info'>
-                            Welcome<br />{userName}!
+                            <h1>Welcome<br />{userName}!</h1>
                         </div>
                         : null
                 }

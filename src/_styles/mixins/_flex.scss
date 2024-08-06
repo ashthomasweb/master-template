@@ -1,0 +1,48 @@
+@mixin displayFlex {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: -moz-box;
+    display: flex;
+}
+
+@mixin displayInlineFlex {
+    display: -webkit-inline-flex;
+    display: -moz-inline-box;
+    display: -ms-flexbox;
+    display: inline-flex;
+}
+
+@mixin flexJustify($position) {
+    -webkit-justify-content: $position;
+    -moz-justify-content: $position;
+    -ms-justify-content: $position;
+    justify-content: $position;
+}
+
+@mixin justifyCenter {
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+}
+
+@mixin flexDirection($direction) {
+    -webkit-flex-direction: $direction;
+    -moz-flex-direction: $direction;
+    -ms-flex-direction: $direction;
+    flex-direction: $direction;
+}
+
+@mixin alignItems($position) {
+    -webkit-align-items: $position;
+    align-items: $position;
+}
+
+@mixin flexCenter {
+    -webkit-justify-content: center;
+    -moz-justify-content: center;
+    -ms-justify-content: center;
+    justify-content: center;
+    -webkit-align-items: center;
+    align-items: center;
+}

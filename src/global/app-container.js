@@ -11,6 +11,9 @@ import {
     /* Initial Assets */
     /* Config Assets */
     /* Icons */
+    /* DeveloperTools */
+    DebugService,
+    debug, t, s
 } from '../app-index'
 
 export default function AppContainer() {

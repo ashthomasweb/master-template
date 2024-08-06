@@ -1,6 +1,15 @@
 // Base
-@import './base/reset.scss';
+@import './base/colors.scss';
+@import './base/functions.scss';
 @import './base/variables.scss';
+@import './base/reset.scss';
+@import './base/typography.scss';
+
+// Mixins 
+@import './mixins/theming.scss';
+@import './mixins/flex.scss';
+@import './mixins/general.scss';
+
 
 // Global
 @import './global/app-container.scss';
@@ -9,10 +18,7 @@
 // Views
 @import './views/content-view.scss';
 @import './views/header-view.scss';
-/* HAL VIEWS STYLESHEET TAG */
 
 // Components
 @import './components/auth-modal.scss';
 @import './components/modal-styles.scss';
-
-/* HAL COMPONENTS STYLESHEET TAG */

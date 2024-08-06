@@ -1,7 +1,8 @@
 .header-view {
     height: $header-height;
     border: 5px solid grey;
-    background-color: #222;
+    background-color: style(bgColor);
+    color: style(textColor);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;

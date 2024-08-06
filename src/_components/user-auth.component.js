@@ -18,7 +18,7 @@ export default function UserAuth() {
     }
 
     return (
-        <div className='entry-auth-modal' >
+        <div className="entry-auth-modal" >
             <h2>User Authentication</h2>
             <button type='button' onClick={userLogin}>Login</button>
             {

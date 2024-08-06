@@ -13,4 +13,6 @@ import {
 
 const container = document.getElementById("app")
 const root = createRoot(container)
+window.c = window.console.log
+window.d = window.console.dir
 root.render(<App />)

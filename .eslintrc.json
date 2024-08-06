@@ -1,0 +1,43 @@
+{
+  "extends": "standard",
+  "rules": {
+        "semi": [
+            "error",
+            "never"
+        ],
+        "no-debugger": 0,
+        "indent": [
+            "error",
+            4,
+            { "SwitchCase": 1 }
+        ],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "jsx-quotes": [
+            "error",
+            "prefer-single"
+        ],
+        "react/jsx-indent": [
+            "error",
+            4 
+        ],
+        "react/jsx-indent-props": [
+            "error",
+            4 
+        ],
+        "react/self-closing-comp": [
+            "error",
+            {
+                "component": false,
+                "html": false
+            }
+        ],
+        "no-unused-vars": ["error", "never"]
+    }
+}

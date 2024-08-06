@@ -1,2 +1,36 @@
-$header-height: 80px;
-$modal-header-height: 60px;
+// Font Family
+$font-family            : 'Martel', serif;
+
+// Base Font for HTML
+$base-font-size         : 16px;
+
+// Paragraph Styles
+$paragraph-color        : #505050;
+$paragraph-size         : rem(17px);
+$paragraph-line-height  : 1.5em;
+$paragraph-margin       : 20px;
+
+// Header tag (h1-h6) Styles
+$hTag-color           : #000000;
+$hTag-rel-size        : rem(40px);
+$hTag-line-height     : 1.25em;
+$hTag-margin          : $paragraph-margin * 1.2;
+
+// Blockquote Styles
+$blockquote-color       : #505050;
+$blockquote-size        : rem(23px);
+$blockquote-line-height : 1.5em;
+$blockquote-margin      : $paragraph-margin * 1.5;
+
+// hr
+$hr-margin: 30px;
+
+// Type Styles
+$font-weight-bold       : 800;
+
+// Misc styles
+$border-color           : #DADADA;
+
+// Component Variables
+$modal-header-height    : 60px;
+$header-height          : 80px;

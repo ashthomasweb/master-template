@@ -6,19 +6,27 @@ import FirebaseUpdateService from "../_services/firebase/firebase-update.service
 import FirebaseDeleteService from "../_services/firebase/firebase-delete.service"
 import DisplayService from '../_services/display.service'
 import DataService from "../_services/data.service"
-
+import ContextValidator from "./ContextValidator"
+import DebugService from "../_services/debug.service"
 export const MainContext = createContext()
 
 export const initialMainState = {
     userName: 'User',
-    userObj: {temp: 'user'},
+    userObj: { temp: 'user' },
+    testArray: [1, 2, 3, 4, [10, {key: 'value'}]],
+    testObjectLit: {
+        test: 'value'
+    }
     // userObj: null,
 }
 
 const MainReducer = (state, action) => {
-    return {
-        ...state,
-        ...action.payload
+    
+    if (ContextValidator.validate(action.payload, initialMainState, 'MainContext')) {
+        return {
+            ...state,
+            ...action.payload
+        }
     }
 }
 
@@ -27,7 +35,8 @@ const MainProvider = (props) => {
 
     DisplayService.setLocalDispatch(mainDispatch)
     DataService.setLocalDispatch(mainDispatch)
-
+    DebugService.setLocalDispatch(mainDispatch)
+    
     FirebaseAuthService.setLocalDispatch(mainDispatch)
     FirebaseReadService.setLocalDispatch(mainDispatch)
     FirebaseUpdateService.setLocalDispatch(mainDispatch)

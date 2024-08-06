@@ -13,7 +13,7 @@ import {
 } from '../app-index'
 
 const trace = false
-const file = '%cDisplayService' 
+const file = '%cDisplayService'
 
 class DisplayService {
     mainDispatch = null
@@ -22,9 +22,6 @@ class DisplayService {
         this.mainDispatch = dispatch
     }
 
-    test() {
-        t(trace) && console.log(`${file} - test`, s)
-    }
 }
 
 export default new DisplayService()

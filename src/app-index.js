@@ -36,6 +36,17 @@ import ContentView from "./_views/content.view"
 
 /* Service Classes */
 
+/* Utility Functions */
+import {
+    getStrTag, 
+    isArray,
+    isObjLit,
+    getLength,
+    checkLength,
+    genNewId,
+    genNewAlphaNumId
+} from './_utilities/global.utilities'
+
 /* Initial Assets */
 
 /* Config Assets */
@@ -45,7 +56,10 @@ import ContentView from "./_views/content.view"
 /* DeveloperTools */
 import DebugService from "./_services/debug.service"
 const t = DebugService.t
+const m = DebugService.m
 const s = DebugService.s()
+// const c = DebugService.c
+// const d = DebugService.d
 const debug = DebugService.debug
 
 /********************* EXPORTS *********************/
@@ -53,20 +67,31 @@ const debug = DebugService.debug
 /* Firebase */
 
 /* Components */
-export { 
-    App, 
-    AppContainer, 
+export {
+    App,
+    AppContainer,
     UserAuth,
     SettingsMenu
 }
 
 /* Views */
-export { 
-    HeaderView, 
-    ContentView 
+export {
+    HeaderView,
+    ContentView
 }
 
 /* Service Classes */
+
+/* Utility Functions */
+export { 
+    getStrTag, 
+    isArray,
+    isObjLit,
+    getLength,
+    checkLength,
+    genNewId,
+    genNewAlphaNumId 
+}
 
 /* Initial Assets */
 
@@ -75,7 +100,7 @@ export {
 /* Icons */
 
 /* DeveloperTools */
-export {t, s, debug, DebugService}
+export { t, s, m, debug, DebugService }
 
 
 

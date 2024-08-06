@@ -13,10 +13,9 @@ import {
     DebugService,
     debug, t, s
 } from '../app-index'
-import displayService from '../_services/display.service'
 
-const trace = false
-const file = '%cHeaderView' 
+const trace = true
+const file = '%cHeaderView'
 
 export default function HeaderView() {
     t(trace) && console.log(`${file} - Init`, s)
@@ -37,7 +36,7 @@ export default function HeaderView() {
 
     const toggleModal = ({ target }) => {
         t(trace) && console.log(`${file} - toggleModal`, s)
-        
+
         const newHeaderDisplayConditions = { ...headerModalDisplay }
         const selectedMenu = target.dataset.menutype
         const currentMenuState = headerModalDisplay[selectedMenu]
@@ -46,9 +45,8 @@ export default function HeaderView() {
         }
         newHeaderDisplayConditions[selectedMenu] = !currentMenuState
         setHeaderModalDisplay(newHeaderDisplayConditions)
-        displayService.test()
     }
-
+    
     const closeAll = () => {
         t(trace) && console.log(`${file} - closeAll`, s)
         
@@ -58,10 +56,16 @@ export default function HeaderView() {
         }
         setHeaderModalDisplay(newHeaderModalDisplay)
     }
+    
+    const testValidation = () => {    
+        t(trace) && console.log(`${file} - testValidation`, s)
+        DebugService.testValidator()
+    }
 
     return (
-        <div className='header-view'>
+        <div className='header-view' data-style='night'>
             <button type='button' data-menutype='settings' onClick={toggleModal}>Settings Menu</button>
+            <button type='button' onClick={testValidation}>Test</button>
             {
                 headerModalDisplay.settings
                     ?
@@ -70,6 +74,7 @@ export default function HeaderView() {
                     </Suspense>
                     : null
             }
+            Test
         </div>
     )
 }

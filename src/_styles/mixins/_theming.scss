@@ -1,0 +1,35 @@
+// A scss 'object' is called a map.
+// keys with nested 'maps' can be accessed, or looped over.
+$styleModes: (
+    night: (
+        bgColor: $cGreyDark,
+        textColor: $cWhite,
+    ),
+    day: (
+        bgColor: $cWhite,
+        textColor: $cGreyDark,
+    ),
+);
+
+// A Mixin is a re-useable block of styles that can be used in multiple places
+// in the app, and that accept arguments.
+@mixin use-style($styleModes) {
+
+    // @each is a loop. Used on a map, you declare the key:value pair names within the given map
+    @each $mode, $map in $styleModes {
+
+        // build out custom CSS variables, to be selected with an attribute selector
+        // The `#{}` is a scss string interpolation, just like a template literal in js
+        [data-style='#{$mode}'] {
+
+            // This will create an attribute selector for each key in the styleMode map ... 'data-styleMode=night' etc.
+            @each $property, $value in $map {
+                // Create custom CSS variables from each listed property:value pair in the styleMode map
+                --#{$property}: #{$value};
+            }
+        }
+    }
+}
+
+// Include the 'use-style' mixin in the current application context
+@include use-style($styleModes)
