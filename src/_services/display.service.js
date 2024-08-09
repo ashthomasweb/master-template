@@ -1,19 +1,27 @@
 import {
     /* Firebase */
     /* Components */
-    SettingsMenu,
+    /* Context */
     /* Views */
+    /* Custom Hooks */
     /* Service Classes */
+    /* Utility Functions */
     /* Assets */
-    /* Config Assets */
     /* Icons */
+    /* Configs */
+    /* Types */
+    /* Interfaces */
     /* DeveloperTools */
-    DebugService,
-    debug, t, s
+    debug,
+    trace,
+    msg
 } from '../app-index'
 
-const trace = false
-const file = '%cDisplayService'
+/* Trace vars */
+const run = false
+const file = 'DisplayService'
+const msg = (copy, fileName = file) => m(copy, fileName)
+/* END Trace vars */
 
 class DisplayService {
     mainDispatch = null

@@ -21,7 +21,7 @@ import { lazy as lazyLoad } from "react"
 
 /* Firebase */
 import { initializeFirebase } from './_services/firebase/firebase-init.service'
-import FirebaseInitService from "./_services/firebase/firebase-init.service"
+import FirebaseInitialization from "./_services/firebase/firebase-init.service"
 import FirebaseAuthService from "./_services/firebase/firebase-auth.service"
 import FirebaseCreateService from "./_services/firebase/firebase-create.service"
 import FirebaseReadService from "./_services/firebase/firebase-read.service"
@@ -72,6 +72,7 @@ import {
 /* Configs */
 import DataPaths from "./config/data-paths"
 
+
 /* Types */
 import {
     FirebaseCreateOptions,
@@ -95,13 +96,12 @@ const debug = DebugService.debug
 /* Firebase */
 export {
     initializeFirebase,
-    FirebaseInitService,
+    FirebaseInitialization,
     FirebaseAuthService,
     FirebaseCreateService,
     FirebaseReadService,
     FirebaseUpdateService,
     FirebaseDeleteService,
-
 }
 
 /* Context */

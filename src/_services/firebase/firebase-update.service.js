@@ -1,8 +1,32 @@
-import FirebaseInitialization from './firebase-init.service'
 import {
     doc,
-    updateDoc
+    updateDoc,
 } from 'firebase/firestore'
+import {
+    /* Firebase */
+    FirebaseInitialization,
+    /* Components */
+    /* Context */
+    /* Views */
+    /* Custom Hooks */
+    /* Service Classes */
+    /* Utility Functions */
+    /* Assets */
+    /* Icons */
+    /* Configs */
+    /* Types */
+    /* Interfaces */
+    /* DeveloperTools */
+    debug,
+    trace,
+    msg
+} from '../../app-index'
+
+/* Trace vars */
+const run = false
+const file = 'FirebaseUpdateService'
+const msg = (copy, fileName = file) => m(copy, fileName)
+/* END Trace vars */
 
 class FirebaseUpdateService {
     mainDispatch = null

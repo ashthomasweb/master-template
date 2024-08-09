@@ -1,7 +1,33 @@
-import FirebaseCreateService from '../_services/firebase/firebase-create.service'
-import FirebaseReadService from '../_services/firebase/firebase-read.service'
-import FirebaseUpdateService from '../_services/firebase/firebase-update.service'
-import FirebaseDeleteService from '../_services/firebase/firebase-delete.service'
+import {
+    /* Firebase */
+    FirebaseCreateService,
+    FirebaseReadService,
+    FirebaseUpdateService,
+    FirebaseDeleteService,
+    /* Components */
+    /* Context */
+    /* Views */
+    /* Custom Hooks */
+    logComponentInit,
+    /* Service Classes */
+    /* Utility Functions */
+    /* Assets */
+    /* Icons */
+    /* Configs */
+    /* Types */
+    /* Interfaces */
+    /* DeveloperTools */
+    debug,
+    trace,
+    m
+} from '../app-index'
+
+/* Trace vars */
+const t = false
+const file = ''
+const msg = (copy, fileName = file) => m(copy, fileName)
+/* END Trace vars */
+
 
 class CRUDInterface {
     async createRecord(options) {

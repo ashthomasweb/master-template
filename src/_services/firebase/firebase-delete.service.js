@@ -1,10 +1,34 @@
-import FirebaseInitialization from './firebase-init.service'
 import {
-    deleteDoc,
     doc,
     updateDoc,
-    deleteField
+    deleteDoc,
+    deleteField,
 } from 'firebase/firestore'
+import {
+    /* Firebase */
+    FirebaseInitialization,
+    /* Components */
+    /* Context */
+    /* Views */
+    /* Custom Hooks */
+    /* Service Classes */
+    /* Utility Functions */
+    /* Assets */
+    /* Icons */
+    /* Configs */
+    /* Types */
+    /* Interfaces */
+    /* DeveloperTools */
+    debug,
+    trace,
+    msg
+} from '../../app-index'
+
+/* Trace vars */
+const run = false
+const file = 'FirebaseDeleteService'
+const msg = (copy, fileName = file) => m(copy, fileName)
+/* END Trace vars */
 
 class FirebaseDeleteService {
     mainDispatch = null
@@ -30,7 +54,7 @@ class FirebaseDeleteService {
             await updateDoc(docRef, deleteTimestamp)
             console.log(`Document successfully marked as deleted with options: `, options)
         } catch (error) {
-            console.log(`Failure updating document with 'deletedAt' timestamp with 'options': `, options)            
+            console.log(`Failure updating document with 'deletedAt' timestamp with 'options': `, options)
             console.error(error)
         }
     }

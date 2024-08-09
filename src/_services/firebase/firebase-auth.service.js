@@ -1,20 +1,3 @@
-import FirebaseInitialization from "./firebase-init.service"
-
-import {
-    /* Firebase */
-    initializeFirebase,
-    /* Components */
-    AppView,
-    /* Views */
-    /* Service Classes */
-    /* Assets */
-    /* Config Assets */
-    /* Icons */
-    /* DeveloperTools */
-    DebugService,
-    debug, t as trace, m as msg
-} from '../../app-index'
-
 import {
     getAuth,
     signOut,
@@ -25,13 +8,37 @@ import {
     onAuthStateChanged,
     browserLocalPersistence,
     signInWithPopup,
-} from "firebase/auth"
-import { User } from "../../types/data-types"
-import { FirebaseCreateOptions } from "../../types/firebase-types"
-import CRUDInterface from "../../interfaces/crud-interface"
-import DataPaths from "../../config/data-paths"
+} from 'firebase/auth'
+import {
+    /* Firebase */
+    initializeFirebase,
+    FirebaseInitialization,
+    /* Components */
+    /* Context */
+    /* Views */
+    /* Custom Hooks */
+    /* Service Classes */
+    /* Utility Functions */
+    /* Assets */
+    /* Icons */
+    /* Configs */
+    DataPaths,
+    /* Types */
+    User,
+    FirebaseCreateOptions,
+    /* Interfaces */
+    CRUDInterface,
+    /* DeveloperTools */
+    debug,
+    trace,
+    msg
+} from '../../app-index'
 
-// const initFirebase = false
+/* Trace vars */
+const run = false
+const file = 'FirebaseAuthService'
+const msg = (copy, fileName = file) => m(copy, fileName)
+/* END Trace vars */
 
 class FirebaseAuthService {
     mainDispatch = null
@@ -40,6 +47,7 @@ class FirebaseAuthService {
 
     constructor(initializeFirebase) {
         if (initializeFirebase) {
+            c('test')
             this.auth = getAuth()
             setPersistence(this.auth, browserLocalPersistence).then(async () => {
                 this.listenToAuthStateChanges()

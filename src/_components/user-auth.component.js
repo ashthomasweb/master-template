@@ -1,4 +1,3 @@
-import AuthInterface from '../interfaces/auth.interface'
 import { useContext } from 'react'
 import {
     /* Firebase */
@@ -15,6 +14,7 @@ import {
     /* Configs */
     /* Types */
     /* Interfaces */
+    AuthInterface,
     /* DeveloperTools */
     debug,
     trace,

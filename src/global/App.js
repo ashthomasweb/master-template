@@ -22,7 +22,7 @@ import {
 } from '../app-index'
 
 /* Trace vars */
-const run = true
+const run = false
 const file = 'App'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */

@@ -20,7 +20,7 @@ import {
 } from '../app-index'
 
 /* Trace vars */
-const run = true
+const run = false
 const file = 'DebugService'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
@@ -30,9 +30,9 @@ class DebugService {
 
     constructor() {
         /* Boolean switches controlling trace and debug behavior */
-        this.debug = true // Turn on Init/Rerenders, initial state validation, and custom defined functions ...
+        this.debug = false // Turn on Init/Rerenders, initial state validation, and custom defined functions ...
         this.logRerenders = false
-        this.forceTrace = true // Run all traces in all files ...
+        this.forceTrace = false // Run all traces in all files ...
 
         /* Binding for trace functions */
         this.m = this.m.bind(this)

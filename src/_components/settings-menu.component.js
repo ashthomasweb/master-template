@@ -1,7 +1,7 @@
 import { useContext } from 'react'
-import FirebaseAuthService from '../_services/firebase/firebase-auth.service'
 import {
     /* Firebase */
+    FirebaseAuthService,
     /* Context */
     MainContext,
     /* Components */
