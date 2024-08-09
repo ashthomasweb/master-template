@@ -3,7 +3,7 @@ import {
     /* Components */
     /* Views */
     /* Service Classes */
-    /* Initial Assets */
+    /* Assets */
     /* Config Assets */
     /* Icons */
     /* DeveloperTools */

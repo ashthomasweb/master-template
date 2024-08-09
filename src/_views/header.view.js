@@ -5,21 +5,30 @@ import {
     /* Components */
     SettingsMenu,
     /* Views */
+       /* Custom Hooks */
+       logComponentInit,
     /* Service Classes */
-    /* Initial Assets */
-    /* Config Assets */
+    /* Utility Functions */
+    /* Assets */
     /* Icons */
+    /* Configs */
     /* DeveloperTools */
     DebugService,
-    debug, t, s
+    debug,
+    trace,
+    msg
 } from '../app-index'
 
-const trace = true
-const file = '%cHeaderView'
+/* Trace vars */
+const t = false
+const file = 'HeaderView'
+const m = (copy, fileName = file) => msg(copy, fileName)
+/* END Trace vars */
 
 export default function HeaderView() {
-    t(trace) && console.log(`${file} - Init`, s)
-
+    debug && logComponentInit(file)
+    // trace(t) && c(...m('Render'))
+    
     const {
         mainState: {
         }
@@ -35,8 +44,8 @@ export default function HeaderView() {
     })
 
     const toggleModal = ({ target }) => {
-        t(trace) && console.log(`${file} - toggleModal`, s)
-
+        trace(t) && c(...m('togalModal'))
+        
         const newHeaderDisplayConditions = { ...headerModalDisplay }
         const selectedMenu = target.dataset.menutype
         const currentMenuState = headerModalDisplay[selectedMenu]
@@ -44,11 +53,12 @@ export default function HeaderView() {
             newHeaderDisplayConditions[key] = false
         }
         newHeaderDisplayConditions[selectedMenu] = !currentMenuState
+        c(newHeaderDisplayConditions)
         setHeaderModalDisplay(newHeaderDisplayConditions)
     }
     
     const closeAll = () => {
-        t(trace) && console.log(`${file} - closeAll`, s)
+        trace(t) && c(...m('closeAll'))
         
         let newHeaderModalDisplay = {}
         for (const key in headerModalDisplay) {
@@ -58,7 +68,8 @@ export default function HeaderView() {
     }
     
     const testValidation = () => {    
-        t(trace) && console.log(`${file} - testValidation`, s)
+        trace(t) && c(...m('testValidation'))
+                
         DebugService.testValidator()
     }
 

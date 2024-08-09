@@ -6,13 +6,16 @@ import {
     App,
     /* Views */
     /* Service Classes */
-    /* Initial Assets */
-    /* Config Assets */
+    /* Utility Functions */
+    /* Assets */
     /* Icons */
+    /* Configs */
+    /* DeveloperTools */
+    DebugService
 } from '../app-index'
+
+DebugService.assignGlobals()
 
 const container = document.getElementById("app")
 const root = createRoot(container)
-window.c = window.console.log
-window.d = window.console.dir
 root.render(<App />)

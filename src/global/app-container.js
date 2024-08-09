@@ -7,16 +7,26 @@ import {
     /* Views */
     HeaderView,
     ContentView,
+    /* Custom Hooks */
+    logComponentInit,
     /* Service Classes */
-    /* Initial Assets */
-    /* Config Assets */
+    /* Utility Functions */
+    /* Assets */
     /* Icons */
+    /* Configs */
     /* DeveloperTools */
-    DebugService,
-    debug, t, s
+    DebugService, debug, trace, msg
 } from '../app-index'
+import useInitialRender from '../hooks/initial-render.hook'
+
+/* Trace vars */
+const t = false
+const file = 'AppContainer'
+const m = (copy, fileName = file) => msg(copy, fileName)
+/* END Trace vars */
 
 export default function AppContainer() {
+    debug && logComponentInit(file)
     const {
         mainState: {
             userObj
@@ -34,7 +44,9 @@ export default function AppContainer() {
                 userObj !== null
                     ? <>
                         <HeaderView />
-                        <ContentView />
+                        <ContentView >
+                            This is the primary pane!
+                        </ContentView>
                     </>
                     : null
             }

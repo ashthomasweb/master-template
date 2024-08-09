@@ -8,14 +8,19 @@ class DebugService {
     mainDispatch = null
 
     constructor() {
-        this.debug = false
-        this.forceTrace = false
-        this.m = this.m.bind(this)
+        this.debug = true
+        this.logReRenders = false
+        this.forceTrace = true
+        this.msg = this.msg.bind(this)
+        this.trace = this.trace.bind(this)
         this.styles = [
             'color: green',
             'background: #111',
             'font-size: 14px',
-            'border-top: 1px solid lightblue',
+            'border-top: 1px solid cyan',
+            'border-left: 1px solid cyan',
+            'padding: 0 4px;',
+            'font-weight: 900;',
         ].join(';')
         this.c = console.log
         this.d = console.dir
@@ -25,25 +30,23 @@ class DebugService {
         this.mainDispatch = dispatch
     }
 
-    t(trace = true) {
-        return DebugService.forceTrace || trace
+    trace(fileTrace = true) {
+        return this.forceTrace || fileTrace
     }
 
     s() {
         return this.styles
     }
 
-    m(message, file) {
-        return [`%c${file} - ${message}`, this.s()]
+    msg(message, file) {
+        return [`\n%c${file} - ${message}`, this.s()]
     }
 
     validateInitialState() {
-        this.t(trace) && console.log(`${file} - init validate`, this.s())
         return ContextValidator.validate(initialMainState, initialMainState, 'MainContext')
     }
 
     testValidator() {
-        this.t(trace) && console.log(`${file} - testValidator`, this.s())
 
         const passUser = 'Test'
         const failUser = 12
@@ -52,7 +55,7 @@ class DebugService {
 
         const passTypeArray = [1, 2, 5, 6, new Set()]
         const failType = new Set([1, 2, 3])
-        const testArray = [1, 2, 3, 4, [20, {key: '23'}]]
+        const testArray = [1, 2, 3, 4, [20, { key: '23' }]]
         const passTypeOL = { test: failType }
 
         const payload = {
@@ -65,7 +68,12 @@ class DebugService {
         this.mainDispatch({ payload })
     }
 
-    
+    assignGlobals() {
+        window.c = window.console.log
+        window.dir = window.console.dir
+    }
+
+
 
 }
 

@@ -1,4 +1,20 @@
 import FirebaseInitialization from "./firebase-init.service"
+
+import {
+    /* Firebase */
+    initializeFirebase,
+    /* Components */
+    AppContainer,
+    /* Views */
+    /* Service Classes */
+    /* Assets */
+    /* Config Assets */
+    /* Icons */
+    /* DeveloperTools */
+    DebugService,
+    debug, t as trace, m as msg
+} from '../../app-index'
+
 import {
     getAuth,
     signOut,
@@ -8,22 +24,22 @@ import {
     setPersistence,
     onAuthStateChanged,
     browserLocalPersistence,
-    signInWithPopup
+    signInWithPopup,
 } from "firebase/auth"
 import { User } from "../../config/data-types"
 import { FirebaseCreateOptions } from "../../config/firebase-types"
 import CRUDInterface from "../../interfaces/crud-interface"
 import DataPaths from "../../config/data-paths"
 
-const initFirebase = false
+// const initFirebase = false
 
 class FirebaseAuthService {
     mainDispatch = null
     auth = null
     app = FirebaseInitialization.app
 
-    constructor(initFirebase) {
-        if (initFirebase) {
+    constructor(initializeFirebase) {
+        if (initializeFirebase) {
             this.auth = getAuth()
             setPersistence(this.auth, browserLocalPersistence).then(async () => {
                 this.listenToAuthStateChanges()
@@ -125,4 +141,4 @@ class FirebaseAuthService {
     }
 }
 
-export default new FirebaseAuthService(initFirebase)
+export default new FirebaseAuthService(initializeFirebase)

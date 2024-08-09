@@ -1,31 +1,35 @@
 import MainProvider from "../__context/MainContext"
+
 import {
     /* Firebase */
     /* Components */
     AppContainer,
     /* Views */
+    /* Custom Hooks */
+    logComponentInit,
     /* Service Classes */
-    /* Initial Assets */
-    /* Config Assets */
+    /* Utility Functions */
+    /* Assets */
     /* Icons */
+    /* Configs */
     /* DeveloperTools */
-    DebugService,
-    debug, t as trace, m as msg
+    DebugService, debug, trace, msg
 } from '../app-index'
 
 /* Trace vars */
 const t = true
-const m = (copy) => msg(copy, 'App')
+const file = 'App'
+const m = (copy, fileName = file) => msg(copy, fileName)
+/* END Trace vars */
 
 export default function App() {
-    trace(t) && c(...m('Init'))
+    debug && logComponentInit(file)
     debug && DebugService.validateInitialState() && console.log('Initial State Validated')
     
-    d(DebugService)
-
     return (
         <MainProvider>
             <AppContainer />
         </MainProvider>
     )
 }
+

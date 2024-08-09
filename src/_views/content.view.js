@@ -1,7 +1,34 @@
 import { useContext } from 'react'
 import { MainContext } from '../__context/MainContext'
+import {
+    /* Firebase */
+    /* Components */
+    /* Views */
+           /* Custom Hooks */
+           logComponentInit,
+    /* Service Classes */
+    /* Utility Functions */
+    /* Assets */
+    /* Icons */
+    /* Configs */
+    /* DeveloperTools */
+    DebugService,
+    debug,
+    trace,
+    msg
+} from '../app-index'
 
-export default function ContentView() {
+/* Trace vars */
+const t = false
+const file = 'ContentView'
+const m = (copy, fileName = file) => msg(copy, fileName)
+/* END Trace vars */
+
+
+export default function ContentView(props) {
+    debug && logComponentInit(file)
+
+    
     const {
         mainState: {
             userObj,
@@ -15,7 +42,8 @@ export default function ContentView() {
                 {
                     userObj !== null
                         ? <div className='user-info'>
-                            <h1>Welcome<br />{userName}!</h1>
+                            <h1>Welcome {userName}!</h1>
+                            {props.children}
                         </div>
                         : null
                 }

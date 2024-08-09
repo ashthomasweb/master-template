@@ -1,25 +1,28 @@
 /**
-* FILENAME:
-*   app-index.js
-*
-* DESCRIPTION:
-*   Provides centralized location for all imports to route through.
-*
-* NOTES:
-*   - React Context cannot be routed through this file.
-*   - Assets included in static config objects / assets must be imported into the 
-*     declaration file directly.
-*
-* (c) Copyright Ashley Thomas
-* Usage Rights: Not for public use or redistribution.
-*
-*/
+ * FILENAME:
+ *   app-index.js
+ *
+ * DESCRIPTION:
+ *   Provides centralized location for all imports to route through.
+ *
+ * NOTES:
+ *   - React Context cannot be routed through this file.
+ *   - Assets included in static config objects / assets must be imported into the 
+ *     declaration file directly.
+ *
+ * (c) Copyright Ashley Thomas
+ * Usage Rights: Not for public use or redistribution.
+ *
+ */
 
 import React from "react"
 
 /********************* IMPORTS *********************/
 
 /* Firebase */
+import {
+    initializeFirebase
+} from './_services/firebase/firebase-init.service'
 
 /* Components */
 import App from "./global/App"
@@ -34,11 +37,14 @@ const SettingsMenu = React.lazy(() => {
 import HeaderView from "./_views/header.view"
 import ContentView from "./_views/content.view"
 
+/* Custom Hooks */
+import {useInitialRender as logComponentInit} from "./hooks/initial-render.hook"
+
 /* Service Classes */
 
 /* Utility Functions */
 import {
-    getStrTag, 
+    getStrTag,
     isArray,
     isObjLit,
     getLength,
@@ -47,24 +53,24 @@ import {
     genNewAlphaNumId
 } from './_utilities/global.utilities'
 
-/* Initial Assets */
-
-/* Config Assets */
+/* Assets */
 
 /* Icons */
 
+/* Configs */
+
 /* DeveloperTools */
 import DebugService from "./_services/debug.service"
-const t = DebugService.t
-const m = DebugService.m
-const s = DebugService.s()
-// const c = DebugService.c
-// const d = DebugService.d
+const trace = DebugService.trace
+const msg = DebugService.msg
 const debug = DebugService.debug
 
 /********************* EXPORTS *********************/
 
 /* Firebase */
+export {
+    initializeFirebase
+}
 
 /* Components */
 export {
@@ -80,40 +86,34 @@ export {
     ContentView
 }
 
+/* Custom Hooks */
+export {
+    logComponentInit
+}
+
 /* Service Classes */
 
 /* Utility Functions */
-export { 
-    getStrTag, 
+export {
+    getStrTag,
     isArray,
     isObjLit,
     getLength,
     checkLength,
     genNewId,
-    genNewAlphaNumId 
+    genNewAlphaNumId
 }
 
-/* Initial Assets */
-
-/* Config Assets */
+/* Assets */
 
 /* Icons */
 
+/* Configs */
+
 /* DeveloperTools */
-export { t, s, m, debug, DebugService }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+export {
+    trace,
+    msg,
+    debug,
+    DebugService
+}
