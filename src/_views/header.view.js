@@ -1,34 +1,38 @@
 import { Suspense, useContext, useState } from 'react'
-import { MainContext } from '../__context/MainContext'
 import {
     /* Firebase */
+    /* Context */
+    MainContext,
     /* Components */
     SettingsMenu,
+    /* Context */
+    MainContext,
     /* Views */
-       /* Custom Hooks */
-       logComponentInit,
+    /* Custom Hooks */
+    logComponentInit,
     /* Service Classes */
     /* Utility Functions */
     /* Assets */
     /* Icons */
     /* Configs */
+    /* Types */
+    /* Interfaces */
     /* DeveloperTools */
     DebugService,
     debug,
     trace,
-    msg
+    m
 } from '../app-index'
 
 /* Trace vars */
-const t = false
+const run = false
 const file = 'HeaderView'
-const m = (copy, fileName = file) => msg(copy, fileName)
+const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export default function HeaderView() {
     debug && logComponentInit(file)
-    // trace(t) && c(...m('Render'))
-    
+
     const {
         mainState: {
         }
@@ -44,8 +48,8 @@ export default function HeaderView() {
     })
 
     const toggleModal = ({ target }) => {
-        trace(t) && c(...m('togalModal'))
-        
+        trace(run) && c(...msg('togalModal'))
+
         const newHeaderDisplayConditions = { ...headerModalDisplay }
         const selectedMenu = target.dataset.menutype
         const currentMenuState = headerModalDisplay[selectedMenu]
@@ -53,23 +57,22 @@ export default function HeaderView() {
             newHeaderDisplayConditions[key] = false
         }
         newHeaderDisplayConditions[selectedMenu] = !currentMenuState
-        c(newHeaderDisplayConditions)
         setHeaderModalDisplay(newHeaderDisplayConditions)
     }
-    
+
     const closeAll = () => {
-        trace(t) && c(...m('closeAll'))
-        
+        trace(run) && c(...msg('closeAll'))
+
         let newHeaderModalDisplay = {}
         for (const key in headerModalDisplay) {
             newHeaderModalDisplay[key] = false
         }
         setHeaderModalDisplay(newHeaderModalDisplay)
     }
-    
-    const testValidation = () => {    
-        trace(t) && c(...m('testValidation'))
-                
+
+    const testValidation = () => {
+        trace(run) && c(...msg('testValidation'))
+
         DebugService.testValidator()
     }
 

@@ -10,12 +10,11 @@
 @import './mixins/flex.scss';
 @import './mixins/general.scss';
 
-
 // Global
-@import './global/app-container.scss';
 @import './global/app.scss';
 
 // Views
+@import './views/app-view.scss';
 @import './views/content-view.scss';
 @import './views/header-view.scss';
 

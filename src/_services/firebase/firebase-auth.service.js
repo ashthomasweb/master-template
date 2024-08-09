@@ -4,7 +4,7 @@ import {
     /* Firebase */
     initializeFirebase,
     /* Components */
-    AppContainer,
+    AppView,
     /* Views */
     /* Service Classes */
     /* Assets */
@@ -26,8 +26,8 @@ import {
     browserLocalPersistence,
     signInWithPopup,
 } from "firebase/auth"
-import { User } from "../../config/data-types"
-import { FirebaseCreateOptions } from "../../config/firebase-types"
+import { User } from "../../types/data-types"
+import { FirebaseCreateOptions } from "../../types/firebase-types"
 import CRUDInterface from "../../interfaces/crud-interface"
 import DataPaths from "../../config/data-paths"
 

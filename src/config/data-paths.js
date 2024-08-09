@@ -7,8 +7,8 @@ class DataPaths {
         
     }
 
-    globalBasePath = this.base.users
-    globalExtensionPath = this.extension.set
+    globalBasePath = null
+    globalExtensionPath = null
 }
 
-export default new DataPaths()
+export default DataPaths

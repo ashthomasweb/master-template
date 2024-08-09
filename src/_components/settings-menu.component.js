@@ -1,8 +1,9 @@
 import { useContext } from 'react'
-import { MainContext } from '../__context/MainContext'
 import FirebaseAuthService from '../_services/firebase/firebase-auth.service'
 import {
     /* Firebase */
+    /* Context */
+    MainContext,
     /* Components */
     /* Views */
     /* Custom Hooks */
@@ -12,17 +13,18 @@ import {
     /* Assets */
     /* Icons */
     /* Configs */
+    /* Types */
+    /* Interfaces */
     /* DeveloperTools */
-    DebugService,
     debug,
     trace,
-    msg
+    m
 } from '../app-index'
 
 /* Trace vars */
-const t = false
+const run = false
 const file = 'SettingsMenu'
-const m = (copy, fileName = file) => msg(copy, fileName)
+const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export default function SettingsMenu(props) {

@@ -1,9 +1,10 @@
-import MainProvider from "../__context/MainContext"
-
 import {
     /* Firebase */
+    /* Context */
+    MainProvider,
+    initialMainState,
     /* Components */
-    AppContainer,
+    AppView,
     /* Views */
     /* Custom Hooks */
     logComponentInit,
@@ -12,23 +13,27 @@ import {
     /* Assets */
     /* Icons */
     /* Configs */
+    /* Types */
+    /* Interfaces */
     /* DeveloperTools */
-    DebugService, debug, trace, msg
+    DebugService,
+    debug,
+    m
 } from '../app-index'
 
 /* Trace vars */
-const t = true
+const run = true
 const file = 'App'
-const m = (copy, fileName = file) => msg(copy, fileName)
+const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export default function App() {
     debug && logComponentInit(file)
-    debug && DebugService.validateInitialState() && console.log('Initial State Validated')
-    
+    debug && DebugService.validateInitialState('MainContext', initialMainState) && c('Initial State Validated')
+
     return (
         <MainProvider>
-            <AppContainer />
+            <AppView />
         </MainProvider>
     )
 }

@@ -1,18 +1,48 @@
-import { initialMainState } from "../__context/MainContext"
-import ContextValidator from "../__context/ContextValidator"
+import {
+    /* Firebase */
+    /* Context */
+    /* Components */
+    /* Context */
+    ContextValidator,
+    /* Views */
+    /* Custom Hooks */
+    /* Service Classes */
+    /* Utility Functions */
+    /* Assets */
+    /* Icons */
+    /* Configs */
+    /* Types */
+    /* Interfaces */
+    /* DeveloperTools */
+    debug,
+    trace,
+    m
+} from '../app-index'
 
-const trace = true
-const file = '%cDebugService'
+/* Trace vars */
+const run = true
+const file = 'DebugService'
+const msg = (copy, fileName = file) => m(copy, fileName)
+/* END Trace vars */
 
 class DebugService {
     mainDispatch = null
 
     constructor() {
-        this.debug = true
-        this.logReRenders = false
-        this.forceTrace = true
-        this.msg = this.msg.bind(this)
+        /* Boolean switches controlling trace and debug behavior */
+        this.debug = true // Turn on Init/Rerenders, initial state validation, and custom defined functions ...
+        this.logRerenders = false
+        this.forceTrace = true // Run all traces in all files ...
+
+        /* Binding for trace functions */
+        this.m = this.m.bind(this)
         this.trace = this.trace.bind(this)
+
+        /* Console function re-assignments */
+        this.c = console.log
+        this.d = console.dir
+
+        /* Trace styles */
         this.styles = [
             'color: green',
             'background: #111',
@@ -20,10 +50,8 @@ class DebugService {
             'border-top: 1px solid cyan',
             'border-left: 1px solid cyan',
             'padding: 0 4px;',
-            'font-weight: 900;',
+            'font-weight: 900;'
         ].join(';')
-        this.c = console.log
-        this.d = console.dir
     }
 
     setLocalDispatch(dispatch) {
@@ -34,37 +62,19 @@ class DebugService {
         return this.forceTrace || fileTrace
     }
 
-    s() {
-        return this.styles
+    m(message, file) {
+        return [`\n%c${file} - ${message}`, this.styles]
     }
 
-    msg(message, file) {
-        return [`\n%c${file} - ${message}`, this.s()]
-    }
-
-    validateInitialState() {
-        return ContextValidator.validate(initialMainState, initialMainState, 'MainContext')
+    validateInitialState(contextName, initialState) {
+        return ContextValidator.validate(initialState, initialState, contextName)
     }
 
     testValidator() {
-
-        const passUser = 'Test'
-        const failUser = 12
-
-        const failNewKey = 0
-
-        const passTypeArray = [1, 2, 5, 6, new Set()]
-        const failType = new Set([1, 2, 3])
         const testArray = [1, 2, 3, 4, [20, { key: '23' }]]
-        const passTypeOL = { test: failType }
-
         const payload = {
-            // userName: failUser
-            // test: failNewKey
             testArray: testArray,
-            // testObjectLit: passTypeOL
         }
-
         this.mainDispatch({ payload })
     }
 
@@ -72,9 +82,6 @@ class DebugService {
         window.c = window.console.log
         window.dir = window.console.dir
     }
-
-
-
 }
 
 export default new DebugService()

@@ -1,26 +1,32 @@
 import {
     /* Firebase */
     /* Components */
+    /* Context */
     /* Views */
+    /* Custom Hooks */
     /* Service Classes */
-    /* Assets */
-    /* Config Assets */
-    /* Icons */
-    /* DeveloperTools */
-    t, 
-    s,
-    debug,
-    d,
     /* Utility Functions */
     getStrTag,
     isArray,
     isObjLit,
     getLength,
     checkLength,
+    /* Assets */
+    /* Icons */
+    /* Configs */
+    /* Types */
+    /* Interfaces */
+    /* DeveloperTools */
+    debug,
+    trace,
+    m
 } from '../app-index'
 
-const trace = false
-const file = '%cContextValidator'
+/* Trace vars */
+const t = false
+const file = 'ContextValidator'
+const msg = (copy, fileName = file) => m(copy, fileName)
+/* END Trace vars */
 
 class ContextValidator {
     constructor() {
@@ -61,20 +67,28 @@ class ContextValidator {
 
             Object.keys(state).forEach(stateKey => {
                 if (!getAllowedTypes().includes(getStrTag(state[stateKey]))) {
-                    disallowedTypesInState.push({ disallowedKey: stateKey, disallowedType: getStrTag(state[stateKey]), allowedTypes: getAllowedTypes(), payload, state })
+                    disallowedTypesInState.push(
+                        { disallowedKey: stateKey, disallowedType: getStrTag(state[stateKey]), allowedTypes: getAllowedTypes(), payload, state }
+                    )
                 }
             })
 
             Object.keys(payload).forEach(payloadKey => {
                 const checkKeyValueValidity = () => {
                     if (!getAllowedTypes().includes(getStrTag(payload[payloadKey]))) {
-                        disallowedTypeKeys.push({ disallowedKey: payloadKey, disallowedType: getStrTag(payload[payloadKey]), allowedTypes: getAllowedTypes(), payload, state })
+                        disallowedTypeKeys.push(
+                            { disallowedKey: payloadKey, disallowedType: getStrTag(payload[payloadKey]), allowedTypes: getAllowedTypes(), payload, state }
+                        )
                     }
                     if (getStrTag(payload[payloadKey]) !== getStrTag(state[payloadKey])) {
-                        invalidTypeKeys.push({ invalidKey: payloadKey, invalidValueType: getStrTag(payload[payloadKey]), initialValueType: getStrTag(state[payloadKey]), payload, state })
+                        invalidTypeKeys.push(
+                            { invalidKey: payloadKey, invalidValueType: getStrTag(payload[payloadKey]), initialValueType: getStrTag(state[payloadKey]), payload, state }
+                        )
                     }
                     if (!Object.keys(state).includes(payloadKey)) {
-                        undeclaredKeys.push({ undeclaredKey: payloadKey, undeclaredKeyValue: payload[payloadKey], payload, state })
+                        undeclaredKeys.push(
+                            { undeclaredKey: payloadKey, undeclaredKeyValue: payload[payloadKey], payload, state }
+                        )
                     }
                 }
                 !this.skipValidation.includes(payloadKey) && checkKeyValueValidity()
@@ -104,21 +118,29 @@ class ContextValidator {
 
             state.forEach(entry => {
                 if (!getAllowedTypes().includes(getStrTag(entry))) {
-                    disallowedTypesInState.push({ disallowedElement: entry, disallowedType: getStrTag(entry), allowedTypes: getAllowedTypes(), payload, state })
+                    disallowedTypesInState.push(
+                        { disallowedElement: entry, disallowedType: getStrTag(entry), allowedTypes: getAllowedTypes(), payload, state }
+                    )
                 }
             })
 
             if (!checkLength(payload, getLength(state))) {
-                undeclaredElements.push({elements: payload.slice(getLength(state)), payload, state})
+                undeclaredElements.push(
+                    { elements: payload.slice(getLength(state)), payload, state }
+                )
             }
 
             payload.forEach((entry, index) => {
                 const checkElementValidity = () => {
                     if (!getAllowedTypes().includes(getStrTag(entry))) {
-                        disallowedTypeElements.push({ disallowedElement: entry, payload, disallowedType: getStrTag(entry), allowedTypes: getAllowedTypes(), payload, state })
+                        disallowedTypeElements.push(
+                            { disallowedElement: entry, payload, disallowedType: getStrTag(entry), allowedTypes: getAllowedTypes(), payload, state }
+                        )
                     }
                     if (getStrTag(entry) !== getStrTag(state[index])) {
-                        invalidTypeElements.push({ invalidElement: entry, invalidElementType: getStrTag(entry), initialValueType: getStrTag(state[index]), payload, state })
+                        invalidTypeElements.push(
+                            { invalidElement: entry, invalidElementType: getStrTag(entry), initialValueType: getStrTag(state[index]), payload, state }
+                        )
                     }
                 }
                 !this.skipValidation.includes(entry) && checkElementValidity()
@@ -142,10 +164,10 @@ class ContextValidator {
             }
         }
 
-        // TODO: Handle other iterable types - Set, Map, etc..
-
+        
         initialPayloadValidation(payload)
-
+        
+        // TODO: Handle other iterable types - Set, Map, etc..
         const traverseState = (payload, state) => {
             recursionCount++
 

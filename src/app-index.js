@@ -1,46 +1,58 @@
 /**
- * FILENAME:
- *   app-index.js
- *
- * DESCRIPTION:
- *   Provides centralized location for all imports to route through.
- *
- * NOTES:
- *   - React Context cannot be routed through this file.
- *   - Assets included in static config objects / assets must be imported into the 
- *     declaration file directly.
- *
- * (c) Copyright Ashley Thomas
- * Usage Rights: Not for public use or redistribution.
- *
- */
+* FILENAME:
+*   app-index.js
+*
+* DESCRIPTION:
+*   Provides centralized location for all imports to route through.
+*
+* NOTES:
+*   - React Context cannot be routed through this file.
+*   - Assets included in static config objects / assets must be imported into the 
+*     declaration file directly.
+*
+* (c) Copyright Ashley Thomas
+* Usage Rights: Not for public use or redistribution.
+*
+*/
 
-import React from "react"
+import { lazy as lazyLoad } from "react"
 
-/********************* IMPORTS *********************/
+/********************* INDEXED IMPORTS *********************/
 
 /* Firebase */
+import { initializeFirebase } from './_services/firebase/firebase-init.service'
+import FirebaseInitService from "./_services/firebase/firebase-init.service"
+import FirebaseAuthService from "./_services/firebase/firebase-auth.service"
+import FirebaseCreateService from "./_services/firebase/firebase-create.service"
+import FirebaseReadService from "./_services/firebase/firebase-read.service"
+import FirebaseUpdateService from "./_services/firebase/firebase-update.service"
+import FirebaseDeleteService from "./_services/firebase/firebase-delete.service"
+
+/* Context */
+import ContextValidator from "./__context/ContextValidator"
+import MainProvider from './__context/MainContext'
 import {
-    initializeFirebase
-} from './_services/firebase/firebase-init.service'
+    MainContext,
+    initialMainState
+} from "./__context/MainContext"
 
 /* Components */
 import App from "./global/App"
-import AppContainer from "./global/app-container"
+import AppView from "./_views/app.view"
 import UserAuth from "./_components/user-auth.component"
-const SettingsMenu = React.lazy(() => {
-    // console.log('lazy!')    
-    return import("./_components/settings-menu.component")
-})
+const SettingsMenu = lazyLoad(() => import("./_components/settings-menu.component")) // Example of lazyLoading a component ...
 
 /* Views */
 import HeaderView from "./_views/header.view"
 import ContentView from "./_views/content.view"
 
 /* Custom Hooks */
-import {useInitialRender as logComponentInit} from "./hooks/initial-render.hook"
+import { useInitialRender as logComponentInit } from "./hooks/initial-render.hook"
 
 /* Service Classes */
+import DataService from "./_services/data.service"
+import DisplayService from "./_services/display.service"
+import DebugService from "./_services/debug.service"
 
 /* Utility Functions */
 import {
@@ -58,26 +70,54 @@ import {
 /* Icons */
 
 /* Configs */
+import DataPaths from "./config/data-paths"
+
+/* Types */
+import {
+    FirebaseCreateOptions,
+    FirebaseReadOptions,
+    FirebaseUpdateOptions,
+    FirebaseDeleteOptions
+} from "./types/firebase-types"
+import { User } from "./types/data-types"
+
+/* Interfaces */
+import AuthInterface from "./interfaces/auth.interface"
+import CRUDInterface from "./interfaces/crud-interface"
 
 /* DeveloperTools */
-import DebugService from "./_services/debug.service"
 const trace = DebugService.trace
-const msg = DebugService.msg
+const m = DebugService.m
 const debug = DebugService.debug
 
 /********************* EXPORTS *********************/
 
 /* Firebase */
 export {
-    initializeFirebase
+    initializeFirebase,
+    FirebaseInitService,
+    FirebaseAuthService,
+    FirebaseCreateService,
+    FirebaseReadService,
+    FirebaseUpdateService,
+    FirebaseDeleteService,
+
+}
+
+/* Context */
+export {
+    MainProvider,
+    MainContext,
+    initialMainState,
+    ContextValidator
 }
 
 /* Components */
 export {
     App,
-    AppContainer,
+    AppView,
     UserAuth,
-    SettingsMenu
+    SettingsMenu,
 }
 
 /* Views */
@@ -92,6 +132,11 @@ export {
 }
 
 /* Service Classes */
+export {
+    DataService,
+    DisplayService,
+    DebugService
+}
 
 /* Utility Functions */
 export {
@@ -109,11 +154,28 @@ export {
 /* Icons */
 
 /* Configs */
+export {
+    DataPaths
+}
+
+/* Types */
+export {
+    FirebaseCreateOptions,
+    FirebaseReadOptions,
+    FirebaseUpdateOptions,
+    FirebaseDeleteOptions,
+    User
+}
+
+/* Interfaces */
+export {
+    AuthInterface,
+    CRUDInterface
+}
 
 /* DeveloperTools */
 export {
     trace,
-    msg,
-    debug,
-    DebugService
+    m,
+    debug
 }

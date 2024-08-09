@@ -1,6 +1,7 @@
-import { useRef, useEffect } from 'react'
+import { useRef } from 'react'
 import {
     /* Firebase */
+    /* Context */
     /* Components */
     /* Views */
     /* Service Classes */
@@ -8,28 +9,27 @@ import {
     /* Assets */
     /* Icons */
     /* Configs */
+    /* Types */
+    /* Interfaces */
     /* DeveloperTools */
     DebugService,
-    debug,
     trace,
-    msg
+    m
 } from '../app-index'
 
 /* Trace vars */
-const t = false
+const run = false
 const file = ''
-const m = (copy, fileName = file) => msg(copy, fileName)
+const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export function useInitialRender(componentName) {
     const isFirstRender = useRef(true)
 
-
-
     if (isFirstRender.current) {
-        trace(t) && c(...m('Init', componentName))
+        trace(run) && c(...msg('Init', componentName))
         isFirstRender.current = false
     } else {
-        DebugService.logReRenders && trace(t) && c(...m('Re-render', componentName))
+        DebugService.logRerenders && trace(run) && c(...msg('Re-render', componentName))
     }
 }

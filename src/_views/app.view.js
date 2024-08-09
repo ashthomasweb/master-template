@@ -1,7 +1,8 @@
 import { useContext } from 'react'
-import { MainContext } from '../__context/MainContext'
 import {
     /* Firebase */
+    /* Context */
+    MainContext,
     /* Components */
     UserAuth,
     /* Views */
@@ -14,19 +15,23 @@ import {
     /* Assets */
     /* Icons */
     /* Configs */
+    /* Types */
+    /* Interfaces */
     /* DeveloperTools */
-    DebugService, debug, trace, msg
+    debug,
+    trace,
+    m
 } from '../app-index'
-import useInitialRender from '../hooks/initial-render.hook'
 
 /* Trace vars */
-const t = false
-const file = 'AppContainer'
-const m = (copy, fileName = file) => msg(copy, fileName)
+const run = false
+const file = 'AppView'
+const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-export default function AppContainer() {
+export default function AppView() {
     debug && logComponentInit(file)
+
     const {
         mainState: {
             userObj
@@ -34,7 +39,7 @@ export default function AppContainer() {
     } = useContext(MainContext)
 
     return (
-        <div className='app-container'>
+        <div className='app-view-container'>
             {
                 userObj === null
                     ? <UserAuth />
