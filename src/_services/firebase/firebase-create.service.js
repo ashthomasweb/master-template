@@ -2,11 +2,12 @@ import {
     doc,
     collection,
     addDoc,
-    setDoc,
+    // setDoc,
 } from 'firebase/firestore'
 import {
     /* Firebase */
     FirebaseInitialization,
+    setDoc,
     /* Components */
     /* Context */
     /* Views */
@@ -21,7 +22,7 @@ import {
     /* DeveloperTools */
     debug,
     trace,
-    msg
+    m
 } from '../../app-index'
 
 /* Trace vars */

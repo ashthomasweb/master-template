@@ -79,7 +79,7 @@ class DebugService {
     }
 
     assignGlobals() {
-        window.c = window.console.log
+        window.log = window.console.log
         window.dir = window.console.dir
     }
 }

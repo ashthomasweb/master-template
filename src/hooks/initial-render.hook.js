@@ -27,9 +27,9 @@ export function useInitialRender(componentName) {
     const isFirstRender = useRef(true)
 
     if (isFirstRender.current) {
-        trace(run) && c(...msg('Init', componentName))
+        trace(run) && log(...msg('Init', componentName))
         isFirstRender.current = false
     } else {
-        DebugService.logRerenders && trace(run) && c(...msg('Re-render', componentName))
+        DebugService.logRerenders && trace(run) && log(...msg('Re-render', componentName))
     }
 }

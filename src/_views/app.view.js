@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useRef } from 'react'
 import {
     /* Firebase */
     /* Context */
@@ -22,6 +22,7 @@ import {
     trace,
     m
 } from '../app-index'
+import ThemeService from '../_services/theme.service'
 
 /* Trace vars */
 const run = false
@@ -34,12 +35,19 @@ export default function AppView() {
 
     const {
         mainState: {
-            userObj
+            userObj,
+            theme
         }
     } = useContext(MainContext)
 
+    const appViewRef = useRef(null)
+
+    useEffect(() => {
+        ThemeService.appViewRef = appViewRef
+    })
+
     return (
-        <div className='app-view-container'>
+        <div className='app-view-container' ref={appViewRef} data-style={theme}>
             {
                 userObj === null
                     ? <UserAuth />

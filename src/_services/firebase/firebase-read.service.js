@@ -21,7 +21,7 @@ import {
     /* DeveloperTools */
     debug,
     trace,
-    msg
+    m
 } from '../../app-index'
 
 /* Trace vars */

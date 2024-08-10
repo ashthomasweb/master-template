@@ -11,6 +11,7 @@ import {
     /* Custom Hooks */
     logComponentInit,
     /* Service Classes */
+    ThemeService,
     /* Utility Functions */
     /* Assets */
     /* Icons */
@@ -21,8 +22,10 @@ import {
     DebugService,
     debug,
     trace,
-    m
+    m,
+    promiseTest
 } from '../app-index'
+import ThemeService from '../_services/theme.service'
 
 /* Trace vars */
 const run = false
@@ -35,6 +38,7 @@ export default function HeaderView() {
 
     const {
         mainState: {
+            theme
         }
     } = useContext(MainContext)
 
@@ -48,7 +52,7 @@ export default function HeaderView() {
     })
 
     const toggleModal = ({ target }) => {
-        trace(run) && c(...msg('togalModal'))
+        trace(run) && log(...msg('togalModal'))
 
         const newHeaderDisplayConditions = { ...headerModalDisplay }
         const selectedMenu = target.dataset.menutype
@@ -60,35 +64,27 @@ export default function HeaderView() {
         setHeaderModalDisplay(newHeaderDisplayConditions)
     }
 
-    const closeAll = () => {
-        trace(run) && c(...msg('closeAll'))
-
-        let newHeaderModalDisplay = {}
-        for (const key in headerModalDisplay) {
-            newHeaderModalDisplay[key] = false
-        }
-        setHeaderModalDisplay(newHeaderModalDisplay)
-    }
-
     const testValidation = () => {
-        trace(run) && c(...msg('testValidation'))
-
         DebugService.testValidator()
     }
 
+    const handleThemeSwitch = () => {
+        ThemeService.switchTheme(theme)
+    }
+
     return (
-        <div className='header-view' data-style='night'>
+        <div className='header-view'>
             <button type='button' data-menutype='settings' onClick={toggleModal}>Settings Menu</button>
             <button type='button' onClick={testValidation}>Test</button>
+            <button type='button' onClick={handleThemeSwitch}>Theme Switch</button>
             {
                 headerModalDisplay.settings
                     ?
-                    <Suspense fallback={<div>Loading ...</div>}>
+                    <Suspense fallback={<div style={{position: 'absolute', top: '45vh', left: '45vw'}}>Loading ...</div>}>
                         <SettingsMenu isOpen={headerModalDisplay.settings} />
                     </Suspense>
                     : null
             }
-            Test
         </div>
     )
 }

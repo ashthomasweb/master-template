@@ -27,6 +27,7 @@ import FirebaseCreateService from "./_services/firebase/firebase-create.service"
 import FirebaseReadService from "./_services/firebase/firebase-read.service"
 import FirebaseUpdateService from "./_services/firebase/firebase-update.service"
 import FirebaseDeleteService from "./_services/firebase/firebase-delete.service"
+import { setDoc } from "firebase/firestore"
 
 /* Context */
 import ContextValidator from "./__context/ContextValidator"
@@ -40,7 +41,12 @@ import {
 import App from "./global/App"
 import AppView from "./_views/app.view"
 import UserAuth from "./_components/user-auth.component"
-const SettingsMenu = lazyLoad(() => import("./_components/settings-menu.component")) // Example of lazyLoading a component ...
+const SettingsMenu = lazyLoad(() => {
+    return Promise.all([
+        import("./_components/settings-menu.component"),
+        new Promise(resolve => setTimeout(resolve, 500))
+    ]).then(([component]) => component)
+}) // Example of lazyLoading a component with delay ...
 
 /* Views */
 import HeaderView from "./_views/header.view"
@@ -53,6 +59,7 @@ import { useInitialRender as logComponentInit } from "./hooks/initial-render.hoo
 import DataService from "./_services/data.service"
 import DisplayService from "./_services/display.service"
 import DebugService from "./_services/debug.service"
+import ThemeService from "./_services/theme.service"
 
 /* Utility Functions */
 import {
@@ -102,6 +109,7 @@ export {
     FirebaseReadService,
     FirebaseUpdateService,
     FirebaseDeleteService,
+    setDoc
 }
 
 /* Context */
@@ -135,7 +143,8 @@ export {
 export {
     DataService,
     DisplayService,
-    DebugService
+    DebugService,
+    ThemeService
 }
 
 /* Utility Functions */
@@ -177,5 +186,5 @@ export {
 export {
     trace,
     m,
-    debug
+    debug,
 }

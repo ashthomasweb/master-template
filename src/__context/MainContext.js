@@ -26,6 +26,7 @@ import {
     trace,
     m
 } from '../app-index'
+import ThemeService from "../_services/theme.service"
 
 /* Trace vars */
 const t = false
@@ -42,7 +43,8 @@ export const initialMainState = {
     testArray: [1, 2, 3, 4, [10, { key: 'value' }]],
     testObjectLit: {
         test: 'value'
-    }
+    },
+    theme: 'night'
 }
 
 const MainReducer = (state, action) => {
@@ -62,11 +64,14 @@ const MainProvider = (props) => {
     DisplayService.setLocalDispatch(mainDispatch)
     DataService.setLocalDispatch(mainDispatch)
     DebugService.setLocalDispatch(mainDispatch)
+    ThemeService.setLocalDispatch(mainDispatch)
+
 
     FirebaseAuthService.setLocalDispatch(mainDispatch)
     FirebaseReadService.setLocalDispatch(mainDispatch)
     FirebaseUpdateService.setLocalDispatch(mainDispatch)
     FirebaseDeleteService.setLocalDispatch(mainDispatch)
+
 
     return (
         <MainContext.Provider value={{ mainState, mainDispatch }}>

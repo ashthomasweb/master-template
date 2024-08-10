@@ -31,23 +31,12 @@ export default function ContentView(props) {
 
     const {
         mainState: {
-            userObj,
-            userName
         }
     } = useContext(MainContext)
 
     return (
         <div className='content-view'>
-            <div className='content-header'>
-                {
-                    userObj !== null
-                        ? <div className='user-info'>
-                            <h1>Welcome {userName}!</h1>
-                            {props.children}
-                        </div>
-                        : null
-                }
-            </div>
+            {props.children}
         </div>
     )
 }

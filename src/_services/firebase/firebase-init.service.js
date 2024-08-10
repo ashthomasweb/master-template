@@ -17,7 +17,7 @@ import {
     /* DeveloperTools */
     debug,
     trace,
-    msg
+    m
 } from '../../app-index'
 
 dotenv.config()
@@ -36,6 +36,7 @@ const firebaseConfig = {
     messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
     appId: process.env.REACT_APP_APP_ID
 }
+
 
 /* Template for .env 
 REACT_APP_API_KEY:
