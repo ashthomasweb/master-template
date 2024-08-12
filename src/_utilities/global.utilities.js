@@ -2,6 +2,10 @@ export const getStrTag = (input) => {
     return Object.prototype.toString.call(input)
 }
 
+export const isTypeEquivalent = (input1, input2) => {
+    return getStrTag(input1) !== getStrTag(input2)
+}
+
 export const isArray = (input) => {
     return getStrTag(input) === '[object Array]'
 }
@@ -16,6 +20,10 @@ export const getLength = (input) => {
 
 export const checkLength = (input, length) => {
     return input.length === length
+}
+
+export const lengthEquivalent = (input1, input2) => {
+    return input1.length === input2.length
 }
 
 export const genNewId = (idLength, forceString = true) => { // TODO: Refactor

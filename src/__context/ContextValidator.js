@@ -7,10 +7,11 @@ import {
     /* Service Classes */
     /* Utility Functions */
     getStrTag,
+    isTypeEquivalent,
     isArray,
     isObjLit,
     getLength,
-    checkLength,
+    lengthEquivalent,
     /* Assets */
     /* Icons */
     /* Configs */
@@ -19,7 +20,7 @@ import {
     /* DeveloperTools */
     debug,
     trace,
-    m
+    m,
 } from '../app-index'
 
 /* Trace vars */
@@ -34,7 +35,10 @@ const errorConfigs = {
 
     },
     array: {
-        invalidTypeElements: `Invalid sdf sdf types present in passed payload. Check passed payload for type accuracy against initial state declaration in ContextName.\nInvalid type(s): `
+        disallowedTypesInState: `Disallowed types present in ContextName initial state. Check ContextName initial state for accuracy, or consider modifying allowable types in ContextValidator.\nState elements with disallowed types: `,
+        undeclaredElements: `Undeclared elements present in passed payload. Check payload for accuracy, or consider modifying initial state object in ContextName.\nUndeclared elements: `,
+        disallowedTypeElements: `Disallowed types present in passed payload. Check payload for accuracy, or consider modifying allowable types in ContextValidator.\nElements with disallowed types: `,
+        invalidTypeElements: `Invalid types present in passed payload. Check passed payload for type accuracy against initial state declaration in ContextName.\nInvalid type(s): `
     }
 }
 
@@ -65,6 +69,10 @@ class ContextValidator {
             return this.primitiveTypes.concat(this.referentialTypes)
         }
 
+        const isAllowedType = (input) => {
+            return getAllowedTypes().includes(getStrTag(input))
+        }
+
         const initialPayloadValidation = (payload) => {
             if (getStrTag(payload) !== this.payloadType) {
                 console.error({ allowedPayloadType: this.payloadType, passedPayloadType: getStrTag(payload) })
@@ -74,14 +82,12 @@ class ContextValidator {
 
         const buildError = (array, errorArrays, type) => {
             const arrayName = Object.keys(errorArrays).find(key => errorArrays[key] === array)
-            log(Object.keys(errorArrays))
-            log(arrayName)
             if (getLength(array) > 0) {
                 console.error(errorConfigs[type][arrayName].replace(/ContextName/g, contextName), array)
             }
         }
 
-        const handleKeyValueValidation = (payload, state) => {
+        const handleObjLitValidation = (payload, state) => {
             const disallowedTypesInState = [], disallowedTypeKeys = [], undeclaredKeys = [], invalidTypeKeys = []
             const errorArrays = [disallowedTypesInState, disallowedTypeKeys, undeclaredKeys, invalidTypeKeys]
 
@@ -131,17 +137,17 @@ class ContextValidator {
 
         const handleArrayEntryValidation = (payload, state) => {
             const disallowedTypesInState = [], undeclaredElements = [], disallowedTypeElements = [], invalidTypeElements = []
-            const errorArray = {disallowedTypesInState, undeclaredElements, disallowedTypeElements, invalidTypeElements}
+            const errorArrays = {disallowedTypesInState, undeclaredElements, disallowedTypeElements, invalidTypeElements}
 
             state.forEach(entry => {
-                if (!getAllowedTypes().includes(getStrTag(entry))) {
+                if (!isAllowedType(entry)) {
                     disallowedTypesInState.push(
                         { disallowedElement: entry, disallowedType: getStrTag(entry), allowedTypes: getAllowedTypes(), payload, state }
                     )
                 }
             })
 
-            if (!checkLength(payload, getLength(state))) {
+            if (!lengthEquivalent(payload, state)) { // Checks the length of the payload against the length of the state
                 undeclaredElements.push(
                     { elements: payload.slice(getLength(state)), payload, state }
                 )
@@ -149,12 +155,12 @@ class ContextValidator {
 
             payload.forEach((entry, index) => {
                 const checkElementValidity = () => {
-                    if (!getAllowedTypes().includes(getStrTag(entry))) {
+                    if (!isAllowedType(entry)) {
                         disallowedTypeElements.push(
-                            { disallowedElement: entry, payload, disallowedType: getStrTag(entry), allowedTypes: getAllowedTypes(), payload, state }
+                            { disallowedElement: entry, disallowedType: getStrTag(entry), allowedTypes: getAllowedTypes(), payload, state }
                         )
                     }
-                    if (getStrTag(entry) !== getStrTag(state[index])) {
+                    if (isTypeEquivalent(entry, state[index])) {
                         invalidTypeElements.push(
                             { invalidElement: entry, invalidElementType: getStrTag(entry), initialValueType: getStrTag(state[index]), payload, state }
                         )
@@ -163,20 +169,9 @@ class ContextValidator {
                 !this.skipValidation.includes(entry) && checkElementValidity()
             })
 
-            if (getLength(disallowedTypesInState) > 0) {
-                console.error(`Disallowed types present in ${contextName} initial state. Check ${contextName} initial state for accuracy, or consider modifying allowable types in ContextValidator.\nState elements with disallowed types: `, disallowedTypesInState)
+            for (const key in errorArrays) {
+                buildError(errorArrays[key], errorArrays, 'array')
             }
-            if (getLength(undeclaredElements) > 0) {
-                console.error(`Undeclared elements present in passed payload. Check payload for accuracy, or consider modifying initial state object in ${contextName}.\nUndeclared elements: `, undeclaredElements)
-            }
-            if (getLength(disallowedTypeElements) > 0) {
-                console.error(`Disallowed types present in passed payload. Check payload for accuracy, or consider modifying allowable types in ContextValidator.\nElements with disallowed types: `, disallowedTypeElements)
-            }
-
-            buildError(invalidTypeElements, errorArray, 'array')
-            // if (getLength(invalidTypeElements) > 0) {
-                // console.error(`Invalid types present in passed payload. Check passed payload for type accuracy against initial state declaration in ${contextName}.\nInvalid type(s): `, invalidTypeElements)
-            // }
         }
 
         
@@ -192,7 +187,7 @@ class ContextValidator {
                     !this.skipValidation.includes(element) && traverseState(element, state[index])
                 }
             } else if (isObjLit(payload)) {
-                handleKeyValueValidation(payload, state)
+                handleObjLitValidation(payload, state)
                 for (const key in payload) {
                     !this.skipValidation.includes(key) && traverseState(payload[key], state[key])
                 }

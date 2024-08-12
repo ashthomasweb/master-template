@@ -65,10 +65,12 @@ import ThemeService from "./_services/theme.service"
 /* Utility Functions */
 import {
     getStrTag,
+    isTypeEquivalent,
     isArray,
     isObjLit,
     getLength,
     checkLength,
+    lengthEquivalent,
     genNewId,
     genNewAlphaNumId
 } from './_utilities/global.utilities'
@@ -152,10 +154,12 @@ export {
 /* Utility Functions */
 export {
     getStrTag,
+    isTypeEquivalent,
     isArray,
     isObjLit,
     getLength,
     checkLength,
+    lengthEquivalent,
     genNewId,
     genNewAlphaNumId
 }

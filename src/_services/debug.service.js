@@ -77,7 +77,7 @@ class DebugService {
 
     testValidator() {
         const passingTestArray = [1, 2, 3, 4, [20, { key: '23' }]]
-        const failTestArray = ['1', 2, 3, 4, [20, { key: 23 }]]
+        const failTestArray = ['1', 2, new Set(), 4, [20, { key: '23' }], 'test']
         const payload = {
             testArray: failTestArray,
         }
