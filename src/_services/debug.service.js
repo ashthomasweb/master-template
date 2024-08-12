@@ -69,18 +69,19 @@ class DebugService {
     validateInitialState(contextName, initialState) {
         return ContextValidator.validate(initialState, initialState, contextName)
     }
-
-    testValidator() {
-        const testArray = [1, 2, 3, 4, [20, { key: '23' }]]
-        const payload = {
-            testArray: testArray,
-        }
-        this.mainDispatch({ payload })
-    }
-
+    
     assignGlobals() {
         window.log = window.console.log
         window.dir = window.console.dir
+    }
+
+    testValidator() {
+        const passingTestArray = [1, 2, 3, 4, [20, { key: '23' }]]
+        const failTestArray = ['1', 2, 3, 4, [20, { key: 23 }]]
+        const payload = {
+            testArray: failTestArray,
+        }
+        this.mainDispatch({ payload })
     }
 }
 

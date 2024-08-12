@@ -34,7 +34,6 @@ const file = 'MainProvider'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-
 export const MainContext = createContext()
 
 export const initialMainState = {
@@ -49,11 +48,17 @@ export const initialMainState = {
 
 const MainReducer = (state, action) => {
     debug && c('MainContext payload: ', action.payload)
-    if (ContextValidator.validate(action.payload, initialMainState, 'MainContext')) {
+    try {
+        ContextValidator.validate(action.payload, initialMainState, 'MainContext')
         return {
             ...state,
             ...action.payload
         }
+    } catch (error) {
+        console.error(error)
+        return {
+            ...state
+        }    
     }
 }
 
@@ -65,13 +70,10 @@ const MainProvider = (props) => {
     DataService.setLocalDispatch(mainDispatch)
     DebugService.setLocalDispatch(mainDispatch)
     ThemeService.setLocalDispatch(mainDispatch)
-
-
     FirebaseAuthService.setLocalDispatch(mainDispatch)
     FirebaseReadService.setLocalDispatch(mainDispatch)
     FirebaseUpdateService.setLocalDispatch(mainDispatch)
     FirebaseDeleteService.setLocalDispatch(mainDispatch)
-
 
     return (
         <MainContext.Provider value={{ mainState, mainDispatch }}>

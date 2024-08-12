@@ -23,7 +23,8 @@ import {
     debug,
     trace,
     m,
-    promiseTest
+    promiseTest,
+    ThemeToggle
 } from '../app-index'
 import ThemeService from '../_services/theme.service'
 
@@ -68,15 +69,11 @@ export default function HeaderView() {
         DebugService.testValidator()
     }
 
-    const handleThemeSwitch = () => {
-        ThemeService.switchTheme(theme)
-    }
-
     return (
         <div className='header-view'>
             <button type='button' data-menutype='settings' onClick={toggleModal}>Settings Menu</button>
             <button type='button' onClick={testValidation}>Test</button>
-            <button type='button' onClick={handleThemeSwitch}>Theme Switch</button>
+            <ThemeToggle />
             {
                 headerModalDisplay.settings
                     ?

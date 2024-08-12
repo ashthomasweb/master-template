@@ -47,6 +47,7 @@ const SettingsMenu = lazyLoad(() => {
         new Promise(resolve => setTimeout(resolve, 500))
     ]).then(([component]) => component)
 }) // Example of lazyLoading a component with delay ...
+import ThemeToggle from "./_components/theme-toggle.component"
 
 /* Views */
 import HeaderView from "./_views/header.view"
@@ -126,6 +127,7 @@ export {
     AppView,
     UserAuth,
     SettingsMenu,
+    ThemeToggle
 }
 
 /* Views */
