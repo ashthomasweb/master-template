@@ -47,11 +47,13 @@ class ContextValidator {
             '[object Object]',
             '[object Array]',
         ]
-        this.skipValidation = ['test']
+        this.skipValidation = []
     }
 
     validate(payload, state, contextName) {
         let recursionCount = 0
+
+        /* Helper methods */
 
         const getAllowedTypes = () => {
             return this.primitiveTypes.concat(this.referentialTypes)
@@ -61,18 +63,21 @@ class ContextValidator {
             return getAllowedTypes().includes(getStrTag(input))
         }
 
-        const initialPayloadValidation = (payload) => {
-            if (getStrTag(payload) !== this.payloadType) {
-                console.error({ allowedPayloadType: this.payloadType, passedPayloadType: getStrTag(payload) })
-                throw new Error(`Invalid payload type.`)
-            }
-        }
-
+        
         const buildError = (array, errorArrays, payload) => {
             const payloadType = getStrTag(payload).replace('[object ', '').replace(']', '').toLowerCase()
             const arrayName = Object.keys(errorArrays).find(key => errorArrays[key] === array)
             if (getLength(array) > 0) {
                 console.error(errorConfigs[payloadType][arrayName].replace(/ContextName/g, contextName), array)
+            }
+        }
+        
+        /* Validation methods based on payload type */
+
+        const initialPayloadValidation = (payload) => {
+            if (getStrTag(payload) !== this.payloadType) {
+                console.error({ allowedPayloadType: this.payloadType, passedPayloadType: getStrTag(payload) })
+                throw new Error(`Invalid payload type.`)
             }
         }
 
@@ -106,7 +111,7 @@ class ContextValidator {
                         )
                     }
                 }
-                !this.skipValidation.includes(payloadKey) && checkKeyValueValidity()
+                !this.skipValidation.includes(payloadKey) && checkKeyValueValidity() // ATTN: Why does this need to be here, as well as in the primary loop?
             })
 
             for (const key in errorArrays) {
@@ -149,7 +154,7 @@ class ContextValidator {
                         )
                     }
                 }
-                !this.skipValidation.includes(entry) && checkElementValidity()
+                !this.skipValidation.includes(entry) && checkElementValidity() // ATTN: Why does this need to be here, as well as in the primary loop?
             })
 
             for (const key in errorArrays) {
@@ -161,9 +166,12 @@ class ContextValidator {
             }
         }
 
+        // TODO: Handle other iterable types - Set, Map, etc..
+        
+        /* Validation loop */
+
         initialPayloadValidation(payload)
 
-        // TODO: Handle other iterable types - Set, Map, etc..
         const traverseState = (payload, state) => {
             recursionCount++
 
@@ -183,6 +191,9 @@ class ContextValidator {
         }
         traverseState(payload, state)
 
+        /* END Validation loop */
+
+        // If recursive loop completes with no errors thrown, return 'true', allowing payload to be set to context ...
         if (recursionCount === 0) return true
     }
 }
