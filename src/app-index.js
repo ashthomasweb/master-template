@@ -15,52 +15,53 @@
 *
 */
 
-import { lazy as lazyLoad } from "react"
+import { lazy as lazyLoad } from 'react'
 
 /********************* INDEXED IMPORTS *********************/
 
 /* Firebase */
 import { initializeFirebase } from './_services/firebase/firebase-init.service'
-import FirebaseInitialization from "./_services/firebase/firebase-init.service"
-import FirebaseAuthService from "./_services/firebase/firebase-auth.service"
-import FirebaseCreateService from "./_services/firebase/firebase-create.service"
-import FirebaseReadService from "./_services/firebase/firebase-read.service"
-import FirebaseUpdateService from "./_services/firebase/firebase-update.service"
-import FirebaseDeleteService from "./_services/firebase/firebase-delete.service"
-import { setDoc } from "firebase/firestore"
+import FirebaseInitialization from './_services/firebase/firebase-init.service'
+import FirebaseAuthService from './_services/firebase/firebase-auth.service'
+import FirebaseCreateService from './_services/firebase/firebase-create.service'
+import FirebaseReadService from './_services/firebase/firebase-read.service'
+import FirebaseUpdateService from './_services/firebase/firebase-update.service'
+import FirebaseDeleteService from './_services/firebase/firebase-delete.service'
+import { setDoc } from 'firebase/firestore'
 
 /* Context */
-import ContextValidator from "./__context/ContextValidator"
+import ContextValidator from './__context/ContextValidator'
 import MainProvider from './__context/MainContext'
 import {
     MainContext,
     initialMainState
-} from "./__context/MainContext"
+} from './__context/MainContext'
 
 /* Components */
-import App from "./global/App"
-import AppView from "./_views/app.view"
-import UserAuth from "./_components/user-auth.component"
+import App from './global/App'
+import AppView from './_views/app.view'
+import UserAuth from './_components/user-auth.component'
+import ThemeToggle from './_components/theme-toggle.component'
+
 const SettingsMenu = lazyLoad(() => {
     return Promise.all([
-        import("./_components/settings-menu.component"),
+        import('./_components/settings-menu.component'),
         new Promise(resolve => setTimeout(resolve, 500))
     ]).then(([component]) => component)
-}) // Example of lazyLoading a component with delay ...
-import ThemeToggle from "./_components/theme-toggle.component"
+}) // Example of lazyLoading a component with delay ... TODO: Refactor?
 
 /* Views */
-import HeaderView from "./_views/header.view"
-import ContentView from "./_views/content.view"
+import HeaderView from './_views/header.view'
+import ContentView from './_views/content.view'
 
 /* Custom Hooks */
-import { useInitialRender as logComponentInit } from "./hooks/initial-render.hook"
+import { useInitialRender as logComponentInit } from './hooks/initial-render.hook'
 
 /* Service Classes */
-import DataService from "./_services/data.service"
-import DisplayService from "./_services/display.service"
-import DebugService from "./_services/debug.service"
-import ThemeService from "./_services/theme.service"
+import DataService from './_services/data.service'
+import DisplayService from './_services/display.service'
+import DebugService from './_services/debug.service'
+import ThemeService from './_services/theme.service'
 
 /* Utility Functions */
 import {
@@ -80,8 +81,8 @@ import {
 /* Icons */
 
 /* Configs */
-import DataPaths from "./config/data-paths"
-
+import DataPaths from './config/data-paths'
+import { errorConfigs } from './config/error-configs'
 
 /* Types */
 import {
@@ -89,12 +90,12 @@ import {
     FirebaseReadOptions,
     FirebaseUpdateOptions,
     FirebaseDeleteOptions
-} from "./types/firebase-types"
-import { User } from "./types/data-types"
+} from './types/firebase-types'
+import { User } from './types/data-types'
 
 /* Interfaces */
-import AuthInterface from "./interfaces/auth.interface"
-import CRUDInterface from "./interfaces/crud-interface"
+import AuthInterface from './interfaces/auth.interface'
+import CRUDInterface from './interfaces/crud-interface'
 
 /* DeveloperTools */
 const trace = DebugService.trace
@@ -170,7 +171,8 @@ export {
 
 /* Configs */
 export {
-    DataPaths
+    DataPaths,
+    errorConfigs
 }
 
 /* Types */
