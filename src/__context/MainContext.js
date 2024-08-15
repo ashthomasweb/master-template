@@ -35,19 +35,22 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export const MainContext = createContext()
+// debug && log(...msg('MainContext init'))
+console.log('%cTRACE: MainContext Init', 'color: green; font-weight: 900')
 
 export const initialMainState = {
-    userName: 'User',
-    userObj: { temp: 'user' },
-    testArray: [1, 2, 3, 4, [10, { key: 'value' }]],
-    testObjectLit: {
-        test: 'value'
-    },
-    theme: 'night'
+    userName: null,
+    userObj: null,
+    theme: 'night',
+
+    /* Test values */
+    // testArray: [1, 2, 3, 4, [10, { key: 'value' }]],
+    // testObjectLit: {
+        // test: 'value'
+    // },
 }
 
 const MainReducer = (state, action) => {
-    debug && c('MainContext payload: ', action.payload)
     try {
         ContextValidator.validate(action.payload, initialMainState, 'MainContext')
         return {
@@ -64,6 +67,7 @@ const MainReducer = (state, action) => {
 
 const MainProvider = (props) => {
     debug && logComponentInit(file)
+
     const [mainState, mainDispatch] = useReducer(MainReducer, initialMainState)
 
     DisplayService.setLocalDispatch(mainDispatch)

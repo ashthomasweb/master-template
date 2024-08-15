@@ -31,11 +31,15 @@ const file = 'FirebaseCreateService'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-class FirebaseCreateService {
+class firebaseCreateService {
     mainDispatch = null
     app = FirebaseInitialization.app
     db = FirebaseInitialization.db
 
+    constructor() {
+        debug && trace(run) && log(...msg('Init'))
+    }
+    
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
     }
@@ -56,4 +60,4 @@ class FirebaseCreateService {
     }
 }
 
-export default new FirebaseCreateService()
+export default firebaseCreateService

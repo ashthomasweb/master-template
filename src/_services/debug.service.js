@@ -29,10 +29,12 @@ class DebugService {
     mainDispatch = null
 
     constructor() {
+        console.log('%cTRACE: DebugService Init', 'color: green; font-weight: 900')
+
         /* Boolean switches controlling trace and debug behavior */
-        this.debug = false // Turn on Init/Rerenders, initial state validation, and custom defined functions ...
-        this.logRerenders = false
-        this.forceTrace = false // Run all traces in all files ...
+        this.debug = true // Turn on Init/Rerenders, initial state validation, and custom defined functions ...
+        this.logRerenders = true
+        this.forceTrace = true // Run all traces in all files ...
 
         /* Binding for trace functions */
         this.m = this.m.bind(this)

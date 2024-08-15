@@ -30,10 +30,14 @@ const file = 'FirebaseDeleteService'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-class FirebaseDeleteService {
+class firebaseDeleteService {
     mainDispatch = null
     app = FirebaseInitialization.app
     db = FirebaseInitialization.db
+
+    constructor() {
+        debug && trace(run) && log(...msg('Init'))
+    }
 
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
@@ -86,4 +90,4 @@ class FirebaseDeleteService {
     }
 }
 
-export default new FirebaseDeleteService()
+export default firebaseDeleteService

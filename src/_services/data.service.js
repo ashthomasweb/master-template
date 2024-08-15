@@ -24,6 +24,9 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 class DataService {
+    constructor() {
+        console.log('%cTRACE: DataService Init', 'color: green; font-weight: 900')
+    }
     mainDispatch = null
 
     setLocalDispatch(dispatch) {

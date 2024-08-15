@@ -47,7 +47,7 @@ class ContextValidator {
             '[object Object]',
             '[object Array]',
         ]
-        this.skipValidation = []
+        this.skipValidation = ['userObj']
     }
 
     validate(payload, state, contextName) {
@@ -82,6 +82,8 @@ class ContextValidator {
         }
 
         const handleObjLitValidation = (payload, state) => {
+            if (state === null) return // ATTN: Can this be handled with more control ?
+            
             const disallowedTypesInState = [], disallowedTypeKeys = [], undeclaredKeys = [], invalidTypeKeys = []
             const errorArrays = { disallowedTypesInState, disallowedTypeKeys, undeclaredKeys, invalidTypeKeys }
 
@@ -106,6 +108,7 @@ class ContextValidator {
                         )
                     }
                     if (isTypeEquivalent(payload[payloadKey], state[payloadKey])) {
+                        if (getStrTag(state[payloadKey]) === "[object Null]") return
                         invalidTypeKeys.push(
                             { invalidKey: payloadKey, invalidValueType: getStrTag(payload[payloadKey]), initialValueType: getStrTag(state[payloadKey]) }
                         )
@@ -124,6 +127,8 @@ class ContextValidator {
         }
 
         const handleArrayEntryValidation = (payload, state) => {
+            if (state === null) return // ATTN: Can this be handled with more control ?
+
             const disallowedTypesInState = [], undeclaredElements = [], disallowedTypeElements = [], invalidTypeElements = []
             const errorArrays = { disallowedTypesInState, undeclaredElements, disallowedTypeElements, invalidTypeElements }
 

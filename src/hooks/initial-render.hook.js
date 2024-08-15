@@ -13,19 +13,20 @@ import {
     /* Interfaces */
     /* DeveloperTools */
     DebugService,
+    debug,
     trace,
     m
 } from '../app-index'
 
 /* Trace vars */
-const run = false
-const file = ''
+const run = true
+const file = 'useInitialRender'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export function useInitialRender(componentName) {
     const isFirstRender = useRef(true)
-
+    // console.log(componentName)
     if (isFirstRender.current) {
         trace(run) && log(...msg('Init', componentName))
         isFirstRender.current = false

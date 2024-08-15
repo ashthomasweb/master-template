@@ -1,4 +1,7 @@
 import {
+    /* Firebase */
+    useFirebase,
+    FirebaseInitialization,
     getAuth,
     signOut,
     // signInWithRedirect,
@@ -8,11 +11,6 @@ import {
     onAuthStateChanged,
     browserLocalPersistence,
     signInWithPopup,
-} from 'firebase/auth'
-import {
-    /* Firebase */
-    initializeFirebase,
-    FirebaseInitialization,
     /* Components */
     /* Context */
     /* Views */
@@ -29,6 +27,7 @@ import {
     /* Interfaces */
     CRUDInterface,
     /* DeveloperTools */
+    DebugService,
     debug,
     trace,
     m
@@ -37,17 +36,19 @@ import {
 /* Trace vars */
 const run = false
 const file = 'FirebaseAuthService'
-const msg = (copy, fileName = file) => m(copy, fileName)
+const msg = (copy, fileName = file) => m(copy, fileName) // Must use absolute method call due to order of imports to declarations at runtime ...
 /* END Trace vars */
 
-class FirebaseAuthService {
+class firebaseAuthService {
     mainDispatch = null
     auth = null
     app = FirebaseInitialization.app
 
-    constructor(initializeFirebase) {
-        if (initializeFirebase) {
-            c('test')
+    constructor(useFirebase) {
+        debug && trace(run) && log(...msg('Init')) // Must use absolute method call due to order of imports to declarations at runtime ...
+
+        // console.log('%cTRACE: FBAuth Init', 'color: green; font-weight: 900')
+        if (useFirebase) {
             this.auth = getAuth()
             setPersistence(this.auth, browserLocalPersistence).then(async () => {
                 this.listenToAuthStateChanges()
@@ -71,7 +72,6 @@ class FirebaseAuthService {
         console.log(this.auth)
         getRedirectResult(this.auth)
             .then((result) => {
-                console.log('TRACE: redirectThen', result)
                 if (result) {
                     // This gives you a Google Access Token. You can use it to access the Google API
                     const credential = GoogleAuthProvider.credentialFromResult(result)
@@ -143,10 +143,10 @@ class FirebaseAuthService {
     setNullUserToState() {
         const payload = {
             userObj: null,
-            userName: 'User'
+            userName: null
         }
         this.mainDispatch({ payload })
     }
 }
 
-export default new FirebaseAuthService(initializeFirebase)
+export default firebaseAuthService

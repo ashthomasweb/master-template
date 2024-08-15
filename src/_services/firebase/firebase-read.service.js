@@ -23,17 +23,21 @@ import {
     trace,
     m
 } from '../../app-index'
-
+import debugService from '../debug.service'
 /* Trace vars */
 const run = false
 const file = 'FirebaseReadService'
-const msg = (copy, fileName = file) => m(copy, fileName)
+const msg = (copy, fileName = file) => debugService.m(copy, fileName)
 /* END Trace vars */
 
-class FirebaseReadService {
+class firebaseReadService {
     mainDispatch = null
     app = FirebaseInitialization.app
     db = FirebaseInitialization.db
+
+    constructor() {
+        debug && trace(run) && log(...msg('Init'))
+    }
 
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
@@ -67,4 +71,4 @@ class FirebaseReadService {
     }
 }
 
-export default new FirebaseReadService()
+export default firebaseReadService

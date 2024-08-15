@@ -28,10 +28,16 @@ const file = 'FirebaseUpdateService'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-class FirebaseUpdateService {
+class firebaseUpdateService {
     mainDispatch = null
     app = FirebaseInitialization.app
     db = FirebaseInitialization.db
+
+    constructor() {
+        debug && trace(run) && log(...msg('Init'))
+        
+        // console.log('%cTRACE: FBUpdate Init', 'color: green; font-weight: 900')
+    }
 
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
@@ -50,4 +56,4 @@ class FirebaseUpdateService {
     }
 }
 
-export default new FirebaseUpdateService()
+export default firebaseUpdateService

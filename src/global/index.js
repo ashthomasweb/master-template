@@ -1,4 +1,5 @@
 import { createRoot } from "react-dom/client"
+// import App from '../global/App'
 import {
     /* Firebase */
     /* Context */
@@ -14,10 +15,20 @@ import {
     /* Types */
     /* Interfaces */
     /* DeveloperTools */
-    DebugService
+    DebugService,
+    debug,
+    trace,
+    m
 } from '../app-index'
 
-DebugService.assignGlobals()
+/* Trace vars */
+const run = false
+const file = 'index.js'
+const msg = (copy, fileName = file) => m(copy, fileName)
+/* END Trace vars */
+
+debug && trace(run) && log(...msg('Init'))
+
 
 const container = document.getElementById("app")
 const root = createRoot(container)

@@ -14,20 +14,83 @@
 * Usage Rights: Not for public use or redistribution.
 *
 */
-
+// debug && console.log('app-index Init')
+console.log('%cTRACE: AppIndex Init', 'color: green; font-weight: 900')
 import { lazy as lazyLoad } from 'react'
+
+
+/* DeveloperTools */
+import DebugService from './_services/debug.service'
+const trace = DebugService.trace
+const m = DebugService.m
+const debug = DebugService.debug
+DebugService.assignGlobals()
+
+export {
+    trace,
+    m,
+    debug,
+    DebugService
+}
 
 /********************* INDEXED IMPORTS *********************/
 
+import { initializeApp } from "firebase/app"
+import { getFirestore } from 'firebase/firestore'
+
 /* Firebase */
-import { initializeFirebase } from './_services/firebase/firebase-init.service'
-import FirebaseInitialization from './_services/firebase/firebase-init.service'
-import FirebaseAuthService from './_services/firebase/firebase-auth.service'
-import FirebaseCreateService from './_services/firebase/firebase-create.service'
-import FirebaseReadService from './_services/firebase/firebase-read.service'
-import FirebaseUpdateService from './_services/firebase/firebase-update.service'
-import FirebaseDeleteService from './_services/firebase/firebase-delete.service'
 import { setDoc } from 'firebase/firestore'
+import {
+    getAuth,
+    signOut,
+    // signInWithRedirect,
+    GoogleAuthProvider,
+    getRedirectResult,
+    setPersistence,
+    onAuthStateChanged,
+    browserLocalPersistence,
+    signInWithPopup,
+} from 'firebase/auth'
+import { useFirebase } from './_services/firebase/firebase-init.service'
+import firebaseInitialization from './_services/firebase/firebase-init.service'
+import firebaseAuthService from './_services/firebase/firebase-auth.service'
+import firebaseCreateService from './_services/firebase/firebase-create.service'
+import firebaseReadService from './_services/firebase/firebase-read.service'
+import firebaseUpdateService from './_services/firebase/firebase-update.service'
+import firebaseDeleteService from './_services/firebase/firebase-delete.service'
+const FirebaseInitialization = new firebaseInitialization()
+const FirebaseAuthService = new firebaseAuthService(useFirebase)
+const FirebaseCreateService = new firebaseCreateService()
+const FirebaseReadService = new firebaseReadService()
+const FirebaseUpdateService = new firebaseUpdateService()
+const FirebaseDeleteService = new firebaseDeleteService()
+
+
+
+
+
+export {
+    useFirebase,
+    initializeApp,
+    FirebaseInitialization,
+    FirebaseAuthService,
+    FirebaseCreateService,
+    FirebaseReadService,
+    FirebaseUpdateService,
+    FirebaseDeleteService,
+    getFirestore,
+    setDoc,
+    getAuth,
+    signOut,
+    // signInWithRedirect,
+    GoogleAuthProvider,
+    getRedirectResult,
+    setPersistence,
+    onAuthStateChanged,
+    browserLocalPersistence,
+    signInWithPopup,
+}
+
 
 /* Context */
 import ContextValidator from './__context/ContextValidator'
@@ -60,7 +123,6 @@ import { useInitialRender as logComponentInit } from './hooks/initial-render.hoo
 /* Service Classes */
 import DataService from './_services/data.service'
 import DisplayService from './_services/display.service'
-import DebugService from './_services/debug.service'
 import ThemeService from './_services/theme.service'
 
 /* Utility Functions */
@@ -97,24 +159,10 @@ import { User } from './types/data-types'
 import AuthInterface from './interfaces/auth.interface'
 import CRUDInterface from './interfaces/crud-interface'
 
-/* DeveloperTools */
-const trace = DebugService.trace
-const m = DebugService.m
-const debug = DebugService.debug
+
 
 /********************* EXPORTS *********************/
 
-/* Firebase */
-export {
-    initializeFirebase,
-    FirebaseInitialization,
-    FirebaseAuthService,
-    FirebaseCreateService,
-    FirebaseReadService,
-    FirebaseUpdateService,
-    FirebaseDeleteService,
-    setDoc
-}
 
 /* Context */
 export {
@@ -148,7 +196,6 @@ export {
 export {
     DataService,
     DisplayService,
-    DebugService,
     ThemeService
 }
 
@@ -190,9 +237,3 @@ export {
     CRUDInterface
 }
 
-/* DeveloperTools */
-export {
-    trace,
-    m,
-    debug,
-}

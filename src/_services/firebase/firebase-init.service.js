@@ -1,8 +1,10 @@
-import { initializeApp } from "firebase/app"
-import { getFirestore } from 'firebase/firestore'
+
 import dotenv from 'dotenv'
+dotenv.config()
 import {
     /* Firebase */
+    initializeApp,
+    getFirestore,
     /* Components */
     /* Context */
     /* Views */
@@ -15,17 +17,16 @@ import {
     /* Types */
     /* Interfaces */
     /* DeveloperTools */
+    DebugService,
     debug,
     trace,
     m
 } from '../../app-index'
 
-dotenv.config()
-
 /* Trace vars */
 const run = false
 const file = 'FirebaseInitialization'
-const msg = (copy, fileName = file) => m(copy, fileName)
+const msg = (copy, fileName = file) => m(copy, fileName) // Must use absolute method call due to order of imports to declarations at runtime ...
 /* END Trace vars */
 
 const firebaseConfig = {
@@ -37,21 +38,22 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_APP_ID
 }
 
-
 /* Template for .env 
-REACT_APP_API_KEY:
-REACT_APP_AUTH_DOMAIN:
-REACT_APP_PROJECT_ID:
-REACT_APP_STORAGE_BUCKET:
-REACT_APP_MESSAGING_SENDER_ID:
-REACT_APP_APP_ID:
+REACT_APP_API_KEY=...
+REACT_APP_AUTH_DOMAIN=...
+REACT_APP_PROJECT_ID=...
+REACT_APP_STORAGE_BUCKET=...
+REACT_APP_MESSAGING_SENDER_ID=...
+REACT_APP_APP_ID=...
 ** END Tempalte */
 
 /* Boolean switch to turn ON or OFF Firebase services */
-export const initializeFirebase = false
+export const useFirebase = true
 
 class FirebaseInitialization {
     constructor() {
+        debug && trace(run) && log(...msg('Init')) // Must use absolute method call due to order of imports to declarations at runtime ...
+        
         try {
             this.app = initializeApp(firebaseConfig)
             this.db = getFirestore(this.app)
@@ -62,4 +64,4 @@ class FirebaseInitialization {
     }
 }
 
-export default new FirebaseInitialization()
+export default FirebaseInitialization

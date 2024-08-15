@@ -2,6 +2,7 @@ class ThemeService {
     mainDispatch = null
     
     constructor() {
+        console.log('%cTRACE: ThemeService Init', 'color: green; font-weight: 900')
         this.appViewRef = null 
     }
     

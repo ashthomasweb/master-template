@@ -26,6 +26,10 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 class DisplayService {
     mainDispatch = null
 
+    constructor() {
+        console.log('%cTRACE: DisplayService Init', 'color: green; font-weight: 900')
+    }
+
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
     }
