@@ -1,10 +1,8 @@
 import {
-    doc,
-    updateDoc,
-} from 'firebase/firestore'
-import {
     /* Firebase */
     FirebaseInitialization,
+    doc,
+    updateDoc,
     /* Components */
     /* Context */
     /* Views */
@@ -35,8 +33,6 @@ class firebaseUpdateService {
 
     constructor() {
         debug && trace(run) && log(...msg('Init'))
-        
-        // console.log('%cTRACE: FBUpdate Init', 'color: green; font-weight: 900')
     }
 
     setLocalDispatch(dispatch) {

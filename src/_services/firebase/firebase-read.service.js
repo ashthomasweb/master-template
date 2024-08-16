@@ -1,12 +1,10 @@
 import {
+    /* Firebase */
+    FirebaseInitialization,
     doc,
     collection,
     getDocs,
     getDoc,
-} from 'firebase/firestore'
-import {
-    /* Firebase */
-    FirebaseInitialization,
     /* Components */
     /* Context */
     /* Views */
@@ -23,11 +21,11 @@ import {
     trace,
     m
 } from '../../app-index'
-import debugService from '../debug.service'
+
 /* Trace vars */
 const run = false
 const file = 'FirebaseReadService'
-const msg = (copy, fileName = file) => debugService.m(copy, fileName)
+const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 class firebaseReadService {

@@ -1,4 +1,3 @@
-
 import dotenv from 'dotenv'
 dotenv.config()
 import {
@@ -26,7 +25,7 @@ import {
 /* Trace vars */
 const run = false
 const file = 'FirebaseInitialization'
-const msg = (copy, fileName = file) => m(copy, fileName) // Must use absolute method call due to order of imports to declarations at runtime ...
+const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 const firebaseConfig = {
@@ -52,7 +51,7 @@ export const useFirebase = true
 
 class FirebaseInitialization {
     constructor() {
-        debug && trace(run) && log(...msg('Init')) // Must use absolute method call due to order of imports to declarations at runtime ...
+        debug && trace(run) && log(...msg('Init'))
         
         try {
             this.app = initializeApp(firebaseConfig)

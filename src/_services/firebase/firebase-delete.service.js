@@ -1,12 +1,10 @@
 import {
+    /* Firebase */
+    FirebaseInitialization,
     doc,
     updateDoc,
     deleteDoc,
     deleteField,
-} from 'firebase/firestore'
-import {
-    /* Firebase */
-    FirebaseInitialization,
     /* Components */
     /* Context */
     /* Views */

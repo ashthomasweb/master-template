@@ -29,6 +29,7 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 
 export default function App() {
     debug && logComponentInit(file)
+    debug && DebugService.validateInitialState('MainContext', initialMainState) && log('Initial State Validated')
 
     return (
         <MainProvider>

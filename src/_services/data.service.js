@@ -23,15 +23,16 @@ const file = 'DataService'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-class DataService {
-    constructor() {
-        console.log('%cTRACE: DataService Init', 'color: green; font-weight: 900')
-    }
+class dataService {
     mainDispatch = null
+
+    constructor() {
+        debug && trace(run) && log(...msg('Init'))
+    }
 
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
     }
 }
 
-export default new DataService()
+export default dataService

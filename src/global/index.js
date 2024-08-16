@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client"
-// import App from '../global/App'
 import {
     /* Firebase */
     /* Context */
@@ -28,7 +27,6 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 debug && trace(run) && log(...msg('Init'))
-
 
 const container = document.getElementById("app")
 const root = createRoot(container)

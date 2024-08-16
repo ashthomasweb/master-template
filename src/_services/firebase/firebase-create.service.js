@@ -1,13 +1,10 @@
 import {
-    doc,
-    collection,
-    addDoc,
-    // setDoc,
-} from 'firebase/firestore'
-import {
     /* Firebase */
     FirebaseInitialization,
     setDoc,
+    doc,
+    collection,
+    addDoc,
     /* Components */
     /* Context */
     /* Views */

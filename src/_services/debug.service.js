@@ -14,36 +14,26 @@ import {
     /* Types */
     /* Interfaces */
     /* DeveloperTools */
-    debug,
-    trace,
-    m
 } from '../app-index'
 
 /* Trace vars */
 const run = false
 const file = 'DebugService'
-const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 class DebugService {
     mainDispatch = null
 
     constructor() {
-        console.log('%cTRACE: DebugService Init', 'color: green; font-weight: 900')
-
         /* Boolean switches controlling trace and debug behavior */
         this.debug = true // Turn on Init/Rerenders, initial state validation, and custom defined functions ...
-        this.logRerenders = true
-        this.forceTrace = true // Run all traces in all files ...
-
+        this.logRerenders = false
+        this.forceTrace = false // Run all traces in all files ...
+        
         /* Binding for trace functions */
         this.m = this.m.bind(this)
         this.trace = this.trace.bind(this)
-
-        /* Console function re-assignments */
-        this.c = console.log
-        this.d = console.dir
-
+        
         /* Trace styles */
         this.styles = [
             'color: green',
@@ -54,10 +44,16 @@ class DebugService {
             'padding: 0 4px;',
             'font-weight: 900;'
         ].join(';')
-    }
 
+        this.initTrace()
+    }
+    
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
+    }
+    
+    initTrace() {
+        this.debug && this.trace(run) && console.log(...this.m('Init', file)) // Must use direct methods as this service is the first to load in the app ...
     }
 
     trace(fileTrace = true) {

@@ -1,10 +1,8 @@
 import {
     /* Firebase */
-    useFirebase,
     FirebaseInitialization,
     getAuth,
     signOut,
-    // signInWithRedirect,
     GoogleAuthProvider,
     getRedirectResult,
     setPersistence,

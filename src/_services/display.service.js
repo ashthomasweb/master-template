@@ -23,11 +23,11 @@ const file = 'DisplayService'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-class DisplayService {
+class displayService {
     mainDispatch = null
 
     constructor() {
-        console.log('%cTRACE: DisplayService Init', 'color: green; font-weight: 900')
+        debug && trace(run) && log(...msg('Init'))
     }
 
     setLocalDispatch(dispatch) {
@@ -36,4 +36,4 @@ class DisplayService {
 
 }
 
-export default new DisplayService()
+export default displayService

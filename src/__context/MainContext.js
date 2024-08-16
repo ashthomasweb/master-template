@@ -10,10 +10,10 @@ import {
     ContextValidator,
     /* Views */
     /* Custom Hooks */
-    logComponentInit,
     /* Service Classes */
     DisplayService,
     DataService,
+    ThemeService,
     /* Utility Functions */
     /* Assets */
     /* Icons */
@@ -26,17 +26,14 @@ import {
     trace,
     m
 } from '../app-index'
-import ThemeService from "../_services/theme.service"
 
 /* Trace vars */
-const t = false
+const run = false
 const file = 'MainProvider'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export const MainContext = createContext()
-// debug && log(...msg('MainContext init'))
-console.log('%cTRACE: MainContext Init', 'color: green; font-weight: 900')
 
 export const initialMainState = {
     userName: null,
@@ -66,7 +63,7 @@ const MainReducer = (state, action) => {
 }
 
 const MainProvider = (props) => {
-    debug && logComponentInit(file)
+    debug && trace(run) && log(...msg('Init'))
 
     const [mainState, mainDispatch] = useReducer(MainReducer, initialMainState)
 
