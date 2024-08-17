@@ -15,6 +15,7 @@ import {
     /* Interfaces */
     /* DeveloperTools */
     debug,
+    logInit,
     trace,
     m
 } from '../app-index'

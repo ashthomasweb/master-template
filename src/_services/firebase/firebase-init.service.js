@@ -18,6 +18,7 @@ import {
     /* DeveloperTools */
     DebugService,
     debug,
+    logInit,
     trace,
     m
 } from '../../app-index'
@@ -51,7 +52,7 @@ export const useFirebase = true
 
 class FirebaseInitialization {
     constructor() {
-        debug && trace(run) && log(...msg('Init'))
+        logInit && log(...msg('Init'))
         
         try {
             this.app = initializeApp(firebaseConfig)

@@ -27,6 +27,7 @@ import {
     /* DeveloperTools */
     DebugService,
     debug,
+    logInit,
     trace,
     m
 } from '../../app-index'
@@ -43,7 +44,7 @@ class firebaseAuthService {
     app = FirebaseInitialization.app
 
     constructor(useFirebase) {
-        debug && trace(run) && log(...msg('Init')) // Must use absolute method call due to order of imports to declarations at runtime ...
+        logInit && log(...msg('Init')) // Must use absolute method call due to order of imports to declarations at runtime ...
 
         // console.log('%cTRACE: FBAuth Init', 'color: green; font-weight: 900')
         if (useFirebase) {

@@ -27,8 +27,11 @@ class DebugService {
     constructor() {
         /* Boolean switches controlling trace and debug behavior */
         this.debug = true // Turn on Init/Rerenders, initial state validation, and custom defined functions ...
-        this.logRerenders = false
+        this.logEvents = true
+        this.logInit = true
+        this.logRerenders = true
         this.forceTrace = false // Run all traces in all files ...
+        this.clearConsoleOnEvent = true
         
         /* Binding for trace functions */
         this.m = this.m.bind(this)
@@ -45,6 +48,21 @@ class DebugService {
             'font-weight: 900;'
         ].join(';')
 
+        this.userEventStyles = [
+            'color: black',
+            'background: yellow',
+            'font-size: 14px',
+            'border-top: 1px solid black',
+            'border-left: 1px solid black',
+            'padding: 0 4px;',
+            'font-weight: 900;',
+            'margin-left: 20px;'
+        ].join(';')
+
+        this.indentStyle = [
+            'margin-left: 20px;'
+        ].join(';')
+
         this.initTrace()
     }
     
@@ -53,7 +71,7 @@ class DebugService {
     }
     
     initTrace() {
-        this.debug && this.trace(run) && console.log(...this.m('Init', file)) // Must use direct methods as this service is the first to load in the app ...
+        this.logInit && console.log(...this.m('Init', file)) // Must use direct methods as this service is the first to load in the app ...
     }
 
     trace(fileTrace = true) {
@@ -71,6 +89,22 @@ class DebugService {
     assignGlobals() {
         window.log = window.console.log
         window.dir = window.console.dir
+    }
+    
+    logUserEvents() {
+        window.addEventListener('click', (e) => {
+            this.clearConsoleOnEvent && console.clear()
+            setTimeout(() => {
+                log(`\n%cUser Click Event`, this.userEventStyles)
+                log('%cTarget: ', this.indentStyle, e.target)
+                if (e.target.value) {
+                    log('%cValue: ', this.indentStyle, e.target.value)
+                }
+                if (Object.entries(e.target.dataset).length > 0) {
+                    log(`%cDataset: `, this.indentStyle, e.target.dataset)
+                }
+            }, 0)
+        })
     }
 
     testValidator() {

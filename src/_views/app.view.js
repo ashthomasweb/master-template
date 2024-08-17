@@ -19,6 +19,7 @@ import {
     /* Interfaces */
     /* DeveloperTools */
     debug,
+    logInit,
     trace,
     m
 } from '../app-index'
@@ -31,7 +32,7 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export default function AppView() {
-    debug && logComponentInit(file)
+    logInit && logComponentInit(file)
 
     const {
         mainState: {

@@ -10,6 +10,7 @@ import {
     ContextValidator,
     /* Views */
     /* Custom Hooks */
+    logComponentInit,
     /* Service Classes */
     DisplayService,
     DataService,
@@ -23,6 +24,7 @@ import {
     /* DeveloperTools */
     DebugService,
     debug,
+    logInit,
     trace,
     m
 } from '../app-index'
@@ -63,7 +65,7 @@ const MainReducer = (state, action) => {
 }
 
 const MainProvider = (props) => {
-    debug && trace(run) && log(...msg('Init'))
+    logInit && logComponentInit(file)
 
     const [mainState, mainDispatch] = useReducer(MainReducer, initialMainState)
 

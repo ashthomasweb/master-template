@@ -27,12 +27,15 @@ import DebugService from './_services/debug.service'
 const trace = DebugService.trace
 const m = DebugService.m
 const debug = DebugService.debug
+const logInit = DebugService.logInit
 DebugService.assignGlobals()
+DebugService.logEvents && DebugService.logUserEvents()
 
 export {
     trace,
     m,
     debug,
+    logInit,
     DebugService
 }
 

@@ -18,6 +18,7 @@ import {
     /* Interfaces */
     /* DeveloperTools */
     debug,
+    logInit,
     trace,
     m
 } from '../../app-index'
@@ -34,7 +35,7 @@ class firebaseReadService {
     db = FirebaseInitialization.db
 
     constructor() {
-        debug && trace(run) && log(...msg('Init'))
+        logInit && log(...msg('Init'))
     }
 
     setLocalDispatch(dispatch) {

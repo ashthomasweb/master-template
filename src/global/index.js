@@ -16,6 +16,7 @@ import {
     /* DeveloperTools */
     DebugService,
     debug,
+    logInit,
     trace,
     m
 } from '../app-index'
@@ -26,7 +27,7 @@ const file = 'index.js'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-debug && trace(run) && log(...msg('Init'))
+logInit && log(...msg('Init'))
 
 const container = document.getElementById("app")
 const root = createRoot(container)

@@ -13,6 +13,7 @@ import {
     /* Interfaces */
     /* DeveloperTools */
     debug,
+    logInit,
     trace,
     m
 } from '../app-index'
@@ -27,7 +28,7 @@ class dataService {
     mainDispatch = null
 
     constructor() {
-        debug && trace(run) && log(...msg('Init'))
+        logInit && log(...msg('Init'))
     }
 
     setLocalDispatch(dispatch) {

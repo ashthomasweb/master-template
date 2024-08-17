@@ -16,6 +16,7 @@ import {
     /* Interfaces */
     /* DeveloperTools */
     debug,
+    logInit,
     trace,
     m
 } from '../app-index'
@@ -27,7 +28,7 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export default function ContentView(props) {
-    debug && logComponentInit(file)
+    logInit && logComponentInit(file)
 
     const {
         mainState: {

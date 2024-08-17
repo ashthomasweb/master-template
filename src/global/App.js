@@ -18,6 +18,7 @@ import {
     /* DeveloperTools */
     DebugService,
     debug,
+    logInit,
     m
 } from '../app-index'
 
@@ -28,7 +29,7 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export default function App() {
-    debug && logComponentInit(file)
+    logInit && logComponentInit(file)
     debug && DebugService.validateInitialState('MainContext', initialMainState) && log('Initial State Validated')
 
     return (

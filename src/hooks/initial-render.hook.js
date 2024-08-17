@@ -14,6 +14,7 @@ import {
     /* DeveloperTools */
     DebugService,
     debug,
+    logInit,
     trace,
     m
 } from '../app-index'
@@ -28,9 +29,22 @@ export function useInitialRender(componentName) {
     const isFirstRender = useRef(true)
     // console.log(componentName)
     if (isFirstRender.current) {
-        trace(run) && log(...msg('Init', componentName))
-        isFirstRender.current = false
+        if (DebugService.clearConsoleOnEvent) {
+            setTimeout(() => {
+                logInit && log(...msg('Init', componentName))
+                isFirstRender.current = false
+            }, 0)
+        } else {
+            logInit && log(...msg('Init', componentName))
+                isFirstRender.current = false
+        }
     } else {
-        DebugService.logRerenders && trace(run) && log(...msg('Re-render', componentName))
+        if (DebugService.clearConsoleOnEvent) {
+            setTimeout(() => {
+                DebugService.logRerenders && trace(run) && log(...msg('Re-render', componentName))
+            }, 0)
+        } else {
+            DebugService.logRerenders && trace(run) && log(...msg('Re-render', componentName))
+        }
     }
 }

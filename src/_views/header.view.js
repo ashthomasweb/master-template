@@ -21,9 +21,9 @@ import {
     /* DeveloperTools */
     DebugService,
     debug,
+    logInit,
     trace,
     m,
-    promiseTest,
     ThemeToggle
 } from '../app-index'
 import ThemeService from '../_services/theme.service'
@@ -35,7 +35,7 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export default function HeaderView() {
-    debug && logComponentInit(file)
+    logInit && logComponentInit(file)
 
     const {
         mainState: {
@@ -53,7 +53,7 @@ export default function HeaderView() {
     })
 
     const toggleModal = ({ target }) => {
-        trace(run) && log(...msg('togalModal'))
+        trace(run) && log(...msg('toggleModal'))
 
         const newHeaderDisplayConditions = { ...headerModalDisplay }
         const selectedMenu = target.dataset.menutype
