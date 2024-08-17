@@ -8,6 +8,16 @@
     transition: $arguments;
 }
 
+// Transistion all properties of element mixin for multi-browser support ...
+// Pass arguments as comma separated values, just like normal ...
+@mixin transitionAll($timing...) {
+    -webkit-transition: $timing;
+    -moz-transition: $timing;
+    -ms-transition: $timing;
+    -o-transition: $timing;
+    transition: $timing;
+}
+
 // Transform mixin for multi-browser support
 // Pass arguments as comma separated values, just like normal ...
 @mixin transform($arguments...) {

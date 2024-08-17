@@ -1,9 +1,8 @@
-import { useContext } from 'react'
 import {
     /* Firebase */
+    FirebaseAuthService,
     /* Components */
     /* Context */
-    MainContext,
     /* Views */
     /* Custom Hooks */
     /* Service Classes */
@@ -21,19 +20,19 @@ import {
 } from '../../app-index'
 
 /* Trace vars */
-const run = false
-const file = 'NEW'
+const t = false
+const file = ''
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-export default function NEW() {
-    const {
-        mainState: {
-        }
-    } = useContext(MainContext)
+class AuthInterface {
+    userLogin() {
+        FirebaseAuthService.firebaseSignIn()
+    }
 
-    return (
-        <div>
-        </div>
-    )
+    userLogout() {
+        FirebaseAuthService.firebaseSignOut()
+    }
 }
+
+export default new AuthInterface()

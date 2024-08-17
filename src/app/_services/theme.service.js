@@ -1,9 +1,7 @@
-import { useContext } from 'react'
 import {
     /* Firebase */
     /* Components */
     /* Context */
-    MainContext,
     /* Views */
     /* Custom Hooks */
     /* Service Classes */
@@ -22,18 +20,30 @@ import {
 
 /* Trace vars */
 const run = false
-const file = 'NEW'
+const file = 'ThemeService'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-export default function NEW() {
-    const {
-        mainState: {
-        }
-    } = useContext(MainContext)
 
-    return (
-        <div>
-        </div>
-    )
+class themeService {
+    mainDispatch = null
+    
+    constructor() {
+        logInit && log(...msg('Init'))
+        
+        this.appViewRef = null 
+    }
+    
+    setLocalDispatch(dispatch) {
+        this.mainDispatch = dispatch
+    }
+
+    switchTheme(input) {
+        const payload = {
+            theme: input === 'night' ? 'day' : 'night'
+        }
+        this.mainDispatch({ payload })
+    }
 }
+
+export default themeService

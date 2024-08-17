@@ -1,9 +1,7 @@
-import { useContext } from 'react'
 import {
     /* Firebase */
     /* Components */
     /* Context */
-    MainContext,
     /* Views */
     /* Custom Hooks */
     /* Service Classes */
@@ -22,18 +20,21 @@ import {
 
 /* Trace vars */
 const run = false
-const file = 'NEW'
+const file = 'DisplayService'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-export default function NEW() {
-    const {
-        mainState: {
-        }
-    } = useContext(MainContext)
+class displayService {
+    mainDispatch = null
 
-    return (
-        <div>
-        </div>
-    )
+    constructor() {
+        logInit && log(...msg('Init'))
+    }
+
+    setLocalDispatch(dispatch) {
+        this.mainDispatch = dispatch
+    }
+
 }
+
+export default displayService

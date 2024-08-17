@@ -1,9 +1,9 @@
-import { useContext } from 'react'
+import { createRoot } from "react-dom/client"
 import {
     /* Firebase */
-    /* Components */
     /* Context */
-    MainContext,
+    /* Components */
+    App,
     /* Views */
     /* Custom Hooks */
     /* Service Classes */
@@ -14,6 +14,7 @@ import {
     /* Types */
     /* Interfaces */
     /* DeveloperTools */
+    DebugService,
     debug,
     logInit,
     trace,
@@ -22,18 +23,12 @@ import {
 
 /* Trace vars */
 const run = false
-const file = 'NEW'
+const file = 'index.js'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-export default function NEW() {
-    const {
-        mainState: {
-        }
-    } = useContext(MainContext)
+logInit && log(...msg('Init'))
 
-    return (
-        <div>
-        </div>
-    )
-}
+const container = document.getElementById("app")
+const root = createRoot(container)
+root.render(<App />)

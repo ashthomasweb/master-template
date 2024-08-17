@@ -1,5 +1,5 @@
 // Declare re-usable function to set variables from style map as dynamically built above
-@function style($property) {
+@function useTheme($property) {
     @return var(--#{$property});
 }
 

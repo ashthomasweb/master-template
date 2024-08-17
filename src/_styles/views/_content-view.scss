@@ -1,9 +1,12 @@
 .content-view {
     height: calc(100% - $header-height);
     border: 5px solid blue;
+    background-color: useTheme(greyScale7);
+    color: useTheme(textColor);
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
     z-index: 0;
+    @include transitionAll(0.2s);
 }

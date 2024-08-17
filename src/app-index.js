@@ -23,13 +23,15 @@ DebugService.debug && DebugService.trace(run) && console.log(...DebugService.m('
 
 /* DeveloperTools */
 import { lazy as lazyLoad } from 'react'
-import DebugService from './_services/debug.service'
+import DebugService from './app/_services/debug.service'
 const trace = DebugService.trace
 const m = DebugService.m
 const debug = DebugService.debug
 const logInit = DebugService.logInit
 DebugService.assignGlobals()
 DebugService.logEvents && DebugService.logUserEvents()
+debug && timer('App load to Auth')
+debug && timer('App load to ContentView')
 
 export {
     trace,
@@ -64,18 +66,18 @@ import {
     browserLocalPersistence,
     signInWithPopup,
 } from 'firebase/auth'
-import { useFirebase } from './_services/firebase/firebase-init.service'
-import firebaseInitialization from './_services/firebase/firebase-init.service'
+import { useFirebase } from './app/_services/firebase/firebase-init.service'
+import firebaseInitialization from './app/_services/firebase/firebase-init.service'
 const FirebaseInitialization = new firebaseInitialization()
-import firebaseAuthService from './_services/firebase/firebase-auth.service'
+import firebaseAuthService from './app/_services/firebase/firebase-auth.service'
 const FirebaseAuthService = new firebaseAuthService(useFirebase)
-import firebaseCreateService from './_services/firebase/firebase-create.service'
+import firebaseCreateService from './app/_services/firebase/firebase-create.service'
 const FirebaseCreateService = new firebaseCreateService()
-import firebaseReadService from './_services/firebase/firebase-read.service'
+import firebaseReadService from './app/_services/firebase/firebase-read.service'
 const FirebaseReadService = new firebaseReadService()
-import firebaseUpdateService from './_services/firebase/firebase-update.service'
+import firebaseUpdateService from './app/_services/firebase/firebase-update.service'
 const FirebaseUpdateService = new firebaseUpdateService()
-import firebaseDeleteService from './_services/firebase/firebase-delete.service'
+import firebaseDeleteService from './app/_services/firebase/firebase-delete.service'
 const FirebaseDeleteService = new firebaseDeleteService()
 
 export {
@@ -109,14 +111,14 @@ export {
 
 
 /* Components */
-import App from './global/App'
-import AppView from './_views/app.view'
-import UserAuth from './_components/user-auth.component'
-import ThemeToggle from './_components/theme-toggle.component'
+import App from './app/global/App'
+import AppView from './app/_views/app.view'
+import UserAuth from './app/_components/user-auth.component'
+import ThemeToggle from './app/_components/theme-toggle.component'
 
 const SettingsMenu = lazyLoad(() => {
     return Promise.all([
-        import('./_components/settings-menu.component'),
+        import('./app/_components/settings-menu.component'),
         new Promise(resolve => setTimeout(resolve, 500))
     ]).then(([component]) => component)
 }) // Example of lazyLoading a component with delay ... TODO: Refactor?
@@ -131,8 +133,8 @@ export {
 
 
 /* Views */
-import HeaderView from './_views/header.view'
-import ContentView from './_views/content.view'
+import HeaderView from './app/_views/header.view'
+import ContentView from './app/_views/content.view'
 
 export {
     HeaderView,
@@ -141,7 +143,7 @@ export {
 
 
 /* Custom Hooks */
-import { useInitialRender as logComponentInit } from './hooks/initial-render.hook'
+import { useInitialRender as logComponentInit } from './app/hooks/initial-render.hook'
 
 export {
     logComponentInit
@@ -149,9 +151,9 @@ export {
 
 
 /* Service Classes */
-import dataService from './_services/data.service'
-import displayService from './_services/display.service'
-import themeService from './_services/theme.service'
+import dataService from './app/_services/data.service'
+import displayService from './app/_services/display.service'
+import themeService from './app/_services/theme.service'
 const ThemeService = new themeService()
 const DataService = new dataService()
 const DisplayService = new displayService()
@@ -174,7 +176,7 @@ import {
     lengthEquivalent,
     genNewId,
     genNewAlphaNumId
-} from './_utilities/global.utilities'
+} from './app/_utilities/global.utilities'
 
 export {
     getStrTag,
@@ -196,8 +198,8 @@ export {
 
 
 /* Configs */
-import DataPaths from './config/data-paths'
-import { errorConfigs } from './config/error-configs'
+import DataPaths from './app/config/data-paths'
+import { errorConfigs } from './app/config/error-configs'
 
 export {
     DataPaths,
@@ -211,8 +213,8 @@ import {
     FirebaseReadOptions,
     FirebaseUpdateOptions,
     FirebaseDeleteOptions
-} from './types/firebase-types'
-import { User } from './types/data-types'
+} from './app/types/firebase-types'
+import { User } from './app/types/data-types'
 
 export {
     FirebaseCreateOptions,
@@ -224,8 +226,8 @@ export {
 
 
 /* Interfaces */
-import AuthInterface from './interfaces/auth.interface'
-import CRUDInterface from './interfaces/crud-interface'
+import AuthInterface from './app/interfaces/auth.interface'
+import CRUDInterface from './app/interfaces/crud-interface'
 
 export {
     AuthInterface,
@@ -234,12 +236,12 @@ export {
 
 
 /* Context */
-import ContextValidator from './__context/ContextValidator'
-import MainProvider from './__context/MainContext'
+import ContextValidator from './app/__context/ContextValidator'
+import MainProvider from './app/__context/MainContext'
 import {
     MainContext,
     initialMainState
-} from './__context/MainContext'
+} from './app/__context/MainContext'
 
 export {
     MainProvider,

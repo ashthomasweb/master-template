@@ -1,11 +1,12 @@
 import { useContext } from 'react'
 import {
     /* Firebase */
-    /* Components */
     /* Context */
     MainContext,
+    /* Components */
     /* Views */
     /* Custom Hooks */
+    logComponentInit,
     /* Service Classes */
     /* Utility Functions */
     /* Assets */
@@ -22,18 +23,21 @@ import {
 
 /* Trace vars */
 const run = false
-const file = 'NEW'
+const file = 'ContentView'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-export default function NEW() {
+export default function ContentView(props) {
+    logInit && logComponentInit(file)
+    debug && timerEnd('App load to ContentView')
+
     const {
-        mainState: {
-        }
+        mainState: {}
     } = useContext(MainContext)
 
     return (
-        <div>
+        <div className='content-view'>
+            {props.children}
         </div>
     )
 }

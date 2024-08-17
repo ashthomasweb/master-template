@@ -7,6 +7,7 @@ import {
     /* Views */
     /* Custom Hooks */
     /* Service Classes */
+    ThemeService,
     /* Utility Functions */
     /* Assets */
     /* Icons */
@@ -22,18 +23,27 @@ import {
 
 /* Trace vars */
 const run = false
-const file = 'NEW'
+const file = ''
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-export default function NEW() {
+export default function ThemeToggle() {
     const {
         mainState: {
+            theme
         }
     } = useContext(MainContext)
 
+    const handleThemeToggle = () => {
+        ThemeService.switchTheme(theme)
+    }
+
     return (
-        <div>
+        <div className='theme-toggle-container'>
+            <label className="switch">
+                <input type="checkbox" checked={theme === 'night'} onClick={handleThemeToggle} readOnly/>
+                    <span className="slider round"></span>
+            </label>
         </div>
     )
 }

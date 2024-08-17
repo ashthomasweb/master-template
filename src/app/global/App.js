@@ -1,11 +1,13 @@
-import { useContext } from 'react'
 import {
     /* Firebase */
-    /* Components */
     /* Context */
-    MainContext,
+    MainProvider,
+    initialMainState,
+    /* Components */
+    AppView,
     /* Views */
     /* Custom Hooks */
+    logComponentInit,
     /* Service Classes */
     /* Utility Functions */
     /* Assets */
@@ -14,26 +16,26 @@ import {
     /* Types */
     /* Interfaces */
     /* DeveloperTools */
+    DebugService,
     debug,
     logInit,
-    trace,
     m
 } from '../../app-index'
 
 /* Trace vars */
 const run = false
-const file = 'NEW'
+const file = 'App'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-export default function NEW() {
-    const {
-        mainState: {
-        }
-    } = useContext(MainContext)
+export default function App() {
+    logInit && logComponentInit(file)
+    debug && DebugService.validateInitialState('MainContext', initialMainState) && log('Initial State Validated')
 
     return (
-        <div>
-        </div>
+        <MainProvider>
+            <AppView />
+        </MainProvider>
     )
 }
+

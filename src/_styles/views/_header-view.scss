@@ -1,14 +1,17 @@
 .header-view {
     height: $header-height;
     border: 5px solid grey;
-    background-color: style(bgColor);
-    color: style(textColor);
+    background-color: useTheme(greyScale5);
+    color: useTheme(textColor);
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    @include transitionAll(0.2s);
 
     button {
         padding: 6px 12px;
+        background-color: useTheme(commonButton);
+        color: useTheme(commonButtonText)
     }
 }
