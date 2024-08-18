@@ -34,3 +34,9 @@ $border-color           : #DADADA;
 // Component Variables
 $modal-header-height    : 60px;
 $header-height          : 80px;
+
+// Icon Styles
+$standard-icon-size     : 20px;
+.standard-svg-icon {
+    height: $standard-icon-size
+}

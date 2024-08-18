@@ -24,7 +24,11 @@ import {
     logInit,
     trace,
     m,
-    ThemeToggle
+    ThemeToggle,
+    // moonIcon,
+    SVGIcon,
+    // settingsIcon,
+    iconPaths
 } from '../../app-index'
 import ThemeService from '../_services/theme.service'
 
@@ -69,11 +73,20 @@ export default function HeaderView() {
         DebugService.testValidator()
     }
 
+    const testIconParsing = () => {
+        DebugService.parsePathFASVG(moonIcon)
+    }
+
     return (
         <div className='header-view'>
-            <button type='button' data-menutype='settings' onClick={toggleModal}>Settings Menu</button>
-            <button type='button' onClick={testValidation}>Test</button>
+            <button type='button' data-menutype='settings' onClick={toggleModal}>
+                <SVGIcon src={iconPaths.settings} />
+                Settings Menu
+                </button>
+            <button type='button' onClick={testIconParsing}>Test</button>
             <ThemeToggle />
+            <SVGIcon src={iconPaths.warning} />
+
             {
                 headerModalDisplay.settings
                     ?

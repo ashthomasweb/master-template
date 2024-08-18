@@ -9,9 +9,17 @@
     align-items: center;
     @include transitionAll(0.2s);
 
+
     button {
         padding: 6px 12px;
         background-color: useTheme(commonButton);
-        color: useTheme(commonButtonText)
+        color: useTheme(commonButtonText);
+
+        svg {
+            fill: useTheme(settingsIcon);
+            width: 34px;
+            height: 34px;
+            pointer-events: none;
+        }
     }
 }

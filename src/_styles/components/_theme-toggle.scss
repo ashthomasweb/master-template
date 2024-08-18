@@ -1,4 +1,15 @@
 .theme-toggle-container {
+    @include displayFlex();
+
+    .icon-container {
+        width: 34px;
+        margin-right: 10px;
+
+        svg {
+            fill: useTheme(sliderIcon);
+        }
+    }
+
     .switch {
         position: relative;
         display: inline-block;

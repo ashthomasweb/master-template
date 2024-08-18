@@ -32,11 +32,11 @@ class DebugService {
         this.forceTrace = false // Run all traces in all files ...
         this.logEvents = false
         this.clearConsoleOnEvent = false // Output clean traces on each user click event
-        
+
         /* Binding for trace functions */
         this.m = this.m.bind(this)
         this.trace = this.trace.bind(this)
-        
+
         /* Trace styles */
         this.styles = [
             'color: green',
@@ -65,11 +65,11 @@ class DebugService {
 
         this.initTrace()
     }
-    
+
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
     }
-    
+
     initTrace() {
         this.logInit && console.log(...this.m('Init', file)) // Must use direct methods as this service is the first to load in the app ...
     }
@@ -85,14 +85,14 @@ class DebugService {
     validateInitialState(contextName, initialState) {
         return ContextValidator.validate(initialState, initialState, contextName)
     }
-    
+
     assignGlobals() {
         window.log = window.console.log
         window.dir = window.console.dir
         window.timer = window.console.time
         window.timerEnd = window.console.timeEnd
     }
-    
+
     logUserEvents() {
         window.addEventListener('click', (e) => {
             this.clearConsoleOnEvent && console.clear()
@@ -117,6 +117,8 @@ class DebugService {
         }
         this.mainDispatch({ payload })
     }
+
+  
 }
 
 export default new DebugService()

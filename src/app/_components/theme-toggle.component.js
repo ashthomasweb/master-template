@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import {
     /* Firebase */
     /* Components */
+    SVGIcon,
     /* Context */
     MainContext,
     /* Views */
@@ -11,6 +12,9 @@ import {
     /* Utility Functions */
     /* Assets */
     /* Icons */
+    iconPaths,
+    // sunIcon,
+
     /* Configs */
     /* Types */
     /* Interfaces */
@@ -20,6 +24,7 @@ import {
     trace,
     m
 } from '../../app-index'
+// import iconPaths from '../config/icon-paths'
 
 /* Trace vars */
 const run = false
@@ -40,9 +45,16 @@ export default function ThemeToggle() {
 
     return (
         <div className='theme-toggle-container'>
+            <div className='icon-container'>
+                {theme === 'day'
+                    ? <SVGIcon src={iconPaths.sun}  />
+                    : <SVGIcon src={iconPaths.moon}  />
+                }
+            </div>
+
             <label className="switch">
-                <input type="checkbox" checked={theme === 'night'} onClick={handleThemeToggle} readOnly/>
-                    <span className="slider round"></span>
+                <input type="checkbox" checked={theme === 'night'} onClick={handleThemeToggle} readOnly />
+                <span className="slider round"></span>
             </label>
         </div>
     )

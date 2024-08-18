@@ -115,20 +115,21 @@ import App from './app/global/App'
 import AppView from './app/_views/app.view'
 import UserAuth from './app/_components/user-auth.component'
 import ThemeToggle from './app/_components/theme-toggle.component'
-
-const SettingsMenu = lazyLoad(() => {
+const SettingsMenu = lazyLoad(() => { // Example of lazyLoading a component with delay ... TODO: Refactor?
     return Promise.all([
         import('./app/_components/settings-menu.component'),
         new Promise(resolve => setTimeout(resolve, 500))
     ]).then(([component]) => component)
-}) // Example of lazyLoading a component with delay ... TODO: Refactor?
+}) 
+import SVGIcon from './app/_components/svg-icon.component'
 
 export {
     App,
     AppView,
     UserAuth,
     SettingsMenu,
-    ThemeToggle
+    ThemeToggle,
+    SVGIcon
 }
 
 
@@ -195,6 +196,10 @@ export {
 
 
 /* Icons */
+import { iconSVGPathDStrings as iconPaths } from './_assets/icons/icon-paths.js'
+export {
+    iconPaths
+}
 
 
 /* Configs */
@@ -203,7 +208,7 @@ import { errorConfigs } from './app/config/error-configs'
 
 export {
     DataPaths,
-    errorConfigs
+    errorConfigs,
 }
 
 
