@@ -41,9 +41,9 @@ export const initialMainState = {
     userName: null,
     userObj: null,
     theme: 'night',
+    testArray: [1, 2, 3, 4, [10, { key: 'value' }]],
 
     /* Test values */
-    // testArray: [1, 2, 3, 4, [10, { key: 'value' }]],
     // testObjectLit: {
         // test: 'value'
     // },

@@ -2,6 +2,7 @@ import {
     /* Firebase */
     /* Components */
     /* Context */
+    initialMainStateTypes,
     /* Views */
     /* Custom Hooks */
     /* Service Classes */
@@ -12,6 +13,7 @@ import {
     isObjLit,
     getLength,
     lengthEquivalent,
+    getParsedTypeFromStrTag,
     /* Assets */
     /* Icons */
     /* Configs */
@@ -66,7 +68,7 @@ class ContextValidator {
 
         
         const buildError = (array, errorArrays, payload) => {
-            const payloadType = getStrTag(payload).replace('[object ', '').replace(']', '').toLowerCase()
+            const payloadType = getParsedTypeFromStrTag(getStrTag(payload))
             const arrayName = Object.keys(errorArrays).find(key => errorArrays[key] === array)
             if (getLength(array) > 0) {
                 console.error(errorConfigs[payloadType][arrayName].replace(/ContextName/g, contextName), array)

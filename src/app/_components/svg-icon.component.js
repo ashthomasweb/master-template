@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useRef, useState, useReducer, useEffect } from 'react'
 import {
     /* Firebase */
     /* Components */
@@ -32,8 +32,27 @@ export default function SVGIcon({ src, fill }) {
         }
     } = useContext(MainContext)
 
+    const pathRef = useRef(null)
+    const [transform, setTransform] = useState('')
+
+    useEffect(() => {
+        if (pathRef.current) {
+
+            const bbox = pathRef.current.getBBox()
+
+            const svgWidth = 512
+            const svgHeight = 512
+
+            const xCenter = (svgWidth - bbox.width) / 2 - bbox.x
+            const yCenter = (svgHeight - bbox.height) / 2 - bbox.y
+
+            setTransform(`translate(${xCenter}, ${yCenter})`)
+        }
+    })
 
     return (
-        <svg className='standard-svg-icon' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" ><path fill={fill} d={ src } /></svg>
+        <div className='svg-icon-container'>
+            <svg className='standard-svg-icon' xmlns="http://www.w3.org/2000/svg" viewBox={`0 0 512 512`} ><path transform={transform} ref={pathRef} fill={fill} d={src} /></svg>
+        </div>
     )
 }

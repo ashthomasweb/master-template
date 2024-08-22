@@ -69,28 +69,27 @@ export default function HeaderView() {
         setHeaderModalDisplay(newHeaderDisplayConditions)
     }
 
-    const testValidation = () => {
-        DebugService.testValidator()
-    }
-
-    const testIconParsing = () => {
-        DebugService.parsePathFASVG(moonIcon)
-    }
-
     return (
         <div className='header-view'>
             <button type='button' data-menutype='settings' onClick={toggleModal}>
-                <SVGIcon src={iconPaths.settings} />
-                Settings Menu
-                </button>
-            <button type='button' onClick={testIconParsing}>Test</button>
+                <span>Settings</span>
+                <span>
+                    <SVGIcon src={iconPaths.settings} />
+                </span>
+            </button>
             <ThemeToggle />
-            <SVGIcon src={iconPaths.warning} />
 
             {
                 headerModalDisplay.settings
                     ?
-                    <Suspense fallback={<div style={{position: 'absolute', top: '45vh', left: '45vw'}}>Loading ...</div>}>
+                    <Suspense
+                        fallback={
+                            <div className='standard-loading-spinner' >
+                                <SVGIcon src={iconPaths.spinner} />
+                                Loading ...
+                            </div>
+                        }
+                    >
                         <SettingsMenu isOpen={headerModalDisplay.settings} />
                     </Suspense>
                     : null

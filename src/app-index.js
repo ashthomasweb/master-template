@@ -118,7 +118,7 @@ import ThemeToggle from './app/_components/theme-toggle.component'
 const SettingsMenu = lazyLoad(() => { // Example of lazyLoading a component with delay ... TODO: Refactor?
     return Promise.all([
         import('./app/_components/settings-menu.component'),
-        new Promise(resolve => setTimeout(resolve, 500))
+        new Promise(resolve => setTimeout(resolve, 10000))
     ]).then(([component]) => component)
 }) 
 import SVGIcon from './app/_components/svg-icon.component'
@@ -176,7 +176,8 @@ import {
     checkLength,
     lengthEquivalent,
     genNewId,
-    genNewAlphaNumId
+    genNewAlphaNumId,
+    getParsedTypeFromStrTag
 } from './app/_utilities/global.utilities'
 
 export {
@@ -188,7 +189,8 @@ export {
     checkLength,
     lengthEquivalent,
     genNewId,
-    genNewAlphaNumId
+    genNewAlphaNumId,
+    getParsedTypeFromStrTag
 }
 
 
@@ -243,9 +245,11 @@ export {
 /* Context */
 import ContextValidator from './app/__context/ContextValidator'
 import MainProvider from './app/__context/MainContext'
+import { initialMainStateTypes } from './app/__context/MainContext'
 import {
     MainContext,
-    initialMainState
+    initialMainState,
+    initialMainStateTypes
 } from './app/__context/MainContext'
 
 export {

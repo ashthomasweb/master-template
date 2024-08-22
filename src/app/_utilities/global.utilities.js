@@ -26,6 +26,10 @@ export const lengthEquivalent = (input1, input2) => {
     return input1.length === input2.length
 }
 
+export const getParsedTypeFromStrTag = (input) => {
+    return input.replace('[object ', '').replace(']').toLowerCase()
+}
+
 export const genNewId = (idLength, forceString = true) => { // TODO: Refactor
     let concatString = ''
     for (let i = 0; i < 4; i++) {
