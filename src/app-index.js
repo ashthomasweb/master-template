@@ -118,7 +118,7 @@ import ThemeToggle from './app/_components/theme-toggle.component'
 const SettingsMenu = lazyLoad(() => { // Example of lazyLoading a component with delay ... TODO: Refactor?
     return Promise.all([
         import('./app/_components/settings-menu.component'),
-        new Promise(resolve => setTimeout(resolve, 10000))
+        new Promise(resolve => setTimeout(resolve, 500))
     ]).then(([component]) => component)
 }) 
 import SVGIcon from './app/_components/svg-icon.component'

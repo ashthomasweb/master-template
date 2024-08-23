@@ -1,4 +1,18 @@
 // Simple Typography Settings - courtesy of Adam Marsden
+@font-face {
+    font-family: Quicksand;
+    src: url("../_assets/fonts/copy/Quicksand-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: NotoSansReg;
+    src: url("../_assets/fonts/display/NotoSansDisplay-VariableFont.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: NotoSansItal;
+    src: url("../_assets/fonts/display/NotoSansDisplay-Italic-VariableFont.ttf") format("truetype");
+}
 
 // Normalize type across browsers
 *, html, body {
