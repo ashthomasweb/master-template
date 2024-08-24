@@ -1,4 +1,6 @@
 // Simple Typography Settings - courtesy of Adam Marsden
+
+// Font import paths must be relative to the primary 'styles.scss' file, not where they are declared ...
 @font-face {
     font-family: Quicksand;
     src: url("../_assets/fonts/copy/Quicksand-VariableFont_wght.ttf") format("truetype");
@@ -14,6 +16,16 @@
     src: url("../_assets/fonts/display/NotoSansDisplay-Italic-VariableFont.ttf") format("truetype");
 }
 
+@font-face {
+    font-family: OpenSansReg;
+    src: url("../_assets/fonts/copy/OpenSans-VariableFont.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: OpenSansItal;
+    src: url("../_assets/fonts/copy/OpenSans-Italic-VariableFont.ttf") format("truetype");
+}
+
 // Normalize type across browsers
 *, html, body {
     font-size: $base-font-size;
@@ -22,14 +34,16 @@
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
     -ms-text-size-adjust: 100%;
+    letter-spacing: 0.5px;
 }
 
 // Headers
 h1, h2, h3, h4, h5, h6 {
     margin-top: $hTag-margin * 1.5;
-    color: $hTag-color;
+    color: useTheme(textColor);
     line-height: $hTag-line-height;
     font-weight: 700;
+    font-family: NotoSansReg;
 
     &:first-child {
         margin-top: 0;
@@ -71,7 +85,7 @@ p {
     margin-bottom: $paragraph-margin;
     font-size: $paragraph-size;
     line-height: $paragraph-line-height;
-    color: $paragraph-color;
+    color: useTheme(textColor);
 
     &:last-of-type {
         margin-bottom: 0;
