@@ -1,26 +1,38 @@
 .theme-toggle-container {
-    @include displayFlex();
 
     .icon-container {
-        width: 16px;
-        margin-right: 10px;
-        pointer-events: none;
         @include transitionAll(.4s);
         position: relative;
         @include zIndex(aboveBacking);
-        position: relative;
-        top: 4.5px;
+        top: 4px;
         left: 9px;
+        cursor: pointer;
+        @include dimensions(26px, 26px);
+        left: 4px;
+        bottom: 4px;
+        background-color: useTheme(sliderThumb);
+        @include transitionAll(.4s);
+        @include dropShadow(1px 2px 5px $cPureBlack);
+        @include borderRadius(50%);
+        @include displayFlex();
+        @include flexCenter();
+
+        .svg-icon-container {
+            @include dimensions(80%, 80%);
+        }
 
         &.isNight {
-            -webkit-transform: translateX(26px);
-            -ms-transform: translateX(26px);
-            transform: translateX(26px);
+            @include transform(translateX(26px));
         }
 
         svg {
             fill: useTheme(sliderIcon);
-            pointer-events: none;
+            @include transitionAll(.4s);
+            cursor: pointer;
+
+            &:hover {
+                transform: scale(.9);
+            }
         }
     }
 
@@ -31,58 +43,24 @@
     }
 
     .switch input {
-        opacity: 1;
-        width: 10px;
-        height: 10px;
+        visibility: hidden;
     }
 
     .slider {
         position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
+        inset: 0;
         background-color: useTheme(sliderBacking);
-        -webkit-transition: .4s;
-        transition: .4s;
-        outline: 2px solid useTheme(greyScale2);
-        box-shadow: inset 0 0 17px 4px #00000090;
-    }
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: useTheme(sliderThumb);
-        -webkit-transition: .4s;
-        transition: .4s;
-        @include dropShadow(1px 2px 5px $cPureBlack);
+        @include transitionAll(.4s);
+        outline: 2px solid useTheme(greyScale1);
+        @include boxShadow(inset 0 0 12px 2px #00000072);
+        @include borderRadius(34px);
     }
 
     input:checked+.slider {
         background-color: useTheme(sliderChecked);
     }
 
-    // input:focus+.slider {
-    //     box-shadow: 0 0 1px useTheme(sliderChecked);
-    // }
-
-    input:checked+.slider:before {
-        -webkit-transform: translateX(26px);
-        -ms-transform: translateX(26px);
-        transform: translateX(26px);
-    }
-
-    /* Rounded sliders */
-    .slider.round {
-        border-radius: 34px;
-    }
-
-    .slider.round:before {
-        border-radius: 50%;
+    input:checked+.slider-thumb {
+        @include transform(translateX(26px));
     }
 }

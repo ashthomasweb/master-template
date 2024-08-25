@@ -53,6 +53,7 @@ export default function ThemeToggle() {
             <label className="switch">
                 <input type="checkbox" checked={isChecked} onClick={handleThemeToggle} readOnly />
                 <span className="slider round">
+                    <div className='slider-thumb'></div>
                     <div className={`icon-container ${isChecked ? 'isNight' : ''}`}>
                         {theme === 'day'
                             ? <SVGIcon src={iconPaths.sun} />
