@@ -1,5 +1,5 @@
-// Transistion mixin for multi-browser support
-// Pass arguments as comma separated values, just like normal ...
+// Transition mixin for multi-browser support
+// Pass arguments as comma separated values, just like normal
 @mixin transition($arguments...) {
     -webkit-transition: $arguments;
     -moz-transition: $arguments;
@@ -8,8 +8,8 @@
     transition: $arguments;
 }
 
-// Transistion all properties of element mixin for multi-browser support ...
-// Pass arguments as comma separated values, just like normal ...
+// Transition all properties of element mixin for multi-browser support
+// Pass arguments as comma separated values, just like normal
 @mixin transitionAll($timing...) {
     -webkit-transition: $timing;
     -moz-transition: $timing;
@@ -19,7 +19,7 @@
 }
 
 // Transform mixin for multi-browser support
-// Pass arguments as comma separated values, just like normal ...
+// Pass arguments as comma separated values, just like normal
 @mixin transform($arguments...) {
     -webkit-transform: $arguments;
     -moz-transform: $arguments;
@@ -42,6 +42,12 @@
     box-shadow: $properties;
 }
 
+@mixin dropShadow($properties) {
+    -webkit-filter: drop-shadow($properties);
+    -moz-filter: drop-shadow($properties);
+    filter: drop-shadow($properties);
+}
+
 @mixin borderRadius($radius) {
     -webkit-border-radius: $radius;
     -moz-border-radius: $radius;
@@ -50,18 +56,7 @@
     border-radius: $radius;
 }
 
-$zIndex: (
-    headerView: 100,
-    contentView: 100,
-    contentModal: 200,
-    headerModal: 200,
-);
-
-@function zIndex($element) {
-    @return map-get($map: $zIndex, $key: $element );
+@mixin dimensions($width, $height) {
+    width: $width;
+    height: $height;
 }
-
-@mixin zIndex($element) {
-    z-index: zIndex($element);
-}
-

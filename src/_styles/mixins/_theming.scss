@@ -7,7 +7,7 @@ $styleModes: (
         sliderThumb: $cWhiteLight,
         sliderBacking: $cWhiteDark,
         sliderChecked: $cLinks,
-        sliderIcon: rgb(91, 91, 128),
+        sliderIcon: $cPrimaryDark,
         commonButton: $cPrimaryLightest,
         commonButtonText: $cTypographyDark,
         settingsIcon: $cLinks,
@@ -32,10 +32,10 @@ $styleModes: (
     day: (bgColor: $cWhite,
         textColor: $cTypographyDark,
         textContrasting: $cTypographyLight,
-        sliderThumb: $cPrimaryDark,
-        sliderBacking: $cGreyLightest,
+        sliderThumb: $cLinks,
+        sliderBacking: $cPrimaryLightest,
         sliderChecked: $cLinks,
-        sliderIcon: yellow,
+        sliderIcon: $cWhiteLight,
         commonButton: $cPrimaryLightest,
         commonButtonText: $cTypographyDark,
         settingsIcon: $cLinks,
@@ -79,5 +79,5 @@ $styleModes: (
     }
 }
 
-// Include the 'use-style' mixin in the current application context
+// Call the 'use-style' mixin and build all theme variables in the current application context
 @include use-style($styleModes)
