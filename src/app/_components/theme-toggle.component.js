@@ -29,6 +29,8 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 export default function ThemeToggle() {
+    logInit && logComponentInit(file)
+
     const {
         mainState: {
             theme
@@ -44,7 +46,6 @@ export default function ThemeToggle() {
 
     return (
         <div className='theme-toggle-container'>
-
 
             <label className="switch">
                 <input type="checkbox" checked={isChecked} onClick={handleThemeToggle} readOnly />

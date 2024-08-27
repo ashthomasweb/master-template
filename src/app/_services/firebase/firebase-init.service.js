@@ -25,7 +25,7 @@ import {
 
 /* Trace vars */
 const run = false
-const file = 'FirebaseInitialization'
+const file = 'FirebaseInitializationService'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
@@ -52,6 +52,7 @@ export const useFirebase = true
 
 class FirebaseInitialization {
     constructor() {
+        /* Log class initialization */
         logInit && log(...msg('Init'))
         
         try {

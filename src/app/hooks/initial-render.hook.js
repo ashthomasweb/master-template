@@ -27,7 +27,7 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 
 export function useInitialRender(componentName) {
     const isFirstRender = useRef(true)
-    // console.log(componentName)
+
     if (isFirstRender.current) {
         if (DebugService.clearConsoleOnEvent) {
             setTimeout(() => {

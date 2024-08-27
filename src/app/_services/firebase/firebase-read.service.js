@@ -35,6 +35,7 @@ class firebaseReadService {
     db = FirebaseInitialization.db
 
     constructor() {
+        /* Log class initialization */
         logInit && log(...msg('Init'))
     }
 

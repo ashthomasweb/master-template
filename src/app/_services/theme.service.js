@@ -24,14 +24,14 @@ const file = 'ThemeService'
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
-
 class themeService {
     mainDispatch = null
     
     constructor() {
-        logInit && log(...msg('Init'))
-        
         this.appViewRef = null 
+
+        /* Log class initialization */
+        logInit && log(...msg('Init'))
     }
     
     setLocalDispatch(dispatch) {

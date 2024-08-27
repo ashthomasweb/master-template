@@ -44,34 +44,29 @@ class DebugService {
             'font-size: 14px',
             'border-top: 1px solid cyan',
             'border-left: 1px solid cyan',
-            'padding: 0 4px;',
-            'font-weight: 900;'
+            'padding: 0 4px',
+            'font-weight: 900'
         ].join(';')
-
         this.userEventStyles = [
             'color: black',
             'background: yellow',
             'font-size: 14px',
             'border-top: 1px solid black',
             'border-left: 1px solid black',
-            'padding: 0 4px;',
-            'font-weight: 900;',
-            'margin-left: 20px;'
+            'padding: 0 4px',
+            'font-weight: 900',
+            'margin-left: 20px'
         ].join(';')
-
         this.indentStyle = [
             'margin-left: 20px;'
         ].join(';')
 
-        this.initTrace()
+        /* Call trace on Service initialization -  Must use methods called directly from Service Class as this service is the first to load in the app */
+        this.logInit && console.log(...this.m('Init', file))
     }
 
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
-    }
-
-    initTrace() {
-        this.logInit && console.log(...this.m('Init', file)) // Must use direct methods as this service is the first to load in the app ...
     }
 
     trace(fileTrace = true) {

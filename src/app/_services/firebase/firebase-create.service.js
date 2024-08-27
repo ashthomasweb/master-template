@@ -35,9 +35,10 @@ class firebaseCreateService {
     db = FirebaseInitialization.db
 
     constructor() {
+        /* Log class initialization */
         logInit && log(...msg('Init'))
     }
-    
+
     setLocalDispatch(dispatch) {
         this.mainDispatch = dispatch
     }

@@ -1,39 +1,40 @@
 .modal-container {
     position: absolute;
-    top: 50%;
+    top: calc(50% + $header-height / 2);
     left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
+    @include zIndex(contentModal);
+    @include transform(translate(-50%, -50%));
     overflow: hidden;
+    border: 4px solid useTheme(greyScale1);
+    max-width: 90%;
+    max-height: 80%;
+    @include dimensions(800px, 600px);
+    max-width: 90vw;
 
     .menu-modal {
-        background-color: #555;
         display: none;
-        flex-direction: column;
-        justify-content: flex-start;
-
+        background-color: useTheme(greyScale3);
+        height: 100%;
+        
         &.isOpen {
-            display: flex;
+            @include displayFlex();
+            @include flexJustify(flex-start);
+            @include flexDirection(column);
         }
 
         .modal-header {
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            height: $modal-header-height;
-            background-color: #333;
-            padding: 5px;
+            @include displayFlex();
+            @include flexJustify(space-between);
+            @include flexAlignItems(center);
+            padding: 5px 15px;
+            @include dimensions(100%, $modal-header-height);
+            background-color: useTheme(greyScale6);
             font-size: 1.1rem;
-            box-shadow: 0 -3px 6px 4px #000;
+            @include boxShadow(0 -3px 6px 4px #000);
         }
 
         &.settings-menu {
-            width: 800px;
-            height: 650px;
-            max-width: 90vw;
-
-            .content {}
+            // @include dimensions(100%, 650px);
         }
-
     }
 }

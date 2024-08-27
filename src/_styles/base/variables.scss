@@ -1,4 +1,4 @@
-/* *** Colors *** */
+/*** Colors ***/
 
 // Primary Color based off 'Alpha-Centauri' - #4d5778)
 $cPrimaryDark       : #363d54;
@@ -39,7 +39,8 @@ $cPureWhite         : #ffffff;
 
 $cTransparent       : transparent;
 
-/* *** Typography *** */
+/*** Typography ***/
+// TODO: HTag and Paragraph styles - particularly margins - need attention
 
 // Font Family
 $font-family            : 'OpenSansReg', serif;
@@ -51,30 +52,29 @@ $font-weight-reg        : 500;
 $font-weight-light      : 200;
 
 // Paragraph Styles
-$paragraph-color        : #505050;   // Associate with theme
+$paragraph-color        : useTheme(textColor);
 $paragraph-size         : rem(17px);
 $paragraph-line-height  : 1.5em;
 $paragraph-margin       : 20px;
 
 // Header (h1-h6) Styles
-$hTag-color             : #000000;     // Associate with theme
+$hTag-color             : useTheme(textColor);
 $hTag-rel-size          : rem(40px);
 $hTag-line-height       : 1.25em;
 $hTag-margin            : $paragraph-margin * 1.2;
 $hr-margin              : 10px;
 
 // Blockquote Styles
-$blockquote-color       : #505050;   // Associate with theme
+$blockquote-color       : useTheme(textColor);
 $blockquote-size        : rem(23px);
 $blockquote-line-height : 1.5em;
 $blockquote-margin      : $paragraph-margin * 1.5;
 
-
-/* *** Misc styles *** */
-$border-color           : #DADADA;   // Associate with theme
+/*** Misc styles ***/
 $standard-icon-size     : 25px;
+$scroll-bar-size        : 6px;
 
-/* *** Component Sizing Variables *** */
+/*** Component Sizing Variables ***/
 $modal-header-height    : 60px;
 $header-height          : 80px;
 

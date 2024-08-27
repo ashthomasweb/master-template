@@ -35,7 +35,7 @@ import {
 /* Trace vars */
 const run = false
 const file = 'FirebaseAuthService'
-const msg = (copy, fileName = file) => m(copy, fileName) // Must use absolute method call due to order of imports to declarations at runtime ...
+const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
 
 class firebaseAuthService {
@@ -44,9 +44,9 @@ class firebaseAuthService {
     app = FirebaseInitialization.app
 
     constructor(useFirebase) {
-        logInit && log(...msg('Init')) // Must use absolute method call due to order of imports to declarations at runtime ...
+        /* Log class initialization */
+        logInit && log(...msg('Init'))
 
-        // console.log('%cTRACE: FBAuth Init', 'color: green; font-weight: 900')
         if (useFirebase) {
             this.auth = getAuth()
             setPersistence(this.auth, browserLocalPersistence).then(async () => {

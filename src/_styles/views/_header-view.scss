@@ -1,25 +1,30 @@
 .header-view {
+    position: relative;
+    @include zIndex(headerView);
+    @include displayFlex();
+    @include flexJustify(space-between);
+    @include flexAlignItems(center);
+    @include flexDirection(row);
+    border-bottom: 1px solid useTheme(contrastScale1);
     height: $header-height;
-    border: 5px solid grey;
+    padding: 0 15px;
     background-color: useTheme(greyScale5);
     color: useTheme(textColor);
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
+    @include dropShadow(1px 2px 5px useTheme(boxShadow));
     @include transitionAll(0.2s);
-    padding: 0 10px;
-    @include flexJustify(space-between);
 
     button {
-        padding: 6px 12px;
-        background-color: useTheme(commonButton);
-        color: useTheme(commonButtonText);
-        @include alignItems(center);
         @include displayFlex();
+        @include flexAlignItems(center);
         gap: 10px;
         @include borderRadius(25px);
+        padding: 6px 12px;
         height: 34px;
+        background-color: useTheme(commonButton);
+        color: useTheme(commonButtonText);
+        @include dropShadow(1px 2px 5px useTheme(boxShadow));
+        outline: 2px solid useTheme(greyScale1);
+        font-weight: 600;
         border: none;
 
         span {
@@ -28,6 +33,8 @@
 
         svg {
             fill: useTheme(settingsIcon);
+            @include dropShadow(1px 2px 5px $cPrimaryLight);
+
         }
     }
 }

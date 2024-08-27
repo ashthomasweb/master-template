@@ -35,6 +35,7 @@ class firebaseDeleteService {
     db = FirebaseInitialization.db
 
     constructor() {
+        /* Log class initialization */
         logInit && log(...msg('Init'))
     }
 
@@ -73,9 +74,9 @@ class firebaseDeleteService {
         }
     }
 
+    
     // Delete an individual field in a document ...
-    // NOTE/ATTN/TODO: If the passed field is not present, custom handling is required to notify UI. No error will be produced from current implementation.
-    async deleteRecordField(options) {
+    async deleteRecordField(options) { // TODO: If the passed field is not present, custom handling is required to notify UI. No error will be produced from current implementation.
         const docRef = doc(this.db, options.basePath, options.pathExtension)
         const fieldObject = {}
         fieldObject[options.fieldToDelete] = deleteField()

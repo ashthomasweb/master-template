@@ -28,6 +28,7 @@ class displayService {
     mainDispatch = null
 
     constructor() {
+        /* Log class initialization */
         logInit && log(...msg('Init'))
     }
 

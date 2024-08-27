@@ -1,3 +1,6 @@
+// Import at initial build
+@import './mixins/general.scss';
+
 // Base
 @import './base/functions.scss';
 @import './base/variables.scss';
@@ -6,7 +9,7 @@
 
 // Mixins 
 @import './mixins/theming.scss';
-@import './mixins/general.scss';
+@import './mixins/z-index.scss';
 
 // Global
 @import './global/app.scss';
@@ -20,4 +23,42 @@
 @import './components/auth-modal.scss';
 @import './components/modal-styles.scss';
 @import './components/theme-toggle.scss';
+@import './components/loading-spinner.scss';
+@import './components/svg-icon.scss';
 
+
+/* CSS Ordering By Importance - Up for debate! */
+
+/* Positioning */
+//  position
+//  z-index
+//  top
+//  right
+
+/* Display & Box Model */
+//  display
+//  overflow
+//  box-sizing
+//  width
+//  height
+//  outline
+//  border
+//  margin
+//  padding
+
+/* Color */
+//  background
+//  color
+
+/* Text */
+//  font-family
+//  font-size
+//  line-height
+//  text-align
+
+/* Other */
+//  cursor
+//  transistion
+//  animation
+
+// NOTE: 'transform' declarations need to be placed under 'Positioning' or 'Display', by use-case

@@ -1,55 +1,39 @@
+/* Global container styles allowing for inner containers to have clear flexible dimensions */
 body {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
     position: relative;
-    font-size: 22px;
+    margin: 0;
+    @include dimensions(100vw, 100vh);
 }
 
 #app {
-    width: 100vw;
-    height: 100vh;
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    border: 5px solid green;
-}
-
-.standard-svg-icon {
-    height: $standard-icon-size;
-    @include displayFlex();
-}
-
-.svg-icon-container {
     @include displayFlex();
     @include flexCenter();
-    height: 100%;
-    width: 100%;
+    @include flexDirection(column);
+    flex-wrap: nowrap;
+    @include dimensions(100vw, 100vh);
 }
 
-.standard-loading-spinner {
-    position: absolute;
-    top: 45vh;
-    left: 50vw;
-    color: white;
-    font-size: 50;
-    z-index: 100;
-    transform: translateX(-50%);
-    margin-bottom: 10px;
+/* Scrollbar Styles */
 
-    svg {
-        animation: spinner 2.5s linear;
-        animation-iteration-count: infinite;
-        fill: useTheme(textColor);
-        height: 40px;
-    }
+::-webkit-scrollbar {
+    width: $scroll-bar-size;
+    height: $scroll-bar-size;
+}
 
-    @keyframes spinner {
-        0% {transform: translate(-50%, 0%) rotate(0deg)}
-        50% {transform: translate(-50%, 12%) rotate(180deg)}
-        100% {transform: translate(-50%, 0%) rotate(360deg)}
-    }
+::-webkit-scrollbar-track {
+    background: useTheme(greyScale3)
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: useTheme(greyScale1);
+    border-radius: calc($scroll-bar-size / 2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: useTheme(contrastScale4);
+}
+
+::-webkit-scrollbar-corner {
+    background-color: useTheme(greyScale1);
 }

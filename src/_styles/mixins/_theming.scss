@@ -1,7 +1,8 @@
 // A scss 'object' is called a map.
 // keys with nested 'maps' can be accessed, or looped over.
 $styleModes: (
-    night: (bgColor: $cGreyDark,
+    night: (
+        bgColor: $cGreyDark,
         textColor: $cTypographyLight,
         textContrasting: $cTypographyDark,
         sliderThumb: $cWhiteLight,
@@ -10,10 +11,10 @@ $styleModes: (
         sliderIcon: $cPrimaryDark,
         commonButton: $cPrimaryLightest,
         commonButtonText: $cTypographyDark,
-        settingsIcon: $cLinks,
+        settingsIcon: $cPrimary,
+        boxShadow: $cPureBlack,
 
-        // borderColor: ,
-        // boxShadow: ,
+        borderColor: $cWhiteDarkest,
         // primaryColor: ,
         // primaryLight: ,
         // primaryDark: ,
@@ -28,8 +29,17 @@ $styleModes: (
         greyScale3: $cGrey,
         greyScale2: $cGreyLight,
         greyScale1: $cGreyLightest,
+        /* Contrasting Greyscale */
+        contrastScale7: $cWhiteDarkest,
+        contrastScale6: $cWhiteDarker,
+        contrastScale5: $cWhiteDark,
+        contrastScale4: $cWhiteMid,
+        contrastScale3: $cWhite,
+        contrastScale2: $cWhiteLight,
+        contrastScale1: $cWhiteLightest,
     ),
-    day: (bgColor: $cWhite,
+    day: (
+        bgColor: $cWhite,
         textColor: $cTypographyDark,
         textContrasting: $cTypographyLight,
         sliderThumb: $cLinks,
@@ -38,10 +48,10 @@ $styleModes: (
         sliderIcon: $cWhiteLight,
         commonButton: $cPrimaryLightest,
         commonButtonText: $cTypographyDark,
-        settingsIcon: $cLinks,
+        settingsIcon: $cPrimary,
+        boxShadow: $cGreyLightest,
 
-        // borderColor: ,
-        // boxShadow: ,
+        borderColor: $cGreyLightest,
         // primaryColor: ,
         // primaryLight: ,
         // primaryDark: ,
@@ -56,6 +66,14 @@ $styleModes: (
         greyScale3: $cWhite,
         greyScale2: $cWhiteLight,
         greyScale1: $cWhiteLightest,
+        /* Contrasting Greyscale */
+        contrastScale7: $cGreyDarkest,
+        contrastScale6: $cGreyDarker,
+        contrastScale5: $cGreyDark,
+        contrastScale4: $cGreyMid,
+        contrastScale3: $cGrey,
+        contrastScale2: $cGreyLight,
+        contrastScale1: $cGreyLightest,
     ),
 );
 

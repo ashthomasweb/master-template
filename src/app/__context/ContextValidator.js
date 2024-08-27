@@ -2,7 +2,6 @@ import {
     /* Firebase */
     /* Components */
     /* Context */
-    initialMainStateTypes,
     /* Views */
     /* Custom Hooks */
     /* Service Classes */

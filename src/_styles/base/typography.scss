@@ -1,11 +1,6 @@
-// Simple Typography Settings - courtesy of Adam Marsden
+/*** Typography Settings - Inspired by Adam Marsden ***/
 
-// Font import paths must be relative to the primary 'styles.scss' file, not where they are declared ...
-@font-face {
-    font-family: Quicksand;
-    src: url("../_assets/fonts/copy/Quicksand-VariableFont_wght.ttf") format("truetype");
-}
-
+// Font import paths must be relative to the primary 'styles.scss' file, not where they are declared
 @font-face {
     font-family: NotoSansReg;
     src: url("../_assets/fonts/display/NotoSansDisplay-VariableFont.ttf") format("truetype");
@@ -26,7 +21,7 @@
     src: url("../_assets/fonts/copy/OpenSans-Italic-VariableFont.ttf") format("truetype");
 }
 
-// Normalize type across browsers
+/*** Normalize type across browsers ***/
 *, html, body {
     font-size: $base-font-size;
     font-family: $font-family;
@@ -37,17 +32,14 @@
     letter-spacing: 0.5px;
 }
 
-// Headers
+/*** Headers ***/
 h1, h2, h3, h4, h5, h6 {
     margin-top: $hTag-margin * 1.5;
     color: useTheme(textColor);
     line-height: $hTag-line-height;
     font-weight: 700;
     font-family: NotoSansReg;
-
-    &:first-child {
-        margin-top: 0;
-    }
+    margin-top: 0;
 }
 
 h1 {
@@ -80,7 +72,7 @@ h6 {
     margin-bottom: calc($hTag-margin / 2);
 }
 
-// Paragraphs
+/*** Paragraphs ***/
 p {
     margin-bottom: $paragraph-margin;
     font-size: $paragraph-size;
@@ -92,7 +84,7 @@ p {
     }
 }
 
-// Links
+/*** Links ***/
 a {
     color: $cLinks;
     transition: all 0.2s ease;
@@ -102,7 +94,7 @@ a {
     }
 }
 
-// Lists
+/*** Lists ***/
 ul,
 ol {
     margin: $paragraph-margin 0 0 20px;
@@ -110,7 +102,7 @@ ol {
     li {
         margin-top: 10px;
         line-height: $paragraph-line-height;
-        color: $paragraph-color;
+        color: $paragraph-color; // Associate with theme
     }
 
     ul,
@@ -140,25 +132,25 @@ ol {
     }
 }
 
-// hr
+/*** hr ***/
 hr {
     height: 1px;
     margin: $hr-margin 0;
     border: none;
-    background-color: $border-color;
+    background-color: useTheme(borderColor);
 }
 
-// Blockquote
+/*** Blockquote ***/
 blockquote {
     margin: $blockquote-margin 0;
     font-size: $blockquote-size;
     line-height: $blockquote-line-height;
-    color: $blockquote-color;
+    color: $blockquote-color; // Associate with theme
     text-align: center;
     font-style: italic;
 }
 
-// Tables
+/*** Tables ***/
 table {
     width: 100%;
     margin: $blockquote-margin 0;
@@ -166,7 +158,7 @@ table {
 }
 
 table, td, th {
-    border: 1px solid $border-color;
+    border: 1px solid useTheme(borderColor);
     text-align: left;
 }
 
@@ -178,7 +170,7 @@ th, td {
     padding: 15px;
 }
 
-// Figure
+/*** Figure ***/
 figure {
     margin: $blockquote-margin 0;
 
@@ -189,19 +181,31 @@ figure {
 
 figcaption {
     margin-top: 10px;
-    color: lighten($paragraph-color, 10%);
+    // color: lighten($paragraph-color, 10%); // 'darken & lighten' declarations can't be used with a 'useTheme' function inside of them - must be handled per use-case
     font-size: $paragraph-margin * 0.8;
 }
 
-// Code
+/*** Code ***/
+code {
+    position: relative;
+    padding: 5px 8px;
+    font-family: Courier New, Courier, monospace;
+    font-size: calc($paragraph-size / 1.2);
+    font-weight: 600;
+    color: useTheme(textColor);
+    line-height: 1em;
+    border: 1px solid useTheme(borderColor);
+    @include borderRadius(3px);
+}
+
 pre {
     display: block;
     margin: 0 0 40px 0;
     padding: 20px;
-    background-color: lighten($border-color, 12%);
-    border: 1px solid $border-color;
+    // background-color: lighten(useTheme(borderColor), 12%); // 'darken & lighten' declarations can't be used with a 'useTheme' function inside of them - must be handled per use-case
+    border: 1px solid useTheme(borderColor);
     overflow: auto;
-    border-radius: 3px;
+    @include borderRadius(3px);
 
     code {
         position: static;
@@ -211,20 +215,7 @@ pre {
     }
 }
 
-code {
-    position: relative;
-    top: -0.2em;
-    padding: 3px;
-    font-family: Courier New, Courier, monospace;
-    font-size: calc($paragraph-size / 1.2);
-    color: darken($border-color, 70%);
-    line-height: 1em;
-    pointer-events: none;
-    border: 1px solid $border-color;
-    border-radius: 3px;
-}
-
-// Misc Styles
+/*** Misc Styles ***/
 em,
 i,
 .italic {

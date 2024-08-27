@@ -1,20 +1,20 @@
 .content-view {
-    height: calc(100% - $header-height);
-    border: 5px solid blue;
-    background-color: useTheme(greyScale7);
-    color: useTheme(textColor);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
-    z-index: 0;
+    @include zIndex(base);
+    @include displayFlex();
+    @include flexAlignItems(center);
+    @include flexDirection(column);
+    overflow-y: auto;
+    padding: 35px 10px 15px;
+    height: calc(100% - $header-height);
+    background-color: useTheme(greyScale6);
+    text-align: center;
     @include transitionAll(0.2s);
-    flex-direction: column;
 
     p {
-        max-width: 70%;
-        font-size: 20px;
         margin-bottom: 30px;
+        max-width: 70%;
+        font-size: rem(20px);
     }
 
     h1 {
@@ -22,13 +22,11 @@
     }
 
     h2 {
-        margin-top: 0;
-        font-weight: 300;
+        font-weight: 350;
+        font-family: 'NotoSansItal';
     }
 
     code {
-        padding: 5px 8px;
-        color: useTheme(textColor);
-        font-size: 18px;
+        font-size: rem(18px);
     }
 }

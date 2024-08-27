@@ -1,27 +1,10 @@
-/**
-* FILENAME:
-*   app-index.js
-*
-* DESCRIPTION:
-*   Provides centralized location for all imports to route through.
-*
-* NOTES:
-*   - React Context cannot be routed through this file.
-*   - Assets included in static config objects / assets must be imported into the 
-*     declaration file directly.
-*
-* (c) Copyright Ashley Thomas
-* Usage Rights: Not for public use or redistribution.
-*
-*/
-
-/* Trace vars */
+/*** Trace vars ***/
 const run = false
 const file = 'app-index'
 DebugService.debug && DebugService.trace(run) && console.log(...DebugService.m('Init', file))
-/* END Trace vars */
+/*** END Trace vars ***/
 
-/* DeveloperTools */
+/* DeveloperTools ***/
 import { lazy as lazyLoad } from 'react'
 import DebugService from './app/_services/debug.service'
 const trace = DebugService.trace
@@ -42,7 +25,7 @@ export {
 }
 
 
-/* Firebase */
+/*** Firebase ***/
 import { initializeApp } from "firebase/app"
 import { getFirestore } from 'firebase/firestore'
 import { 
@@ -110,7 +93,7 @@ export {
 }
 
 
-/* Components */
+/*** Components ***/
 import App from './app/global/App'
 import AppView from './app/_views/app.view'
 import UserAuth from './app/_components/user-auth.component'
@@ -135,7 +118,7 @@ export {
 }
 
 
-/* Views */
+/*** Views ***/
 import HeaderView from './app/_views/header.view'
 import ContentView from './app/_views/content.view'
 
@@ -145,7 +128,7 @@ export {
 }
 
 
-/* Custom Hooks */
+/*** Custom Hooks ***/
 import { useInitialRender as logComponentInit } from './app/hooks/initial-render.hook'
 
 export {
@@ -153,7 +136,7 @@ export {
 }
 
 
-/* Service Classes */
+/*** Service Classes ***/
 import dataService from './app/_services/data.service'
 import displayService from './app/_services/display.service'
 import themeService from './app/_services/theme.service'
@@ -168,7 +151,7 @@ export {
 }
 
 
-/* Utility Functions */
+/*** Utility Functions ***/
 import {
     getStrTag,
     isTypeEquivalent,
@@ -196,17 +179,17 @@ export {
 }
 
 
-/* Assets */
+/*** Assets ***/
 
 
-/* Icons */
+/*** Icons ***/
 import { iconSVGPathDStrings as iconPaths } from './_assets/icons/icon-paths.js'
 export {
     iconPaths
 }
 
 
-/* Configs */
+/*** Configs ***/
 import DataPaths from './app/config/data-paths'
 import { errorConfigs } from './app/config/error-configs'
 
@@ -216,7 +199,7 @@ export {
 }
 
 
-/* Types */
+/*** Types ***/
 import {
     FirebaseCreateOptions,
     FirebaseReadOptions,
@@ -234,7 +217,7 @@ export {
 }
 
 
-/* Interfaces */
+/*** Interfaces ***/
 import AuthInterface from './app/interfaces/auth.interface'
 import CRUDInterface from './app/interfaces/crud-interface'
 
@@ -244,7 +227,7 @@ export {
 }
 
 
-/* Context */
+/*** Context ***/
 import ContextValidator from './app/__context/ContextValidator'
 import MainProvider from './app/__context/MainContext'
 import { initialMainStateTypes } from './app/__context/MainContext'

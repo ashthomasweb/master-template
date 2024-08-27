@@ -1,0 +1,24 @@
+
+.standard-loading-spinner {
+    position: absolute;
+    top: 45vh;
+    left: 50vw;
+    @include zIndex(aboveAll);
+    margin-bottom: 10px;
+    color: white;
+    font-size: 50;
+    transform: translateX(-50%);
+
+    svg {
+        height: 40px;
+        animation: spinner 2.5s linear infinite;
+        animation-iteration-count: infinite;
+        fill: useTheme(textColor);
+    }
+
+    @keyframes spinner {
+        0% {transform: translate(-50%, 0%) rotate(0deg)}
+        50% {transform: translate(-50%, 12%) rotate(180deg)}
+        100% {transform: translate(-50%, 0%) rotate(360deg)}
+    }
+}

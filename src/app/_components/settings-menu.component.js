@@ -1,9 +1,9 @@
-import { useContext } from 'react'
+// import { useContext } from 'react'
 import {
     /* Firebase */
     FirebaseAuthService,
     /* Context */
-    MainContext,
+    // MainContext,
     /* Components */
     /* Views */
     /* Custom Hooks */
@@ -31,10 +31,10 @@ const msg = (copy, fileName = file) => m(copy, fileName)
 export default function SettingsMenu(props) {
     logInit && logComponentInit(file)
 
-    const {
-        mainState: {
-        }
-    } = useContext(MainContext)
+    // const {
+    //     mainState: {
+    //     }
+    // } = useContext(MainContext)
 
     const handleSignOut = () => {
         FirebaseAuthService.firebaseSignOut()

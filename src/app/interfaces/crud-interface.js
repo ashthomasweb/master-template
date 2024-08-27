@@ -8,7 +8,6 @@ import {
     /* Context */
     /* Views */
     /* Custom Hooks */
-    logComponentInit,
     /* Service Classes */
     /* Utility Functions */
     /* Assets */
@@ -28,7 +27,6 @@ const t = false
 const file = ''
 const msg = (copy, fileName = file) => m(copy, fileName)
 /* END Trace vars */
-
 
 class CRUDInterface {
     async createRecord(options) {

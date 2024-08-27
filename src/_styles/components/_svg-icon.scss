@@ -1,0 +1,10 @@
+.standard-svg-icon {
+    @include displayFlex();
+    height: $standard-icon-size;
+}
+
+.svg-icon-container {
+    @include displayFlex();
+    @include flexCenter();
+    @include dimensions(100%, 100%);
+}

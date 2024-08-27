@@ -1,21 +1,18 @@
 .theme-toggle-container {
 
     .icon-container {
-        @include transitionAll(.4s);
         position: relative;
-        @include zIndex(aboveBacking);
         top: 4px;
-        left: 9px;
-        cursor: pointer;
-        @include dimensions(26px, 26px);
         left: 4px;
-        bottom: 4px;
-        background-color: useTheme(sliderThumb);
-        @include transitionAll(.4s);
-        @include dropShadow(1px 2px 5px $cPureBlack);
-        @include borderRadius(50%);
+        @include zIndex(aboveBacking);
         @include displayFlex();
         @include flexCenter();
+        @include borderRadius(50%);
+        @include dimensions(26px, 26px);
+        background-color: useTheme(sliderThumb);
+        @include dropShadow(1px 2px 5px $cPureBlack);
+        @include transitionAll(.4s);
+        cursor: pointer;
 
         .svg-icon-container {
             @include dimensions(80%, 80%);
@@ -49,11 +46,11 @@
     .slider {
         position: absolute;
         inset: 0;
-        background-color: useTheme(sliderBacking);
-        @include transitionAll(.4s);
         outline: 2px solid useTheme(greyScale1);
-        @include boxShadow(inset 0 0 12px 2px #00000072);
         @include borderRadius(34px);
+        background-color: useTheme(sliderBacking);
+        @include boxShadow(inset 0 0 12px 2px #00000072);
+        @include transitionAll(.4s);
     }
 
     input:checked+.slider {
