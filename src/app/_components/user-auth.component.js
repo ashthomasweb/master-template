@@ -32,7 +32,6 @@ export default function UserAuth() {
     logInit && logComponentInit(file)
     debug && timerEnd('App load to Auth')
 
-
     const {
         mainState: {
             userObj

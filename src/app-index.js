@@ -122,6 +122,7 @@ const SettingsMenu = lazyLoad(() => { // Example of lazyLoading a component with
     ]).then(([component]) => component)
 }) 
 import SVGIcon from './app/_components/svg-icon.component'
+import LoadingSpinner from './app/_components/loading.component.js'
 
 export {
     App,
@@ -129,7 +130,8 @@ export {
     UserAuth,
     SettingsMenu,
     ThemeToggle,
-    SVGIcon
+    SVGIcon,
+    LoadingSpinner
 }
 
 

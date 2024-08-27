@@ -5,13 +5,13 @@ import {
     MainContext,
     /* Components */
     SettingsMenu,
+    LoadingSpinner,
     /* Context */
     MainContext,
     /* Views */
     /* Custom Hooks */
     logComponentInit,
     /* Service Classes */
-    ThemeService,
     /* Utility Functions */
     /* Assets */
     /* Icons */
@@ -28,9 +28,7 @@ import {
     // moonIcon,
     SVGIcon,
     // settingsIcon,
-    iconPaths
 } from '../../app-index'
-import ThemeService from '../_services/theme.service'
 
 /* Trace vars */
 const run = false
@@ -74,7 +72,7 @@ export default function HeaderView() {
             <button type='button' data-menutype='settings' onClick={toggleModal}>
                 <span>Settings</span>
                 <span>
-                    <SVGIcon src={iconPaths.settings} />
+                    <SVGIcon src={'settings'} />
                 </span>
             </button>
             <ThemeToggle />
@@ -82,14 +80,7 @@ export default function HeaderView() {
             {
                 headerModalDisplay.settings
                     ?
-                    <Suspense
-                        fallback={
-                            <div className='standard-loading-spinner' >
-                                <SVGIcon src={iconPaths.spinner} />
-                                Loading ...
-                            </div>
-                        }
-                    >
+                    <Suspense fallback={<LoadingSpinner />} >
                         <SettingsMenu isOpen={headerModalDisplay.settings} />
                     </Suspense>
                     : null

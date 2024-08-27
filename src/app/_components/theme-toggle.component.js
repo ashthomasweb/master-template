@@ -12,9 +12,6 @@ import {
     /* Utility Functions */
     /* Assets */
     /* Icons */
-    iconPaths,
-    // sunIcon,
-
     /* Configs */
     /* Types */
     /* Interfaces */
@@ -24,7 +21,6 @@ import {
     trace,
     m
 } from '../../app-index'
-// import iconPaths from '../config/icon-paths'
 
 /* Trace vars */
 const run = false
@@ -56,8 +52,8 @@ export default function ThemeToggle() {
                     <div className='slider-thumb'></div>
                     <div className={`icon-container ${isChecked ? 'isNight' : ''}`}>
                         {theme === 'day'
-                            ? <SVGIcon src={iconPaths.sun} />
-                            : <SVGIcon src={iconPaths.moon} />
+                            ? <SVGIcon src={'sun'} />
+                            : <SVGIcon src={'moon'} />
                         }
                     </div>
                 </span>
